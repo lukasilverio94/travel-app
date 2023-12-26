@@ -36,7 +36,7 @@ export const addNewTravel = async (req, res) => {
 //Get All Travels
 export const getAllTravels = async (req, res) => {
   try {
-    const travels = await Post.find({});
+    const travels = await Post.find({}).sort({ createdAt: -1 });
     return res.status(200).json(travels);
   } catch (error) {
     console.log(error.message);

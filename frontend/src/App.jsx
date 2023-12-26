@@ -1,7 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-//Components
+import axios from "axios";
+//Components & pages
 import Home from "./pages/Home";
+import CreatePost from "./pages/CreatePost";
+import ShowPost from "./pages/ShowPost";
+import EditPost from "./pages/EditPost";
+import DeletePost from "./pages/DeletePost";
+
 import Navbar from "./components/Navbar";
+
+// Default axios
+axios.defaults.baseURL = "http://localhost:4000";
 
 function App() {
   return (
@@ -9,6 +18,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route path="/posts/create" element={<CreatePost />} />
+        <Route path="/posts/details/:id" element={<ShowPost />} />
+        <Route path="/posts/edit/:id" element={<EditPost />} />
+        <Route path="/posts/delete/:id" element={<DeletePost />} />
       </Routes>
     </BrowserRouter>
   );

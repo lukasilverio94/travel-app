@@ -9,7 +9,7 @@ const app = express();
 
 // middleware for parsing req.body (json read)
 app.use(express.json());
-app.use("/posts", postRoutes);
+
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -17,6 +17,9 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
+
+//Routes
+app.use("/posts", postRoutes);
 
 //Connect db
 mongoose

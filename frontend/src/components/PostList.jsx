@@ -29,7 +29,7 @@ const PostList = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="container flex flex-col gap-y-3 mt-3">
+        <div className="container flex flex-col  mt-2">
           {posts.map((post) => (
             <Post key={post._id} post={post} />
           ))}

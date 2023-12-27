@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 
@@ -7,10 +8,34 @@ export default function CreatePost() {
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Add Post
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      title,
+      place,
+      description,
+    };
+    setLoading(true);
+    axios
+      .post("/posts", data)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
 
   return (
     <div className="p-4">
-      <form className="flex flex-col border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:w-1/2 p-4 mx-auto">
+      <form
+        className="flex flex-col border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:w-1/2 p-4 mx-auto"
+        onSubmit={handleSubmit}
+      >
         <h1 className="text-3xl my-4">Create Travel Story: </h1>
         <div className="my-4">
           <label className="text-xl mr-4 text-gray-500">Title</label>
@@ -18,6 +43,8 @@ export default function CreatePost() {
             type="text"
             className="border-2 border-gray-500 px-4 py-2 w-full"
             placeholder="Title for your experience"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="my-4">
@@ -26,6 +53,8 @@ export default function CreatePost() {
             type="text"
             className="border-2 border-gray-500 px-4 py-2  w-full "
             placeholder="Name of the place about the history"
+            value={place}
+            onChange={(e) => setPlace(e.target.value)}
           />
         </div>
         <div className="my-4">
@@ -34,6 +63,8 @@ export default function CreatePost() {
             type="number"
             className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
             placeholder="Describe your experience..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <button className="p-2 bg-teal-700  text-white m-8">Save</button>

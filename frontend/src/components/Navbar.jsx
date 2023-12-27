@@ -8,6 +8,8 @@ export default function Navbar() {
     setIsNavOpen(!isNavOpen);
   };
 
+  const isLoggedIn = localStorage.getItem("token");
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -15,13 +17,11 @@ export default function Navbar() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          {/* IMAGE / ICON HERE IN FUTURE */}
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Travel App
           </span>
         </Link>
 
-        {/* Toggle button for small screens */}
         <button
           onClick={toggleNav}
           className="md:hidden text-gray-700 focus:outline-none"
@@ -59,20 +59,17 @@ export default function Navbar() {
           )}
         </button>
 
-        {/* Navigation items */}
         <div
           className={`${
             isNavOpen ? "block" : "hidden"
           } w-full md:flex md:w-auto md:order-1`}
           id="navbar-search"
         >
-          {/* ... responsive search input code ... */}
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            {localStorage.getItem("token") ? (
-              // If token is present (user is logged in)
+            {isLoggedIn ? (
               <>
                 <li>
-                  <Link to="/">
+                  <Link to="/logout">
                     <h2>Logout</h2>
                   </Link>
                 </li>
@@ -84,10 +81,24 @@ export default function Navbar() {
                     Home
                   </Link>
                 </li>
-                {/* Add more logged-in links as needed */}
+                <li>
+                  <Link
+                    to="/posts/create"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  >
+                    Add Experience
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/explore"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  >
+                    Explore Travels
+                  </Link>
+                </li>
               </>
             ) : (
-              // If token is not present (user is logged out)
               <>
                 <li>
                   <Link to="/signin">
@@ -102,26 +113,8 @@ export default function Navbar() {
                     Home
                   </Link>
                 </li>
-                {/* Add more logged-out links as needed */}
               </>
             )}
-            {/* Common links for both states */}
-            <li>
-              <Link
-                to="/posts/create"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Add Experience
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/explore"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Explore Travels
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

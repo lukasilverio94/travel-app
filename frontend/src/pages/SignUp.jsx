@@ -1,33 +1,34 @@
-import  { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios'
-
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function SignUp() {
   const [user, setUser] = useState({
-    userName: '',
-    email: '',
-    password: '',
+    userName: "",
+    email: "",
+    password: "",
   });
-  const[err, setErr]=useState()
-  const[success, setSuccess]=useState()
+  const [err, setErr] = useState();
+  const [success, setSuccess] = useState();
+
   const signUpUser = (e) => {
     e.preventDefault();
-    if(user.email !=='' && user.password !=='' && user.userName !==''){
-      axios.post('/new-account', user)
-      .then((result)=>{
-        setSuccess(result.data);
-        window.location.href = '/signIn'
-      })
-      .catch((err)=>{
-        // console.log(err);
-        setErr(err.response.data);
-      })
-    }else{
-      setErr('Email, Username  and Password are required')
+    if (user.email !== "" && user.password !== "" && user.userName !== "") {
+      axios
+        .post("/user/new-account", user, {
+          withCredentials: true,
+        })
+        .then((result) => {
+          setSuccess(result.data);
+          window.location.href = "/signIn";
+        })
+        .catch((err) => {
+          console.log(err);
+          setErr(err.response.data);
+        });
+    } else {
+      setErr("Email, Username  and Password are required");
     }
-
-    
   };
 
   const handleChange = (e) => {
@@ -37,7 +38,7 @@ export default function SignUp() {
       [e.target.name]: e.target.value,
     });
   };
-  
+
   return (
     <div>
       <h2>Sign up</h2>
@@ -46,7 +47,7 @@ export default function SignUp() {
           Username
         </label>
         <input
-        className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
+          className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
           type="text"
           id="userName"
           name="userName"
@@ -59,7 +60,7 @@ export default function SignUp() {
           Email
         </label>
         <input
-        className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
+          className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
           type="email"
           id="email"
           name="email"
@@ -72,7 +73,7 @@ export default function SignUp() {
           Password
         </label>
         <input
-        className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
+          className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
           type="password"
           id="password"
           name="password"
@@ -80,20 +81,17 @@ export default function SignUp() {
           onChange={handleChange}
         />
 
-        <button  type="submit" className="p-2 bg-teal-700  text-white m-8">
+        <button type="submit" className="p-2 bg-teal-700  text-white m-8">
           Sign up
         </button>
       </form>
       <h5>{err ? err : null}</h5>
       <h5>{success ? success : null}</h5>
 
-
-
       <Link to="/signIn">
         <h1>Have an account</h1>
         <h2>Sign In!</h2>
       </Link>
-      
     </div>
   );
 }

@@ -67,7 +67,7 @@ export default function CreatePost() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <button className="p-2 bg-teal-700  text-white m-8">Save</button>
+        <button className="p-2 bg-teal-700 w-100 text-white m-8">Save</button>
       </form>
     </div>
   );

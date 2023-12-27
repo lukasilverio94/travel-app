@@ -9,11 +9,12 @@ import DeletePost from "./pages/DeletePost";
 
 import Navbar from "./components/Navbar";
 
-import SignUp from './pages/SignUp'
-import SignIn from './pages/SignIn'
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
 
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -25,13 +26,8 @@ function App() {
         <Route path="/posts/details/:id" element={<ShowPost />} />
         <Route path="/posts/edit/:id" element={<EditPost />} />
         <Route path="/posts/delete/:id" element={<DeletePost />} />
-
-    
-        <Route exact
-                    path='/signIn'
-                    element={<SignIn/>}/>
-        <Route exact path='/signUp'
-                    element={<SignUp/>}/>
+        <Route exact path="/signIn" element={<SignIn />} />
+        <Route exact path="/signUp" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

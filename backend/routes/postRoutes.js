@@ -1,5 +1,4 @@
 import express from "express";
-const router = express.Router();
 import {
   addNewTravel,
   getAllTravels,
@@ -8,19 +7,13 @@ import {
   deleteTravel,
 } from "../controller/postController.js";
 
-import {
-  login,
-  signup,
-} from "../controller/userController.js";
-// Post routes
-router.get("/", getAllTravels); //Get All Posts
-router.post("/", addNewTravel); //Add New Post
-router.get("/:id", getTravel); //Single Post
-router.put("/:id", updateTravel); //Edit post
-router.delete("/:id", deleteTravel); //Delete post
+const router = express.Router();
 
-// user routes
-router.post('/new-account',signup);
-router.post('/logIn', login);
+// Post routes
+router.get("/", getAllTravels); // Get All Posts
+router.post("/", addNewTravel); // Add New Post
+router.get("/:id", getTravel); // Single Post
+router.put("/:id", updateTravel); // Edit post
+router.delete("/:id", deleteTravel); // Delete post
 
 export default router;

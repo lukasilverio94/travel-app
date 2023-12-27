@@ -1,4 +1,3 @@
-// components/Post.js
 import React from "react";
 
 const Post = ({ post }) => (

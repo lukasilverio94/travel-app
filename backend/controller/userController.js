@@ -1,12 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
 import User from "../models/userModel.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+//Function sign up
 export const signup = async (req, res) => {
-  // Log the incoming request data
-  console.log("Received signup request:", req.body);
-
   // Hash the user's password using bcrypt with a salt factor of 12
   let hashedPass = bcrypt.hashSync(req.body.password, 12);
 
@@ -48,15 +48,17 @@ export const signup = async (req, res) => {
 // Function for user login
 export const login = async (req, res) => {
   // Log the incoming login request data
-  console.log("request to", req.body);
+  console.log("Request to login:", req.body);
 
-  // Find a user in the database with the provided email
-  let user = await User.findOne({ email: req.body.email });
+  try {
+    // Find a user in the database with the provided email
+    let user = await User.findOne({ email: req.body.email });
 
-  if (!user) {
-    // If the user is not found, send a 400 Bad Request response
-    res.status(400).send("User or password are not correct");
-  } else {
+    if (!user) {
+      // If the user is not found, send a 400 Bad Request response
+      return res.status(400).send("User or password are not correct");
+    }
+
     // Compare the provided password with the hashed password stored in the database
     let isCorrectPass = await bcrypt.compareSync(
       req.body.password,
@@ -65,19 +67,22 @@ export const login = async (req, res) => {
 
     if (!isCorrectPass) {
       // If the password is incorrect, send a 400 Bad Request response
-      res.status(400).send("User or password are not correct");
-    } else {
-      // If the user and password are correct, generate a JWT token for authentication
-      let userInfoForToken = {
-        id: user._id,
-        userName: user.userName,
-        email: user.email,
-      };
-
-      let userToken = jwt.sign({ userInfoForToken }, "random text");
-
-      // Send the generated token in the response
-      res.status(200).send(userToken);
+      return res.status(400).json({ error: "Email or password incorrect" });
     }
+
+    // If the user and password are correct, generate a JWT token for authentication
+    let userInfoForToken = {
+      id: user._id,
+      userName: user.userName,
+      email: user.email,
+    };
+
+    let userToken = jwt.sign({ userInfoForToken }, process.env.SECRET);
+
+    // Send the generated token in the response
+    res.status(200).send(userToken);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred during login.");
   }
 };

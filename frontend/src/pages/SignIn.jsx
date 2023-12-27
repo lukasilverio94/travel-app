@@ -25,40 +25,41 @@ export default function SignIn() {
           // navigate('allPosts')
           window.location.href = "/";
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          setErr(error.response.data.error);
         });
     } else {
       setErr("Email and Password are required");
     }
   };
   return (
-    <div>
-      do you have an account sign in:
-      <form onSubmit={submitLogIn}>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h2 className="text-2xl font-bold mb-4">Sign In</h2>
+      <form onSubmit={submitLogIn} className="w-96">
         <input
-          className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
+          className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="email"
-          placeholder="enter your email"
+          placeholder="Enter your email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
+          className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="password"
-          placeholder="enter your pass"
+          placeholder="Enter your password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input
-          className="p-2 bg-teal-700  text-white m-8"
+        <button
+          className="w-full bg-teal-500 text-white py-2 rounded"
           type="submit"
-          value="SignIn"
-          onSubmit={submitLogIn}
-        />
+        >
+          Sign In
+        </button>
       </form>
-      <h5>{err ? err : null}</h5>
-      <Link to="/signUp">
-        <h1>make an new account</h1>
-        <h2>sign up!</h2>
+      {err && <h5 className="text-red-500 mt-2 font-semibold">{err}</h5>}
+
+      <Link to="/signUp" className="mt-4 text-blue-500">
+        <span>Don't have an account?</span>
+        <span className="ml-1 font-bold">Sign up!</span>
       </Link>
     </div>
   );

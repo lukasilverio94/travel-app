@@ -16,10 +16,12 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    user: {
-      type: String,
-      required: false,
-    },
+    // postOwner: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'User', 
+    //   required: true,
+    // },
+  
     image: {
       type: String,
       required: false,

@@ -23,7 +23,7 @@ const PostList = () => {
 
   return (
     <div>
-      <h1 className="text-4xl py-3 text-teal-700  border-b-2 border-teal-700">
+      <h1 className="text-4xl py-3 text-teal-700 font-semibold border-b-2 border-teal-700">
         Read all travels experiences:
       </h1>
       {loading ? (

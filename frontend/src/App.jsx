@@ -6,11 +6,12 @@ import CreatePost from "./pages/CreatePost";
 import ShowPost from "./pages/ShowPost";
 import EditPost from "./pages/EditPost";
 import DeletePost from "./pages/DeletePost";
-
 import Navbar from "./components/Navbar";
-
+import Logout from "./components/Logout";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import PostList from "./components/PostList";
+import NotFound from "./pages/NotFound";
 
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
@@ -21,13 +22,20 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/posts/create" element={<CreatePost />} />
-        <Route path="/posts/details/:id" element={<ShowPost />} />
-        <Route path="/posts/edit/:id" element={<EditPost />} />
-        <Route path="/posts/delete/:id" element={<DeletePost />} />
-        <Route exact path="/signIn" element={<SignIn />} />
-        <Route exact path="/signUp" element={<SignUp />} />
+        {localStorage.getItem("token") ? (
+          <>
+            <Route exact path="/" element={<PostList />} />
+            <Route exact path="/posts/create" element={<CreatePost />} />
+            <Route exact path="/logout" element={<Logout />} />
+          </>
+        ) : (
+          <>
+            <Route exact path="/" element={<SignUp />} />
+            <Route exact path="/signin" element={<SignIn />} />
+            <Route exact path="/signUp" element={<SignUp />} />
+          </>
+        )}
+        <Route exact path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

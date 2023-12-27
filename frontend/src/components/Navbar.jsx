@@ -68,14 +68,44 @@ export default function Navbar() {
         >
           {/* ... responsive search input code ... */}
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <Link
-                to="/"
-                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-              >
-                Home
-              </Link>
-            </li>
+            {localStorage.getItem("token") ? (
+              // If token is present (user is logged in)
+              <>
+                <li>
+                  <Link to="/">
+                    <h2>Logout</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                  >
+                    Home
+                  </Link>
+                </li>
+                {/* Add more logged-in links as needed */}
+              </>
+            ) : (
+              // If token is not present (user is logged out)
+              <>
+                <li>
+                  <Link to="/signin">
+                    <h2>Login</h2>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                  >
+                    Home
+                  </Link>
+                </li>
+                {/* Add more logged-out links as needed */}
+              </>
+            )}
+            {/* Common links for both states */}
             <li>
               <Link
                 to="/posts/create"

@@ -27,6 +27,7 @@ function App() {
             <Route exact path="/" element={<PostList />} />
             <Route exact path="/posts/create" element={<CreatePost />} />
             <Route exact path="/posts/details/:id" element={<ShowPost />} />
+            <Route exact path="/posts/delete/:id" element={<DeletePost />} />
             <Route exact path="/logout" element={<Logout />} />
           </>
         ) : (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 // Components
 import Loader from "../components/Loader";
 import Stars from "../components/Stars";
@@ -33,6 +33,11 @@ export default function ShowPost() {
       <p>{post.description}</p>
       <small>{post.createdAt}</small>
       <Stars />
+      <Link to={`/posts/delete/${id}`}>
+        <span className="bg-red-600 my-3 text-white px-2 py-2 rounded-md">
+          Delete
+        </span>
+      </Link>
     </div>
   );
 }

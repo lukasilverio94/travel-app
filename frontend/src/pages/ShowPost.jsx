@@ -24,7 +24,10 @@ export default function ShowPost() {
       });
   }, []);
   return (
-    <div key={post._id} className="flex flex-col gap-y-3 mt-5 items-center">
+    <div
+      key={post._id}
+      className="container mx-6 flex flex-col max-w-5xl  gap-y-3 mt-5 "
+    >
       <h3 className="text-teal-600 text-3xl ">{post.title}</h3>
       <p className="text-slate-800 font-semibold">Place: {post.place}</p>
       <p>{post.description}</p>

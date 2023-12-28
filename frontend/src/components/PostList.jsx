@@ -22,9 +22,9 @@ const PostList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container px-6">
       <h1 className="text-4xl py-3 text-teal-700 font-semibold border-b-2 border-teal-700">
-        Read all travels experiences:
+        Get inspired by some experiences:
       </h1>
       {loading ? (
         <Loader />

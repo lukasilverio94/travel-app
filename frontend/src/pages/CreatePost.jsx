@@ -7,6 +7,7 @@ export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -27,6 +28,12 @@ export default function CreatePost() {
       .catch((error) => {
         setLoading(false);
         console.log(error);
+        if (error.response && error.response.status === 400) {
+          setError(error.response.data.error);
+        } else {
+          setError("An error occurred. Please try again.");
+          console.error("Server Error:", error);
+        }
       });
   };
 
@@ -67,7 +74,12 @@ export default function CreatePost() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <button className="p-2 bg-teal-700 w-100 text-white m-8">Save</button>
+        <button className="p-2 bg-teal-700 w-100 text-white    mb-3">
+          Save
+        </button>
+        {error && (
+          <p className="text-red-600 text-center font-semibold">{error}</p>
+        )}
       </form>
     </div>
   );

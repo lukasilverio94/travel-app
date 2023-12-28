@@ -1,8 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [username, setUsername] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUsername(response.data.username);
+          console.log(response.data.username);
+        })
+        
+        .catch((error) => {
+          console.error("Error fetching user information:", error.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, []);
+  
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);

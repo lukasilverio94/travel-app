@@ -1,9 +1,10 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
-import User from "../models/userModel.js";
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import User from '../models/userModel.js';
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+// import { verifyToken } from '../middlewares/authMiddleware';
 
 //Function sign up
 export const signup = async (req, res) => {
@@ -21,11 +22,12 @@ export const signup = async (req, res) => {
 
   try {
     // Save the new user to the database
-    console.log("Received signup request:", req.body);
+    console.log('Received signup request:', req.body);
     await newUser.save();
 
     // Send a success response if the user is saved successfully
-    res.status(200).send("User saved successfully");
+    res.status(200).send('User saved successfully');
+    console.log('User is saved', req.body);
   } catch (error) {
     // Handle errors during user saving process
     if (error.code === 11000) {
@@ -34,13 +36,13 @@ export const signup = async (req, res) => {
         .status(400)
         .send(
           `This ${Object.keys(error.keyValue)}: ${Object.values(
-            error.keyValue
-          )} is already used`
+            error.keyValue,
+          )} is already used`,
         );
     } else {
       // Other errors
       console.error(error);
-      res.status(500).send("An error occurred while saving the user.");
+      res.status(500).send('An error occurred while saving the user.');
     }
   }
 };
@@ -48,7 +50,7 @@ export const signup = async (req, res) => {
 // Function for user login
 export const login = async (req, res) => {
   // Log the incoming login request data
-  console.log("Request to login:", req.body);
+  console.log('Request to login:', req.body);
 
   try {
     // Find a user in the database with the provided email
@@ -56,18 +58,18 @@ export const login = async (req, res) => {
 
     if (!user) {
       // If the user is not found, send a 400 Bad Request response
-      return res.status(400).send("User or password are not correct");
+      return res.status(400).send('User or password are not correct');
     }
 
     // Compare the provided password with the hashed password stored in the database
     let isCorrectPass = await bcrypt.compareSync(
       req.body.password,
-      user.password
+      user.password,
     );
 
     if (!isCorrectPass) {
       // If the password is incorrect, send a 400 Bad Request response
-      return res.status(400).json({ error: "Email or password incorrect" });
+      return res.status(400).json({ error: 'Email or password incorrect' });
     }
 
     // If the user and password are correct, generate a JWT token for authentication
@@ -81,8 +83,34 @@ export const login = async (req, res) => {
 
     // Send the generated token in the response
     res.status(200).send(userToken);
+    console.log(`${userInfoForToken.userName} is inLogged`);
   } catch (error) {
     console.error(error);
-    res.status(500).send("An error occurred during login.");
+    res.status(500).send('An error occurred during login.');
   }
 };
+
+export const verifyUser = async (req, res) => {
+  const token = req.headers.authorization;
+  console.log('userC95',token);
+  jwt.verify(token, process.env.SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+    }
+
+    // Attach the decoded user information to the request object for later use
+    req.user = decoded;})
+    console.log('userC 103',req);
+  
+  // try {
+  //   const user = req.user; // Assuming the user information is attached to req.user by middleware
+  //   res.status(200).json({
+  //     userId: user.userId,
+  //     username: user.username,
+  //   });
+  // } catch (error) {
+  //   console.error('Error fetching user details:', error);
+  //   res.status(500).json({ error: 'Internal Server Error' });
+  // }
+};
+

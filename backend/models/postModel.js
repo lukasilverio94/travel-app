@@ -16,16 +16,23 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    // postOwner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'User', 
-    //   required: true,
-    // },
+    postOwner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User', 
+      required: false,
+    },
   
     image: {
       type: String,
       required: false,
     },
+
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
   },
   { timestamps: true }
 );

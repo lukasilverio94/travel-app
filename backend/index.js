@@ -4,6 +4,7 @@ dotenv.config();
 import mongoose from "mongoose";
 import postRoutes from "./routes/postRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
 import cors from "cors";
 
 const app = express();
@@ -14,7 +15,7 @@ app.use(
   cors({
     origin: ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: 'Authorization,Content-Type',
     credentials: true,
   })
 );
@@ -22,6 +23,7 @@ app.use(
 //Routes
 app.use("/user", userRoutes);
 app.use("/posts", postRoutes);
+app.use("/comments", commentRoutes);
 
 //Connect db
 mongoose

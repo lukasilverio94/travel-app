@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import Post from "./Post";
@@ -32,7 +32,9 @@ const PostList = () => {
         <div className="container flex flex-col  mt-2">
           {posts.map((post) => (
             <Post key={post._id} post={post} />
+            
           ))}
+          
         </div>
       )}
     </div>

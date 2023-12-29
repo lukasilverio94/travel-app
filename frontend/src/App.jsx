@@ -4,7 +4,6 @@ import axios from "axios";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import ShowPost from "./pages/ShowPost";
-import EditPost from "./pages/EditPost";
 import DeletePost from "./pages/DeletePost";
 import Navbar from "./components/Navbar";
 import Logout from "./components/Logout";

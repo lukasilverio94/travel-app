@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { MdOutlineDelete } from "react-icons/md";
 
 const CommentList = ({ post }) => {
   const [comments, setComments] = useState([]);
+  const { id } = useParams();
 
   // CommentList.jsx
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        // console.log('Post comments:', post.comments); // Add this log
-
         const commentDetails = await Promise.all(
           post.comments.map(async (commentId) => {
             const response = await axios.get(`/comments/${commentId}`);
-            // console.log('Comment details:', response.data);
-            // console.log('Comment text:', response.data.commentText);
+
             return response.data;
           })
         );
 
-        // console.log('Comments:', commentDetails);
         setComments(commentDetails);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -30,6 +29,18 @@ const CommentList = ({ post }) => {
     fetchComments();
   }, [post.comments]);
 
+  //Delete Comment
+  const handleDeleteComment = (id) => {
+    axios
+      .delete(`/comment/delete/${id}`)
+      .then(() => {
+        useNavigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <h3>Comments:</h3>
@@ -37,7 +48,12 @@ const CommentList = ({ post }) => {
         {comments.map((comment) => (
           <li key={comment._id} className="pt-2">
             <strong>{comment.writer}: </strong>
-            <p>{comment.commentText}</p>
+            <div>
+              <p>{comment.commentText}</p>
+              <button onClick={() => handleDeleteComment(comment._id)}>
+                <MdOutlineDelete className="text-red-600 text-3xl cursor-pointer" />
+              </button>
+            </div>
           </li>
         ))}
       </ul>

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import CommentList from "./CommentList"; // Import the CommentList component
+import CommentList from "./CommentList";
 
 export default function Comments({ post }) {
   const [showComment, setShowComment] = useState(false);

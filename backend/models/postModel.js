@@ -16,9 +16,9 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    postOwner: {
-      type: Schema.Types.ObjectId,
-      ref: 'User', 
+    writer: {
+      type: String,
+      // ref: 'User', 
       required: false,
     },
   

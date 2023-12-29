@@ -9,6 +9,7 @@ export const addNewComment = async (req, res) => {
   const postId = req.body.postId;
   const comment = new Comment({
     commentText: req.body.commentText,
+    writer: req.body.writer,
   });
 
   await comment.save();

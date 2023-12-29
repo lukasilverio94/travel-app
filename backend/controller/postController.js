@@ -1,4 +1,5 @@
 import Post from '../models/postModel.js';
+import Comment from '../models/commentModel.js';
 import mongoose from 'mongoose';
 
 //Add New Travel

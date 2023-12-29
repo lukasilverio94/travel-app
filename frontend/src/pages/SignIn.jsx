@@ -58,7 +58,7 @@ export default function SignIn() {
       {err && <h5 className="text-red-500 mt-2 font-semibold">{err}</h5>}
 
       <Link to="/signUp" className="mt-4 text-blue-500">
-        <span>Don't have an account?</span>
+        <span>Do not have an account?</span>
         <span className="ml-1 font-bold">Sign up!</span>
       </Link>
     </div>

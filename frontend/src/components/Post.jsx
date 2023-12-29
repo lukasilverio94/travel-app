@@ -1,6 +1,10 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+
+import Comments from "./Comments"
+
 import Stars from "./Stars";
+
 
 const Post = ({ post }) => (
   <div key={post._id} className="flex flex-col gap-y-2 mt-2">
@@ -10,12 +14,21 @@ const Post = ({ post }) => (
     <h5 className="text-slate-900 font-semibold">Description: </h5>
     <p>{post.description.slice(0, 25)}...</p>
     <small>{post.createdAt}</small>
+
+    {/* comment */}
+    <Comments post={post} />
+    
+    
+    {/* <Link to={`posts/details/${post._id}`}>Read more...</Link> */}
+    <hr />
+
     <Stars />
     <Link to={`posts/details/${post._id}`} className="border-b-2 pb-5 my-2">
       <span className="bg-slate-900 text-white px-2 py-2 rounded-md hover:bg-teal-500">
         Read more
       </span>
     </Link>
+
   </div>
 );
 

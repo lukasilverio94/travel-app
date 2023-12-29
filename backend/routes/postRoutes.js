@@ -5,6 +5,7 @@ import {
   getTravel,
   updateTravel,
   deleteTravel,
+  
 } from "../controller/postController.js";
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.post("/", addNewTravel); // Add New Post
 router.get("/details/:id", getTravel); // Single Post
 router.put("/update/:id", updateTravel); // Edit post
 router.delete("/delete/:id", deleteTravel); // Delete post
+
 
 export default router;

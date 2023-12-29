@@ -99,8 +99,8 @@ export const verifyUser = async (req, res) => {
     console.log('Decoded:', decoded);
 
     res.status(200).json({
-      userId: decoded?.userInfForToken?.id,
-      username: decoded?.userInfForToken?.userName,
+      userId: decoded?.userInfoForToken?.id,
+      username: decoded?.userInfoForToken?.userName,
     });
   } catch (error) {
     console.error('Error fetching user details:', error);

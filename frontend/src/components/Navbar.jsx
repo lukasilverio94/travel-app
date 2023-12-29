@@ -9,23 +9,24 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    
+
     if (token) {
       axios
-  .get("/user/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((error) => {
-    console.error("Error fetching user information:", error.message);
-  })
-  .finally(() => {
-    setIsLoading(false);
-  });
+        .get("/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUsername(response.data.username);
+          localStorage.setItem("username", response.data.username);
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }, []);
 
@@ -94,7 +95,9 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <li>
-                  <span>{isLoading ? "Loading..." : `Welcome, ${username}`}</span>
+                  <span>
+                    {isLoading ? "Loading..." : `Welcome, ${username}`}
+                  </span>
                 </li>
                 <li>
                   <Link to="/logout">

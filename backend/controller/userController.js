@@ -92,25 +92,21 @@ export const login = async (req, res) => {
 
 export const verifyUser = async (req, res) => {
   const token = req.headers.authorization;
-  console.log('userC95',token);
-  jwt.verify(token, process.env.SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Unauthorized: Invalid token' });
-    }
+  console.log('Token:', token);
 
-    // Attach the decoded user information to the request object for later use
-    req.user = decoded;})
-    console.log('userC 103',req);
-  
-  // try {
-  //   const user = req.user; // Assuming the user information is attached to req.user by middleware
-  //   res.status(200).json({
-  //     userId: user.userId,
-  //     username: user.username,
-  //   });
-  // } catch (error) {
-  //   console.error('Error fetching user details:', error);
-  //   res.status(500).json({ error: 'Internal Server Error' });
-  // }
+  try {
+    const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.SECRET);
+    console.log('Decoded:', decoded);
+
+    res.status(200).json({
+      userId: decoded?.userInfForToken?.id,
+      username: decoded?.userInfForToken?.userName,
+    });
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(401).json({ error: 'Unauthorized: Invalid token' });
+  }
 };
+
+
 

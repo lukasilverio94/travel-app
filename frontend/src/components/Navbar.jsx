@@ -9,27 +9,25 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    
     if (token) {
       axios
-        .get("/user/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setUsername(response.data.username);
-          console.log(response.data.username);
-        })
-        
-        .catch((error) => {
-          console.error("Error fetching user information:", error.message);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+  .get("/user/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error("Error fetching user information:", error.message);
+  })
+  .finally(() => {
+    setIsLoading(false);
+  });
     }
   }, []);
-  
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -95,6 +93,9 @@ export default function Navbar() {
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {isLoggedIn ? (
               <>
+                <li>
+                  <span>{isLoading ? "Loading..." : `Welcome, ${username}`}</span>
+                </li>
                 <li>
                   <Link to="/logout">
                     <h2>Logout</h2>

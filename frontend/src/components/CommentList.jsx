@@ -36,7 +36,7 @@ return (
     <h3>Comments:</h3>
     <ul>
       {comments.map((comment) => (
-        <li key={comment._id}>{comment.commentText}</li>
+        <li key={comment._id}><strong>{comment.writer}</strong>{comment.commentText}</li>
       ))}
     </ul>
   </div>

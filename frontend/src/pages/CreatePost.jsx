@@ -18,6 +18,7 @@ export default function CreatePost() {
       title,
       place,
       description,
+      writer: JSON.parse(localStorage.getItem("user")).username
     };
     setLoading(true);
     axios

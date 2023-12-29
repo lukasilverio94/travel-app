@@ -19,7 +19,11 @@ export default function Navbar() {
         })
         .then((response) => {
           setUsername(response.data.username);
-          localStorage.setItem("username", response.data.username);
+          
+          localStorage.setItem("user", JSON.stringify(response.data));
+          
+          // Corrected log statement
+          console.log(JSON.parse(localStorage.getItem("user")).username);
         })
         .catch((error) => {
           console.error("Error fetching user information:", error.message);

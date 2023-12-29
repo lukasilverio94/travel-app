@@ -9,6 +9,7 @@ export default function Comments({ post }) {
   const [comment, setComment] = useState({
     postId: post._id,
     commentText: "",
+    writer: JSON.parse(localStorage.getItem("user")).username 
   });
 
   const toggleShowComment = () => {
@@ -42,7 +43,7 @@ export default function Comments({ post }) {
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="text"
-          placeholder="add a comment to USERNAME"
+          placeholder={`add a comment to ${post.writer}`}
           onChange={(e) =>
             setComment({ ...comment, commentText: e.target.value })
           }

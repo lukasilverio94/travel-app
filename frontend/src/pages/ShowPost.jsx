@@ -23,6 +23,7 @@ export default function ShowPost() {
         setLoading(false);
       });
   }, []);
+
   return (
     <div
       key={post._id}

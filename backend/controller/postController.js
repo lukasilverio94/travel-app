@@ -1,31 +1,31 @@
-import Post from '../models/postModel.js';
-import Comment from '../models/commentModel.js';
-import mongoose from 'mongoose';
+import Post from "../models/postModel.js";
+import Comment from "../models/commentModel.js";
+import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-  const { title, place, description,writer } = req.body;
+  const { title, place, description, writer } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
 
-    if (!title) {
-      emptyFields.push('title');
+    if (title.trim() === "") {
+      emptyFields.push("title");
     }
-    if (!place) {
-      emptyFields.push('load');
+    if (place.trim() === "") {
+      emptyFields.push("load");
     }
-    if (!description) {
-      emptyFields.push('reps');
+    if (description.trim() === "") {
+      emptyFields.push("reps");
     }
     if (emptyFields.length > 0) {
       return res.status(400).json({
-        error: 'Please fill in all fields',
+        error: "Please fill in all fields",
         emptyFields,
       });
     }
     //Add Doc
-    const newTravel = { title, place, description,writer  };
+    const newTravel = { title, place, description, writer };
     const travel = await Post.create(newTravel);
     return res.status(201).json(travel);
   } catch (error) {
@@ -50,12 +50,12 @@ export const getTravel = async (req, res) => {
   const { id } = req.params;
   //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
   const travel = await Post.findById(id);
 
   if (!travel) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
   return res.status(200).json(travel);
 };
@@ -65,12 +65,12 @@ export const updateTravel = async (req, res) => {
   const { id } = req.params;
   //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
   const travel = await Post.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!travel) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
 
   res.status(200).json(travel);
@@ -81,13 +81,13 @@ export const deleteTravel = async (req, res) => {
   const { id } = req.params;
   //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
 
   const workout = await Post.findOneAndDelete({ _id: id });
 
   if (!workout) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
 
   res.status(200).json(workout);

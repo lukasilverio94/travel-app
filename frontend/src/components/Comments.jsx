@@ -1,5 +1,5 @@
 // Comments.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import CommentList from "./CommentList"; // Import the CommentList component
@@ -9,7 +9,7 @@ export default function Comments({ post }) {
   const [comment, setComment] = useState({
     postId: post._id,
     commentText: "",
-    writer: JSON.parse(localStorage.getItem("user")).username 
+    writer: JSON.parse(localStorage.getItem("user")).username,
   });
 
   const toggleShowComment = () => {
@@ -20,7 +20,7 @@ export default function Comments({ post }) {
     e.preventDefault();
     console.log(comment.postId);
 
-    if (comment.commentText !== "") {
+    if (comment.commentText.trim() !== "") {
       axios
         .post("/comments/newComment", comment, {
           withCredentials: true,
@@ -36,6 +36,10 @@ export default function Comments({ post }) {
       console.log("Comment text is required");
     }
   };
+
+  // useEffect(() => {
+  //   submitComment();
+  // });
 
   return (
     <div>

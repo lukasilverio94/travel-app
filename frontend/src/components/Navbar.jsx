@@ -19,11 +19,7 @@ export default function Navbar() {
         })
         .then((response) => {
           setUsername(response.data.username);
-          
-          localStorage.setItem("user", JSON.stringify(response.data));
-          
-          // Corrected log statement
-          console.log(JSON.parse(localStorage.getItem("user")).username);
+          localStorage.setItem("username", response.data.username);
         })
         .catch((error) => {
           console.error("Error fetching user information:", error.message);
@@ -138,14 +134,6 @@ export default function Navbar() {
                 <li>
                   <Link to="/signin">
                     <h2>Login</h2>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/"
-                    className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                  >
-                    Home
                   </Link>
                 </li>
               </>

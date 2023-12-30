@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 import UploadImg from "../components/UploadImg";
+// ... (your imports)
+
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
@@ -13,40 +15,62 @@ export default function CreatePost() {
   const navigate = useNavigate();
 
   // Add Post
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      title,
-      place,
-      description,
-      writer: JSON.parse(localStorage.getItem("user")).username,
-      image : image
-    };
-    setLoading(true);
-    axios
-      .post("/posts", data)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-        if (error.response && error.response.status === 400) {
-          setError(error.response.data.error);
-        } else {
-          setError("An error occurred. Please try again.");
-          console.error("Server Error:", error);
-        }
-      });
+
+    try {
+      console.log("Image state:", image);
+      // Check if the image is undefined
+      if (image === undefined) {
+        setError("Please upload an image");
+        return;
+      }
+
+      const userData = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        title,
+        place,
+        description,
+        writer: userData.username,
+        image: image,
+      };
+
+      setLoading(true);
+      console.log(data);
+      axios.post("/posts", data, {
+        maxContentLength: Infinity, // or set a specific value
+      },{ withCredentials: true })
+
+      // Reset the form fields and provide feedback to the user
+      // setTitle("");
+      // setPlace("");
+      // setDescription("");
+      // setImage(undefined);
+      // setError(null);
+      // setLoading(false);
+
+      navigate("/");
+    } catch (error) {
+      setLoading(false);
+      console.error("Error:", error);
+
+      if (error.response && error.response.status === 400) {
+        setError(error.response.data.error);
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
   };
+
   const handleConversion = (dataURL) => {
-    
-    setImage(dataURL)
-    console.log(image);
+    console.log("Data URL:", dataURL);
+    setImage(dataURL);
     // Handle the converted data URL as needed
   };
+
   return (
     <div className="p-4">
+      
       <form
         className="flex flex-col border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:w-1/2 p-4 mx-auto"
         onSubmit={handleSubmit}
@@ -60,6 +84,7 @@ export default function CreatePost() {
             placeholder="Title for your experience"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required // Add required attribute for validation
           />
         </div>
         <div className="my-4">
@@ -70,22 +95,24 @@ export default function CreatePost() {
             placeholder="Name of the place about the history"
             value={place}
             onChange={(e) => setPlace(e.target.value)}
+            required // Add required attribute for validation
           />
         </div>
         <div className="my-4">
           <label className="text-xl mr-4 text-gray-500">Description</label>
           <textarea
-            type="number"
             className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
             placeholder="Describe your experience..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required // Add required attribute for validation
           />
         </div>
-        
-         <UploadImg onConversion={handleConversion} />
-        <button className="p-2 bg-teal-700 w-100 text-white    mb-3">
-          Save
+
+        <UploadImg onConversion={handleConversion} />
+
+        <button className="p-2 bg-teal-700 w-100 text-white mb-3" disabled={loading}>
+          {loading ? "Saving..." : "Save"}
         </button>
         {error && (
           <p className="text-red-600 text-center font-semibold">{error}</p>

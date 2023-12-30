@@ -14,7 +14,11 @@ const Post = ({ post }) => (
     <h5 className="text-slate-900 font-semibold">Description: </h5>
     <p>{post.description.slice(0, 25)}...</p>
     <small>{post.createdAt}</small>
-
+    <img
+          className="rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-4"
+          src={post.image}
+          alt="Post"
+        />
     {/* comment */}
     <Comments post={post} />
     

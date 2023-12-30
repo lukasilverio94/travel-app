@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
-function FileConverter() {
+function UploadImg({ onConversion }) {
   const fileInputRef = useRef(null);
   const [convertedDataURL, setConvertedDataURL] = useState(null);
 
@@ -32,16 +32,11 @@ function FileConverter() {
         const dataURL = e.target.result;
 
         // Call the convertToDataURLviaCanvas function
-        convertToDataURLviaCanvas(dataURL, handleConversion, 'image/jpeg');
+        convertToDataURLviaCanvas(dataURL, onConversion, 'image/jpeg');
       };
 
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleConversion = (dataURL) => {
-    // Handle the converted data URL
-    console.log('Converted image to data URL:', dataURL);
   };
 
   return (
@@ -61,4 +56,5 @@ function FileConverter() {
   );
 }
 
-export default FileConverter;
+export default UploadImg;
+

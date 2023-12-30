@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
-
+import UploadImg from "../components/UploadImg";
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function CreatePost() {
       place,
       description,
       writer: JSON.parse(localStorage.getItem("user")).username,
+      image : image
     };
     setLoading(true);
     axios
@@ -37,7 +39,12 @@ export default function CreatePost() {
         }
       });
   };
-
+  const handleConversion = (dataURL) => {
+    
+    setImage(dataURL)
+    console.log(image);
+    // Handle the converted data URL as needed
+  };
   return (
     <div className="p-4">
       <form
@@ -75,6 +82,8 @@ export default function CreatePost() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+        
+         <UploadImg onConversion={handleConversion} />
         <button className="p-2 bg-teal-700 w-100 text-white    mb-3">
           Save
         </button>

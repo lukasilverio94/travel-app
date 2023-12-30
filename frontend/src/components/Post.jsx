@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-
+import { formatDistance } from "date-fns"; //To format date
 import Comments from "./Comments";
 
 import Stars from "./Stars";
@@ -12,7 +12,11 @@ const Post = ({ post }) => (
     <p className="text-slate-800 text-2xl "> {post.place}</p>
     <h5 className="text-slate-900 font-semibold">Description: </h5>
     <p>{post.description.slice(0, 25)}...</p>
-    <small>{post.createdAt}</small>
+    <small>
+      {formatDistance(new Date(post.createdAt), new Date(), {
+        addSuffix: true,
+      })}
+    </small>
 
     {post.image && (
       <img

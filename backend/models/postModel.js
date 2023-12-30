@@ -18,19 +18,19 @@ const postSchema = new Schema(
     },
     writer: {
       type: String,
-      // ref: 'User', 
+      // ref: 'User',
       required: false,
     },
-  
+
     image: {
       type: String,
-      required: true,
+      required: false,
     },
 
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
+        ref: "Comment",
       },
     ],
   },

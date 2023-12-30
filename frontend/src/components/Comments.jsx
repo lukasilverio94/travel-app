@@ -1,4 +1,3 @@
-// Comments.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -11,6 +10,8 @@ export default function Comments({ post }) {
     commentText: "",
     writer: JSON.parse(localStorage.getItem("user")).username,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const toggleShowComment = () => {
     setShowComment((prevShowComment) => !prevShowComment);
@@ -18,28 +19,33 @@ export default function Comments({ post }) {
 
   const submitComment = (e) => {
     e.preventDefault();
-    console.log(comment.postId);
 
     if (comment.commentText.trim() !== "") {
+      setLoading(true);
+
       axios
         .post("/comments/newComment", comment, {
           withCredentials: true,
         })
         .then((result) => {
-          console.log(result.data);
+          console.log("Comment added: ", result.data);
           setComment({ ...comment, commentText: "" }); // Clear the input field
         })
         .catch((err) => {
-          console.log("comment doesnt post", err);
+          console.error("Error posting comment", err);
+          setError("Error posting comment");
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
-      console.log("Comment text is required");
+      setError("Comment text is required");
     }
   };
 
-  // useEffect(() => {
-  //   submitComment();
-  // });
+  useEffect(() => {
+    // You can perform additional actions or side effects after state updates here
+  }, [comment]); // Add dependencies if needed
 
   return (
     <div>
@@ -48,6 +54,7 @@ export default function Comments({ post }) {
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="text"
           placeholder={`add a comment to ${post.writer}`}
+          value={comment.commentText}
           onChange={(e) =>
             setComment({ ...comment, commentText: e.target.value })
           }
@@ -56,18 +63,18 @@ export default function Comments({ post }) {
           className="w-full bg-teal-500 text-white py-2 rounded"
           type="submit"
         >
-          Comment
+          {loading ? "Posting..." : "Comment"}
         </button>
       </form>
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <button onClick={toggleShowComment}>
         {showComment ? "Hide Comment" : "View all Comments"}
       </button>
-      {showComment && <CommentList post={post} />}{" "}
-      {/* Pass the entire post object to CommentList */}
+      {showComment && <CommentList post={post} />}
     </div>
   );
 }
 
 Comments.propTypes = {
-  post: PropTypes.object.isRequired, // Adjust propTypes to expect a post object
+  post: PropTypes.object.isRequired,
 };

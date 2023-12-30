@@ -12,10 +12,14 @@ const CommentList = ({ post }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
+        if (!post.comments || post.comments.length === 0) {
+          setComments([]);
+          return;
+        }
         const commentDetails = await Promise.all(
           post.comments.map(async (commentId) => {
             const response = await axios.get(`/comments/${commentId}`);
-
+            console.log(response.data);
             return response.data;
           })
         );
@@ -32,9 +36,9 @@ const CommentList = ({ post }) => {
   //Delete Comment
   const handleDeleteComment = (id) => {
     axios
-      .delete(`/comment/delete/${id}`)
+      .delete(`comments/delete/${id}`)
       .then(() => {
-        useNavigate("/");
+        fetchComments();
       })
       .catch((error) => {
         console.log(error);

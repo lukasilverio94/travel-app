@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-  const { title, place, description, writer } = req.body;
+  const { title, place, description, writer,image, } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
@@ -25,12 +25,13 @@ export const addNewTravel = async (req, res) => {
       });
     }
     //Add Doc
-    const newTravel = { title, place, description, writer };
+    const newTravel = { title, place, description, writer ,image};
     const travel = await Post.create(newTravel);
+    console.log(travel);
     return res.status(201).json(travel);
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "error.message" });
   }
 };
 

@@ -1,4 +1,3 @@
-// Comments.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -12,13 +11,14 @@ export default function Comments({ post }) {
     writer: JSON.parse(localStorage.getItem("user")).username,
   });
 
+  const [refreshComments, setRefreshComments] = useState(false);
+
   const toggleShowComment = () => {
     setShowComment((prevShowComment) => !prevShowComment);
   };
 
   const submitComment = (e) => {
     e.preventDefault();
-    console.log(comment.postId);
 
     if (comment.commentText.trim() !== "") {
       axios
@@ -26,20 +26,17 @@ export default function Comments({ post }) {
           withCredentials: true,
         })
         .then((result) => {
-          console.log(result.data);
           setComment({ ...comment, commentText: "" }); // Clear the input field
+          // Toggle the refreshComments state to trigger a re-render of CommentList
+          setRefreshComments((prevRefresh) => !prevRefresh);
         })
         .catch((err) => {
-          console.log("comment doesnt post", err);
+          console.error("Comment couldn't be posted", err);
         });
     } else {
-      console.log("Comment text is required");
+      console.error("Comment text is required");
     }
   };
-
-  // useEffect(() => {
-  //   submitComment();
-  // });
 
   return (
     <div>
@@ -62,8 +59,8 @@ export default function Comments({ post }) {
       <button onClick={toggleShowComment}>
         {showComment ? "Hide Comment" : "View all Comments"}
       </button>
-      {showComment && <CommentList post={post} />}{" "}
-      {/* Pass the entire post object to CommentList */}
+      {showComment && <CommentList post={post} refresh={refreshComments} />}{" "}
+      {/* Pass the refresh state to CommentList */}
     </div>
   );
 }

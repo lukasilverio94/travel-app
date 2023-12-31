@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Loader from "../components/Loader";
 import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
@@ -18,7 +18,7 @@ const DeletePost = () => {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
+        console.error(error);
       });
   };
 

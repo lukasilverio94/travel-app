@@ -4,7 +4,7 @@ import User from '../models/userModel.js';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import { verifyToken } from '../middlewares/authMiddleware';
+
 
 //Function sign up
 export const signup = async (req, res) => {

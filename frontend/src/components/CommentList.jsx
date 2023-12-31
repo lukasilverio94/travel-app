@@ -1,43 +1,36 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { MdOutlineDelete } from "react-icons/md";
 
 const CommentList = ({ post }) => {
-  const [comments, setComments] = useState([]);
-  const { id } = useParams();
+  const [comments, setComments] = useState(post.comments); // Use state to manage comments
+  const [refresh, setRefresh] = useState(false);
 
-  // CommentList.jsx
+  // Fetch comments when the component mounts or when 'refresh' changes
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const commentDetails = await Promise.all(
-          post.comments.map(async (commentId) => {
-            const response = await axios.get(`/comments/${commentId}`);
-
-            return response.data;
-          })
-        );
-
-        setComments(commentDetails);
+        const response = await axios.get(`/posts/details/${post._id}`);
+        setComments(response.data.comments);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
     };
 
     fetchComments();
-  }, [post.comments]);
+  }, [post._id, refresh]);
 
-  //Delete Comment
+  // Delete Comment
   const handleDeleteComment = (id) => {
     axios
-      .delete(`/comment/delete/${id}`)
+      .delete(`/comments/delete/${id}`)
       .then(() => {
-        useNavigate("/");
+        // Toggle the refresh state to trigger a re-render
+        setRefresh((prevRefresh) => !prevRefresh);
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Error deleting comment:", error);
       });
   };
 

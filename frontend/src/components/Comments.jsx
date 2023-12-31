@@ -12,6 +12,8 @@ export default function Comments({ post }) {
   });
 
   const [refreshComments, setRefreshComments] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const toggleShowComment = () => {
     setShowComment((prevShowComment) => !prevShowComment);
@@ -21,20 +23,27 @@ export default function Comments({ post }) {
     e.preventDefault();
 
     if (comment.commentText.trim() !== "") {
+      setLoading(true);
+
       axios
         .post("/comments/newComment", comment, {
           withCredentials: true,
         })
         .then((result) => {
+          console.log("Comment added: ", result.data);
           setComment({ ...comment, commentText: "" }); // Clear the input field
           // Toggle the refreshComments state to trigger a re-render of CommentList
           setRefreshComments((prevRefresh) => !prevRefresh);
         })
         .catch((err) => {
-          console.error("Comment couldn't be posted", err);
+          console.error("Error posting comment", err);
+          setError("Error posting comment");
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
-      console.error("Comment text is required");
+      setError("Comment text is required");
     }
   };
 
@@ -45,6 +54,7 @@ export default function Comments({ post }) {
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="text"
           placeholder={`add a comment to ${post.writer}`}
+          value={comment.commentText}
           onChange={(e) =>
             setComment({ ...comment, commentText: e.target.value })
           }
@@ -53,9 +63,10 @@ export default function Comments({ post }) {
           className="w-full bg-teal-500 text-white py-2 rounded"
           type="submit"
         >
-          Comment
+          {loading ? "Posting..." : "Comment"}
         </button>
       </form>
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <button onClick={toggleShowComment}>
         {showComment ? "Hide Comment" : "View all Comments"}
       </button>
@@ -66,5 +77,5 @@ export default function Comments({ post }) {
 }
 
 Comments.propTypes = {
-  post: PropTypes.object.isRequired, // Adjust propTypes to expect a post object
+  post: PropTypes.object.isRequired,
 };

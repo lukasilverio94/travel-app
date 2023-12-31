@@ -57,7 +57,6 @@ export default function CreatePost() {
 
   return (
     <div className="p-4">
-      
       <form
         className="flex flex-col border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:w-1/2 p-4 mx-auto"
         onSubmit={handleSubmit}
@@ -98,7 +97,10 @@ export default function CreatePost() {
 
         <UploadImg onConversion={handleConversion} />
 
-        <button className="p-2 bg-teal-700 w-100 text-white mb-3" disabled={loading}>
+        <button
+          className="p-2 bg-teal-700 w-100 text-white mb-3"
+          disabled={loading}
+        >
           {loading ? "Saving..." : "Save"}
         </button>
         {error && (

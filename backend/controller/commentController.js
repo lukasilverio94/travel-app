@@ -24,18 +24,18 @@ export const addNewComment = async (req, res) => {
 
 //Delete comment
 export const deleteComment = async (req, res) => {
-  
+  console.log(req.params);
   const { id } = req.params;
-  console.log(id);
+  //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such Comment" });
+    return res.status(404).json({ error: "No such comment" });
   }
 
-  const workout = await Comment.findOneAndDelete({ _id: id });
+  const comment = await Comment.findByIdAndDelete(id);
 
-  if (!workout) {
-    return res.status(404).json({ error: "Comment such post" });
+  if (!comment) {
+    return res.status(404).json({ error: "No such comment" });
   }
 
-  res.status(200).json(workout);
+  res.status(200).json(comment);
 };

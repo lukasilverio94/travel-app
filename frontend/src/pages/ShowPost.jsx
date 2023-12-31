@@ -1,8 +1,6 @@
-// Import useState and useEffect from React
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
-// Components
 import Loader from "../components/Loader";
 import Stars from "../components/Stars";
 
@@ -24,54 +22,92 @@ export default function ShowPost() {
         console.error(error);
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   const handleEditMode = () => {
-    if (isEditMode) {
-      // If in edit mode, send a PUT request to update the post
-      axios
-        .put(`/posts/update/${id}`, post)
-        .then((response) => {
-          console.log("Post updated successfully:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating post:", error);
-        });
-    }
+    setIsEditMode(!isEditMode);
+  };
 
-    // Toggle the edit mode
-    setIsEditMode((prevEditMode) => !prevEditMode);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPost({ ...post, [name]: value });
+  };
+
+  const handleSave = () => {
+    axios
+      .put(`/posts/update/${id}`, post)
+      .then((response) => {
+        console.log("Post updated successfully:", response.data);
+        setIsEditMode(false);
+      })
+      .catch((error) => {
+        console.error("Error updating post:", error);
+      });
   };
 
   return (
-    <div
-      key={post._id}
-      className="container mx-6 flex flex-col max-w-5xl gap-y-3 mt-5"
-    >
-      <h3 className="text-teal-600 text-3xl">{post.title}</h3>
-      <p className="text-slate-800 font-semibold">Place: {post.place}</p>
+    <div className="container mx-6 flex flex-col max-w-5xl gap-y-3 mt-5">
+      <h3 className="text-teal-600 text-3xl">
+        {isEditMode ? (
+          <input
+            type="text"
+            name="title"
+            value={post.title}
+            onChange={handleInputChange}
+            className="border-b-2 border-teal-600 focus:outline-none"
+          />
+        ) : (
+          post.title
+        )}
+      </h3>
+      <p className="text-slate-800 font-semibold">
+        {isEditMode ? (
+          <input
+            type="text"
+            name="place"
+            value={post.place}
+            onChange={handleInputChange}
+            className="border-b-2 border-teal-600 focus:outline-none"
+          />
+        ) : (
+          post.place
+        )}
+      </p>
       {isEditMode ? (
-        <input
-          type="text"
+        <textarea
+          name="description"
           value={post.description}
-          onChange={(e) => setPost({ ...post, description: e.target.value })}
+          onChange={handleInputChange}
+          className="border-2 border-teal-600 focus:outline-none"
         />
       ) : (
         <p>{post.description}</p>
       )}
-      <small>{post.createdAt}</small>
+
       <Stars />
-      <Link to={`/posts/delete/${id}`}>
-        <span className="bg-red-600 my-3 text-white px-2 py-2 rounded-md">
-          Delete
-        </span>
-      </Link>
-      <button
-        className="bg-slate-600 my-3 text-white px-2 py-2 rounded-md"
-        onClick={handleEditMode}
-      >
-        {isEditMode ? "Save" : "Edit"}
-      </button>
+      <div className="flex items-center gap-2">
+        <Link to={`/posts/delete/${id}`}>
+          <span className="bg-red-600 my-3 text-white px-2 py-2 rounded-md">
+            Delete
+          </span>
+        </Link>
+        {isEditMode && (
+          <button
+            className="bg-slate-600 my-3 text-white px-2 py-2 rounded-md"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+        )}
+        {!isEditMode && (
+          <button
+            className="bg-slate-600 my-3 text-white px-2 py-2 rounded-md"
+            onClick={handleEditMode}
+          >
+            Edit
+          </button>
+        )}
+      </div>
     </div>
   );
 }

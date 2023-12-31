@@ -1,10 +1,9 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-
-import Comments from "./Comments"
+import { formatDistance } from "date-fns"; //To format date
+import Comments from "./Comments";
 
 import Stars from "./Stars";
-
 
 const Post = ({ post }) => (
   <div key={post._id} className="flex flex-col gap-y-2 mt-2">
@@ -13,16 +12,23 @@ const Post = ({ post }) => (
     <p className="text-slate-800 text-2xl "> {post.place}</p>
     <h5 className="text-slate-900 font-semibold">Description: </h5>
     <p>{post.description.slice(0, 25)}...</p>
-    <small>{post.createdAt}</small>
-    <img
-          className="rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-4"
-          src={post.image}
-          alt="Post"
-        />
+    <small>
+      {formatDistance(new Date(post.createdAt), new Date(), {
+        addSuffix: true,
+      })}
+    </small>
+
+    {post.image && (
+      <img
+        className="rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-4"
+        src={post.image}
+        alt="Post"
+      />
+    )}
+
     {/* comment */}
     <Comments post={post} />
-    
-    
+
     {/* <Link to={`posts/details/${post._id}`}>Read more...</Link> */}
     <hr />
 
@@ -32,7 +38,6 @@ const Post = ({ post }) => (
         Read more
       </span>
     </Link>
-
   </div>
 );
 

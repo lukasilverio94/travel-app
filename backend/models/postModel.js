@@ -18,10 +18,10 @@ const postSchema = new Schema(
     },
     writer: {
       type: String,
-      // ref: 'User', 
+      // ref: 'User',
       required: false,
     },
-  
+
     image: {
       type: String,
       required: false,
@@ -30,7 +30,7 @@ const postSchema = new Schema(
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
+        ref: "Comment",
       },
     ],
   },

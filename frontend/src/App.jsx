@@ -12,17 +12,15 @@ import SignIn from "./pages/SignIn";
 import PostList from "./components/PostList";
 import NotFound from "./pages/NotFound";
 
-
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 function App() {
- 
   return (
     <BrowserRouter>
       <Navbar />
-      
+
       <Routes>
         {localStorage.getItem("token") ? (
           <>

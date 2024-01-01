@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Loader from "../components/Loader";
+import BackButton from "../components/BackButton";
 import Stars from "../components/Stars";
 
 export default function ShowPost() {
@@ -47,6 +48,7 @@ export default function ShowPost() {
 
   return (
     <div className="container mx-6 flex flex-col max-w-5xl gap-y-3 mt-5">
+      <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
         <div>
           <h3 className="text-teal-600 text-3xl">
@@ -84,7 +86,6 @@ export default function ShowPost() {
             />
           ) : (
             <p>{post.description}</p>
-            
           )}
           <Stars />
           <div className="flex items-center gap-2">
@@ -113,9 +114,6 @@ export default function ShowPost() {
         </div>
       ) : (
         <>
-          
-          
-          
           <h3 className="text-teal-600 text-3xl">{post.title}</h3>
           <p className="text-slate-800 font-semibold">{post.place}</p>
           <p>{post.description}</p>

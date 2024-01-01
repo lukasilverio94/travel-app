@@ -4,7 +4,6 @@ import axios from "axios";
 // import Loader from "../components/Loader";
 import UploadImg from "../components/UploadImg";
 
-
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
@@ -19,8 +18,6 @@ export default function CreatePost() {
     e.preventDefault();
 
     try {
-
-      // const userData = JSON.parse(localStorage.getItem("user"));
       const data = {
         title,
         place,
@@ -31,10 +28,14 @@ export default function CreatePost() {
 
       setLoading(true);
 
-      axios.post("/posts", data, {
-        maxContentLength: Infinity, // or set a specific value
-      },{ withCredentials: true })
-
+      axios.post(
+        "/posts",
+        data,
+        {
+          maxContentLength: Infinity, // or set a specific value
+        },
+        { withCredentials: true }
+      );
 
       navigate("/");
     } catch (error) {

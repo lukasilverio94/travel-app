@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loader from "../components/Loader";
+// import Loader from "../components/Loader";
 import UploadImg from "../components/UploadImg";
-// ... (your imports)
+
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
@@ -19,36 +19,22 @@ export default function CreatePost() {
     e.preventDefault();
 
     try {
-      console.log("Image state:", image);
-      // Check if the image is undefined
 
-      const userData = JSON.parse(localStorage.getItem("user"));
+      // const userData = JSON.parse(localStorage.getItem("user"));
       const data = {
         title,
         place,
         description,
-        writer: userData.username,
+        writer: JSON.parse(localStorage.getItem("user")).username,
         image: image,
       };
 
       setLoading(true);
-      console.log(data);
-      axios.post(
-        "/posts",
-        data,
-        {
-          maxContentLength: Infinity, // or set a specific value
-        },
-        { withCredentials: true }
-      );
 
-      // Reset the form fields and provide feedback to the user
-      // setTitle("");
-      // setPlace("");
-      // setDescription("");
-      // setImage(undefined);
-      // setError(null);
-      // setLoading(false);
+      axios.post("/posts", data, {
+        maxContentLength: Infinity, // or set a specific value
+      },{ withCredentials: true })
+
 
       navigate("/");
     } catch (error) {
@@ -64,7 +50,7 @@ export default function CreatePost() {
   };
 
   const handleConversion = (dataURL) => {
-    console.log("Data URL:", dataURL);
+    // console.log("Data URL:", dataURL);
     setImage(dataURL);
     // Handle the converted data URL as needed
   };

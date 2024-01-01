@@ -23,7 +23,7 @@ export default function SignUp() {
           window.location.href = "/signIn";
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           setErr(err.response.data);
         });
     } else {

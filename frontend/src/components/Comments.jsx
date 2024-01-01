@@ -10,6 +10,8 @@ export default function Comments({ post }) {
     commentText: "",
     writer: JSON.parse(localStorage.getItem("user")).username,
   });
+
+  const [refreshComments, setRefreshComments] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -30,6 +32,8 @@ export default function Comments({ post }) {
         .then((result) => {
           console.log("Comment added: ", result.data);
           setComment({ ...comment, commentText: "" }); // Clear the input field
+          // Toggle the refreshComments state to trigger a re-render of CommentList
+          setRefreshComments((prevRefresh) => !prevRefresh);
         })
         .catch((err) => {
           console.error("Error posting comment", err);
@@ -42,10 +46,6 @@ export default function Comments({ post }) {
       setError("Comment text is required");
     }
   };
-
-  useEffect(() => {
-    // You can perform additional actions or side effects after state updates here
-  }, [comment]); // Add dependencies if needed
 
   return (
     <div>
@@ -70,7 +70,8 @@ export default function Comments({ post }) {
       <button onClick={toggleShowComment}>
         {showComment ? "Hide Comment" : "View all Comments"}
       </button>
-      {showComment && <CommentList post={post} />}
+      {showComment && <CommentList post={post} refresh={refreshComments} />}{" "}
+      {/* Pass the refresh state to CommentList */}
     </div>
   );
 }

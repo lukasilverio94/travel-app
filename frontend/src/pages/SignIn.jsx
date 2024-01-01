@@ -16,7 +16,6 @@ export default function SignIn() {
       email: email,
       password: password,
     };
-    console.log();
     if (email !== "" && password !== "") {
       axios
         .post("/user/login", data)
@@ -26,7 +25,9 @@ export default function SignIn() {
           window.location.href = "/";
         })
         .catch((error) => {
-          setErr(error.response.data.error);
+          setErr(error.response.data);
+          
+          
         });
     } else {
       setErr("Email and Password are required");

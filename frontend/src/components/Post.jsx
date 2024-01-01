@@ -15,7 +15,7 @@ const Post = ({ post }) => (
     <small>
       {formatDistance(new Date(post.createdAt), new Date(), {
         addSuffix: true,
-      })}
+      })}  by {JSON.parse(localStorage.getItem("user")).username}
     </small>
 
     {post.image && (

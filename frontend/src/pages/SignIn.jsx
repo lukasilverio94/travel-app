@@ -25,8 +25,8 @@ export default function SignIn() {
           window.location.href = "/";
         })
         .catch((error) => {
-          setErr(error.response.data.error);
-          console.error("login post request unsuccess");
+          setErr(error.response.data);
+          
           
         });
     } else {

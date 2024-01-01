@@ -43,9 +43,10 @@ const CommentList = ({ post }) => {
             <strong>{comment.writer}: </strong>
             <div>
               <p>{comment.commentText}</p>
+              {JSON.parse(localStorage.getItem("user")).username === comment.writer && 
               <button onClick={() => handleDeleteComment(comment._id)}>
                 <MdOutlineDelete className="text-red-600 text-3xl cursor-pointer" />
-              </button>
+              </button>}
             </div>
           </li>
         ))}

@@ -20,12 +20,12 @@ export default function CreatePost() {
 
     try {
 
-      const userData = JSON.parse(localStorage.getItem("user"));
+      // const userData = JSON.parse(localStorage.getItem("user"));
       const data = {
         title,
         place,
         description,
-        writer: userData.username,
+        writer: JSON.parse(localStorage.getItem("user")).username,
         image: image,
       };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import Post from "./Post";
+import Banner from "./Banner";
 const MemoizedPost = React.memo(Post);
 
 const PostList = () => {
@@ -21,12 +22,17 @@ const PostList = () => {
     axios
       .get(`/posts?page=${currentPage}&limit=3`)
       .then((response) => {
-        setPosts((prevPosts) => (currentPage === 1 ? response.data : [...prevPosts, ...response.data]));
+        setPosts((prevPosts) =>
+          currentPage === 1 ? response.data : [...prevPosts, ...response.data]
+        );
         setHasMore(response.data.length > 0);
         setLoading(false);
 
         if (currentPage > 1 && containerRef.current) {
-          containerRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+          containerRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+          });
         }
       })
       .catch((error) => {
@@ -41,6 +47,7 @@ const PostList = () => {
 
   return (
     <div className="container px-6">
+      <Banner />
       <h1 className="text-4xl py-3 text-teal-700 font-semibold border-b-2 border-teal-700">
         Get inspired by some experiences:
       </h1>
@@ -51,9 +58,7 @@ const PostList = () => {
           {posts.length === 0 ? (
             <p>No posts available</p>
           ) : (
-            posts.map((post) => (
-              <MemoizedPost key={post._id} post={post} />
-            ))
+            posts.map((post) => <MemoizedPost key={post._id} post={post} />)
           )}
         </div>
       )}

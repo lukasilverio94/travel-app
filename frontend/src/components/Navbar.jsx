@@ -96,7 +96,11 @@ export default function Navbar() {
               <>
                 <li>
                   <small>
-                    {isLoading ? "Loading..." : `Welcome, ${username}`}
+                    {isLoading
+                      ? "Loading..."
+                      : `Welcome, ${
+                          username.charAt(0).toUpperCase() + username.slice(1)
+                        }`}
                   </small>
                 </li>
                 <li>

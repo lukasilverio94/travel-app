@@ -6,6 +6,7 @@ import {
   updateTravel,
   deleteTravel,
   
+  
 } from "../controller/postController.js";
 
 const router = express.Router();

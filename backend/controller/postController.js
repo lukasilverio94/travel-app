@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-  const { title, place, description, writer, image } = req.body;
+  const { title, place, description, writer, image,rating } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
@@ -25,7 +25,7 @@ export const addNewTravel = async (req, res) => {
       });
     }
     //Add Doc
-    const newTravel = { title, place, description, writer, image };
+    const newTravel = { title, place, description, writer, image,rating };
     const travel = await Post.create(newTravel);
     console.log(travel);
     return res.status(201).json(travel);
@@ -77,17 +77,39 @@ export const getTravel = async (req, res) => {
 //Update Travel
 export const updateTravel = async (req, res) => {
   const { id } = req.params;
-  //Check if Id matches mongo standard
+
+  // Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such post" });
   }
-  const travel = await Post.findOneAndUpdate({ _id: id }, { ...req.body });
 
-  if (!travel) {
-    return res.status(404).json({ error: "No such post" });
+  try {
+    let updatedTravel;
+
+    // Check if the 'rating' property is present in the request body
+    if ('rating' in req.body) {
+      const { rating } = req.body;
+
+      updatedTravel = await Post.findOneAndUpdate(
+        { _id: id },
+        { $push: { ratings: rating } },
+        { new: true }
+      );
+    } else {
+      // Update general travel information
+      updatedTravel = await Post.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true });
+    }
+
+    // Check if the post was found and updated
+    if (!updatedTravel) {
+      return res.status(404).json({ error: "No such post" });
+    }
+
+    res.status(200).json(updatedTravel);
+  } catch (error) {
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  res.status(200).json(travel);
 };
 
 //Delete Travel

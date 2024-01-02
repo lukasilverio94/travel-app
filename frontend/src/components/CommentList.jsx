@@ -13,6 +13,7 @@ const CommentList = ({ post }) => {
       try {
         const response = await axios.get(`/posts/details/${post._id}`);
         setComments(response.data.comments);
+        setRefresh((prevRefresh) => !prevRefresh);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }

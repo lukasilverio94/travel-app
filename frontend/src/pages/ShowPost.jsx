@@ -52,7 +52,8 @@ export default function ShowPost() {
         rating: updatedPost.rating,
       });
       console.log("Rating updated on server:", response.data);
-  
+      console.log(response.data);
+
       // Update the post state with the new rating
       setPost(updatedPost);
     } catch (error) {

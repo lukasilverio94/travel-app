@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-  const { title, place, description, writer, image,rating } = req.body;
+  const { title, place, description, writer, image, rating } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
@@ -25,7 +25,7 @@ export const addNewTravel = async (req, res) => {
       });
     }
     //Add Doc
-    const newTravel = { title, place, description, writer, image,rating };
+    const newTravel = { title, place, description, writer, image, rating };
     const travel = await Post.create(newTravel);
     console.log(travel);
     return res.status(201).json(travel);
@@ -42,7 +42,7 @@ export const getAllTravels = async (req, res) => {
     const travels = await Post.find({})
       .sort({ createdAt: -1 })
       .populate({
-        path: 'comments',
+        path: "comments",
         options: { sort: { created_at: -1 } },
       })
       .skip((page - 1) * limit)
@@ -55,7 +55,6 @@ export const getAllTravels = async (req, res) => {
   }
 };
 
-
 // Get Single Travel
 export const getTravel = async (req, res) => {
   const { id } = req.params;
@@ -64,10 +63,10 @@ export const getTravel = async (req, res) => {
     return res.status(404).json({ error: "No such post" });
   }
   const travel = await Post.findById(id).populate({
-    path: 'comments',
+    path: "comments",
     options: { sort: { created_at: -1 } },
   });
-   
+
   if (!travel) {
     return res.status(404).json({ error: "No such post" });
   }
@@ -87,7 +86,7 @@ export const updateTravel = async (req, res) => {
     let updatedTravel;
 
     // Check if the 'rating' property is present in the request body
-    if ('rating' in req.body) {
+    if ("rating" in req.body) {
       const { rating } = req.body;
 
       updatedTravel = await Post.findOneAndUpdate(
@@ -95,17 +94,24 @@ export const updateTravel = async (req, res) => {
         { $push: { ratings: rating } },
         { new: true }
       );
+      const averageRating =
+        updatedTravel.ratings.reduce((sum, rating) => sum + rating, 0) /
+        updatedTravel.ratings.length;
+
+      res.json({ post: updatedTravel, averageRating });
+      // Send back the updated post and average rating as the response
     } else {
       // Update general travel information
-      updatedTravel = await Post.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true });
+      updatedTravel = await Post.findOneAndUpdate(
+        { _id: id },
+        { ...req.body },
+        { new: true }
+      );
     }
-
     // Check if the post was found and updated
     if (!updatedTravel) {
       return res.status(404).json({ error: "No such post" });
     }
-
-    res.status(200).json(updatedTravel);
   } catch (error) {
     console.error("Error updating post:", error);
     res.status(500).json({ error: "Internal Server Error" });

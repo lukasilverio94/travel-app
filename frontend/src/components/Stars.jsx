@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 export default function Stars({ post, onRatingChange }) {
   const [rating, setRating] = useState(null);
@@ -10,6 +10,7 @@ export default function Stars({ post, onRatingChange }) {
   useEffect(() => {
     // Check if post is defined before trying to access its properties
     if (post && post._id) {
+      console.log(post);
       setRating(post.rating);
     }
   }, [post]);
@@ -18,21 +19,20 @@ export default function Stars({ post, onRatingChange }) {
     console.log("New rating:", newRating);
     // Update the local state
     setRating(newRating);
-  
+
     // Update the post object with the new rating
     if (post) {
       const updatedPost = {
         ...post,
         rating: newRating,
       };
-  
+
       // Call the onRatingChange callback with the updated post
       if (onRatingChange) {
         onRatingChange(updatedPost);
       }
     }
   };
-  
 
   return (
     <>

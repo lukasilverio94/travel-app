@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PostList from "./components/PostList";
 import NotFound from "./pages/NotFound";
+import Footer from "./components/Footer";
 
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
@@ -39,6 +40,7 @@ function App() {
         )}
         <Route exact path="/*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -8,6 +8,9 @@ export default {
         roboto: ["Roboto", "sans-serif"],
       },
     },
+    backgroundImage: {
+      parallax: 'url("../public/assets/banner.jpg")',
+    },
   },
   plugins: [],
 };

@@ -42,12 +42,14 @@ const CommentList = ({ post }) => {
         {comments.map((comment) => (
           <li key={comment._id} className="pt-2">
             <strong>{comment.writer}: </strong>
-            <div>
+            <div className="flex items-center justify-between">
               <p>{comment.commentText}</p>
-              {JSON.parse(localStorage.getItem("user")).username === comment.writer && 
-              <button onClick={() => handleDeleteComment(comment._id)}>
-                <MdOutlineDelete className="text-red-600 text-3xl cursor-pointer" />
-              </button>}
+              {JSON.parse(localStorage.getItem("user")).username ===
+                comment.writer && (
+                <button onClick={() => handleDeleteComment(comment._id)}>
+                  <MdOutlineDelete className="text-red-600 text-3xl cursor-pointer" />
+                </button>
+              )}
             </div>
           </li>
         ))}

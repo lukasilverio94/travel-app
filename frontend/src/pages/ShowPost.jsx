@@ -61,31 +61,31 @@ export default function ShowPost() {
     }
   };
   return (
-    <div className="container mx-6 flex flex-col max-w-5xl gap-y-3 mt-5">
+    <div className="container mx-auto p-6">
       <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
-        <div>
-          <h3 className="text-teal-600 text-3xl">
+        <div className="bg-white p-6 rounded-md shadow-md">
+          <h3 className="text-teal-600 text-3xl mb-4">
             {isEditMode ? (
               <input
                 type="text"
                 name="title"
                 value={post.title}
                 onChange={handleInputChange}
-                className="border-b-2 border-teal-600 focus:outline-none"
+                className="w-full border-b-2 border-teal-600 focus:outline-none text-xl"
               />
             ) : (
               post.title
             )}
           </h3>
-          <p className="text-slate-800 font-semibold">
+          <p className="text-slate-800 font-semibold mb-2">
             {isEditMode ? (
               <input
                 type="text"
                 name="place"
                 value={post.place}
                 onChange={handleInputChange}
-                className="border-b-2 border-teal-600 focus:outline-none"
+                className="w-full border-b-2 border-teal-600 focus:outline-none"
               />
             ) : (
               post.place
@@ -96,21 +96,24 @@ export default function ShowPost() {
               name="description"
               value={post.description}
               onChange={handleInputChange}
-              className="border-2 border-teal-600 focus:outline-none"
+              className="w-full border-2 border-teal-600 focus:outline-none mb-4 resize-y"
+              style={{ minHeight: "100px" }}
             />
           ) : (
-            <p>{post.description}</p>
+            <p className="text-slate-900 mb-4 leading-snug">
+              {post.description}
+            </p>
           )}
           <Stars post={post} onRatingChange={handleRatingChange} />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4 mt-6">
             <Link to={`/posts/delete/${id}`}>
-              <span className="bg-red-600 my-3 text-white px-2 py-2 rounded-md">
+              <span className="bg-red-600 text-white px-4 py-2 rounded-md">
                 Delete
               </span>
             </Link>
             {isEditMode && (
               <button
-                className="bg-slate-600 my-3 text-white px-2 py-2 rounded-md"
+                className="bg-teal-600 text-white px-4 py-2 rounded-md"
                 onClick={handleSave}
               >
                 Save
@@ -118,7 +121,7 @@ export default function ShowPost() {
             )}
             {!isEditMode && (
               <button
-                className="bg-slate-600 my-3 text-white px-2 py-2 rounded-md"
+                className="bg-slate-600 text-white px-4 py-2 rounded-md"
                 onClick={handleEditMode}
               >
                 Edit
@@ -128,9 +131,9 @@ export default function ShowPost() {
         </div>
       ) : (
         <>
-          <h3 className="text-teal-600 text-3xl">{post.title}</h3>
-          <p className="text-slate-800 font-semibold">{post.place}</p>
-          <p>{post.description}</p>
+          <h3 className="text-teal-600 text-3xl mt-4">{post.title}</h3>
+          <p className="text-slate-800 font-semibold mt-2">{post.place}</p>
+          <p className="text-slate-900 mt-4 leading-snug">{post.description}</p>
           <Stars post={post} onRatingChange={handleRatingChange} />
         </>
       )}

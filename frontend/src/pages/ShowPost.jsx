@@ -45,7 +45,20 @@ export default function ShowPost() {
       console.error("Error updating post:", error);
     }
   };
-
+  const handleRatingChange = async (updatedPost) => {
+    try {
+      // Update the server with the new rating
+      const response = await axios.put(`/posts/update/${id}`, {
+        rating: updatedPost.rating,
+      });
+      console.log("Rating updated on server:", response.data);
+  
+      // Update the post state with the new rating
+      setPost(updatedPost);
+    } catch (error) {
+      console.error("Error updating rating on server:", error);
+    }
+  };
   return (
     <div className="container mx-6 flex flex-col max-w-5xl gap-y-3 mt-5">
       <BackButton />
@@ -87,7 +100,7 @@ export default function ShowPost() {
           ) : (
             <p>{post.description}</p>
           )}
-          <Stars />
+          <Stars post={post} onRatingChange={handleRatingChange} />
           <div className="flex items-center gap-2">
             <Link to={`/posts/delete/${id}`}>
               <span className="bg-red-600 my-3 text-white px-2 py-2 rounded-md">
@@ -117,7 +130,7 @@ export default function ShowPost() {
           <h3 className="text-teal-600 text-3xl">{post.title}</h3>
           <p className="text-slate-800 font-semibold">{post.place}</p>
           <p>{post.description}</p>
-          <Stars />
+          <Stars post={post} onRatingChange={handleRatingChange} />
         </>
       )}
     </div>

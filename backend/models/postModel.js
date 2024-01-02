@@ -26,7 +26,11 @@ const postSchema = new Schema(
       type: String,
       required: false,
     },
-
+ 
+    ratings: {
+      type: [Number], 
+      default: [],   
+    },
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

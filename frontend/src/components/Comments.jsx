@@ -48,8 +48,8 @@ export default function Comments({ post }) {
   };
 
   return (
-    <div>
-      <form onSubmit={submitComment} className="w-96">
+    <div className="container mb-2">
+      <form onSubmit={submitComment} className="max-w-md">
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="text"
@@ -67,7 +67,7 @@ export default function Comments({ post }) {
         </button>
       </form>
       {error && <div style={{ color: "red" }}>{error}</div>}
-      <button onClick={toggleShowComment}>
+      <button onClick={toggleShowComment} className="my-2 italic text-teal-600">
         {showComment ? "Hide Comment" : "View all Comments"}
       </button>
       {showComment && <CommentList post={post} refresh={refreshComments} />}{" "}

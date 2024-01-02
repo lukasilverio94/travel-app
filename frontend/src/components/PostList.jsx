@@ -3,14 +3,15 @@ import axios from "axios";
 import Loader from "./Loader";
 import Post from "./Post";
 import Banner from "./Banner";
+import SearchInput from "./SearchInput";
 const MemoizedPost = React.memo(Post);
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -20,12 +21,26 @@ const PostList = () => {
   const loadPosts = () => {
     setLoading(true);
     axios
-      .get(`/posts?page=${currentPage}&limit=3`)
+      .get(`/posts?page=${currentPage}&limit=5`)
       .then((response) => {
-        setPosts((prevPosts) =>
-          currentPage === 1 ? response.data : [...prevPosts, ...response.data]
-        );
-        setHasMore(response.data.length > 0);
+        const newPosts = response.data;
+
+        // Combine existing posts and new posts
+        const allPosts = currentPage === 1 ? newPosts : [...posts, ...newPosts];
+
+        // Apply the filter to all posts
+        const filteredPosts = allPosts.filter((post) => {
+          const titleMatch = post.title
+            .toLowerCase()
+            .includes(search.toLowerCase());
+          const placeMatch = post.place
+            .toLowerCase()
+            .includes(search.toLowerCase());
+          return titleMatch || placeMatch;
+        });
+
+        setPosts(filteredPosts);
+        setHasMore(newPosts.length > 0);
         setLoading(false);
 
         if (currentPage > 1 && containerRef.current) {
@@ -45,12 +60,21 @@ const PostList = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
+  const handleSearchChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearch(searchTerm);
+    setLoading(false);
+    setCurrentPage(1); // Reset current page when the search term changes
+  };
+
   return (
     <div className="container px-6">
       <Banner />
       <h1 className="text-4xl pt-6 pb-2 text-teal-700 font-semibold border-b-2 border-teal-700">
         Get inspired by some experiences:
       </h1>
+
+      <SearchInput onChange={handleSearchChange} value={search} />
       {loading ? (
         <Loader />
       ) : (
@@ -58,7 +82,17 @@ const PostList = () => {
           {posts.length === 0 ? (
             <p>No posts available</p>
           ) : (
-            posts.map((post) => <MemoizedPost key={post._id} post={post} />)
+            posts
+              .filter((post) => {
+                const titleMatch = post.title
+                  .toLowerCase()
+                  .includes(search.toLowerCase());
+                const placeMatch = post.place
+                  .toLowerCase()
+                  .includes(search.toLowerCase());
+                return titleMatch || placeMatch;
+              })
+              .map((post) => <MemoizedPost key={post._id} post={post} />)
           )}
         </div>
       )}

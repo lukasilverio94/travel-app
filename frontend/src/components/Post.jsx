@@ -9,10 +9,12 @@ const Post = ({ post }) => (
     className="grid grid-cols-1 md:grid-cols-2 gap-x-4 border-b-2 py-5"
   >
     {/* Text Section */}
-    <div className="flex flex-col gap-y-1 md:col-span-1 md:pr-4">
+    <div className="flex flex-col gap-y-2 md:col-span-1 md:pr-4">
       <h3 className="text-teal-600 text-3xl">{post.title}</h3>
-      <h2 className="text-xl">Location: </h2>
-      <p className="text-slate-800 text-2xl">{post.place}</p>
+      <div>
+        <p className="text-sm">Location: </p>
+        <p className="text-slate-800 text-2xl">{post.place}</p>
+      </div>
       <h5 className="text-slate-900 font-semibold">Travel Experience </h5>
       <p>{post.description.slice(0, 50)}...</p>
       <small>
@@ -23,7 +25,7 @@ const Post = ({ post }) => (
       </small>
       <Comments post={post} />
       <Stars />
-      <Link to={`posts/details/${post._id}`} className=" my-2">
+      <Link to={`posts/details/${post._id}`} className=" my-1">
         <span className="bg-slate-900 text-white px-2 py-2 rounded-md hover:bg-teal-500">
           Read more
         </span>

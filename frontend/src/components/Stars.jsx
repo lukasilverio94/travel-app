@@ -27,21 +27,20 @@ export default function Stars({ post, onRatingChange }) {
     console.log("New rating:", newRating);
     // Update the local state
     setRating(newRating);
-  
+
     // Update the post object with the new rating
     if (post) {
       const updatedPost = {
         ...post,
         rating: newRating,
       };
-  
+
       // Call the onRatingChange callback with the updated post
       if (onRatingChange) {
         onRatingChange(updatedPost);
       }
     }
   };
-  
 
   return (
     <>

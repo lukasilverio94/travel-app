@@ -7,19 +7,17 @@ export default function Stars({ post, onRatingChange }) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
-
   const averageRating =
-  post.ratings && post.ratings.length > 0
-    ? post.ratings.reduce((sum, rating) => sum + rating, 0) / post.ratings.length
-    : 0;
-
+    post.ratings && post.ratings.length > 0
+      ? post.ratings.reduce((sum, rating) => sum + rating, 0) /
+        post.ratings.length
+      : 0;
 
   useEffect(() => {
-    
     // Check if post is defined before trying to access its properties
     if (post && post._id) {
       console.log(post);
-      setRating(post.rating || averageRating);
+      setRating(post.rating || Math.round(averageRating));
     }
   }, [post]);
 
@@ -47,7 +45,7 @@ export default function Stars({ post, onRatingChange }) {
       <div className="flex">
         {[...Array(5)].map((star, index) => {
           const currentRating = index + 1;
-          
+
           return (
             <label key={Math.random() * 1000000}>
               <input

@@ -94,11 +94,11 @@ export const updateTravel = async (req, res) => {
         { $push: { ratings: rating } },
         { new: true }
       );
-      const averageRating =
-        updatedTravel.ratings.reduce((sum, rating) => sum + rating, 0) /
-        updatedTravel.ratings.length;
+      // const averageRating =
+      //   updatedTravel.ratings.reduce((sum, rating) => sum + rating, 0) /
+      //   updatedTravel.ratings.length;
 
-      res.json({ post: updatedTravel, averageRating });
+      res.json({ post: updatedTravel });
       // Send back the updated post and average rating as the response
     } else {
       // Update general travel information
@@ -107,6 +107,7 @@ export const updateTravel = async (req, res) => {
         { ...req.body },
         { new: true }
       );
+      res.json({ post: updatedTravel });
     }
     // Check if the post was found and updated
     if (!updatedTravel) {

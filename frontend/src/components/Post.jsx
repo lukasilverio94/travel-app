@@ -1,8 +1,9 @@
 // import React, { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns"; //To format date
+import { FaArrowRightLong } from "react-icons/fa6";
 import Comments from "./Comments";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Stars from "./Stars";
 import axios from "axios";
 
@@ -16,7 +17,7 @@ const Post = ({ post }) => {
         rating: updatedPost.rating,
       });
       console.log("Rating updated on server:", response.data);
-  
+
       // Update the post state with the new rating
       // setLocalPost(updatedPost);
     } catch (error) {
@@ -24,54 +25,58 @@ const Post = ({ post }) => {
     }
   };
 
-  
-  
-  return(
-  <div key={post._id} className="flex flex-col gap-y-2 mt-2">
-    <h3 className="text-teal-600 text-3xl ">{post.title}</h3>
-    <h2 className="font-semibold text-xl">Place: </h2>
-    <p className="text-slate-800 text-2xl "> {post.place}</p>
-    <h5 className="text-slate-900 font-semibold">Description: </h5>
-    <p>{post.description.slice(0, 25)}...</p>
-    <small>
-      {formatDistance(new Date(post.createdAt), new Date(), {
-        addSuffix: true,
-      })}{" "}
-      by {post.writer}
-    </small>
+  return (
+    <div key={post._id} className="flex flex-col gap-y-2 mt-2">
+      <h3 className="text-teal-600 text-3xl ">{post.title}</h3>
+      <p className="text-sm">Where: </p>
+      <p className="text-slate-800 text-2xl "> {post.place}</p>
+      <p>{post.description.slice(0, 25)}...</p>
+      <Link to={`posts/details/${post._id}`} className="my-1">
+        <span className="flex items-center text-teal-700">
+          <span className="hover:border-b hover:border-teal-700">
+            Read more
+          </span>
+          <FaArrowRightLong className="ms-1" />
+        </span>
+      </Link>
+      <small>
+        {formatDistance(new Date(post.createdAt), new Date(), {
+          addSuffix: true,
+        })}{" "}
+        by {post.writer}
+      </small>
 
-    {post.image && (
-      <img
-        className="rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-4"
-        src={post.image}
-        alt="Post"
-      />
-    )}
+      {post.image && (
+        <figure>
+          <img
+            className="rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-4"
+            src={post.image}
+            alt="Post"
+          />
+        </figure>
+      )}
 
-    {/* comment */}
-    <Comments post={post} />
+      {/* comment */}
+      <Comments post={post} />
 
-    {/* <Link to={`posts/details/${post._id}`}>Read more...</Link> */}
-    <hr />
-    <Stars post={post} onRatingChange={handleRatingChange} />
-    {/* <Stars post={post} /> */}
-    <Link to={`posts/details/${post._id}`} className="border-b-2 pb-5 my-2">
-      <span className="bg-slate-900 text-white px-2 py-2 rounded-md hover:bg-teal-500">
-        Read more
-      </span>
-    </Link>
-  </div>
-)
-    }
-    Post.propTypes = {
-      post: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        place: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        writer: PropTypes.string.isRequired,
-        createdAt: PropTypes.string.isRequired,
-        image: PropTypes.string, 
-      }).isRequired,
+      {/* <Link to={`posts/details/${post._id}`}>Read more...</Link> */}
+      <hr />
+      <Stars post={post} onRatingChange={handleRatingChange} />
+      {/* <Stars post={post} /> */}
+    </div>
+  );
 };
+
+Post.propTypes = {
+  post: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    place: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    writer: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    image: PropTypes.string,
+  }).isRequired,
+};
+
 export default Post;

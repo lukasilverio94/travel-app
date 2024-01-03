@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import BackButton from "../components/BackButton";
-import Stars from "../components/Stars";
 
 export default function ShowPost() {
   const [post, setPost] = useState({});
@@ -45,21 +44,7 @@ export default function ShowPost() {
       console.error("Error updating post:", error);
     }
   };
-  const handleRatingChange = async (updatedPost) => {
-    try {
-      // Update the server with the new rating
-      const response = await axios.put(`/posts/update/${id}`, {
-        rating: updatedPost.rating,
-      });
-      console.log("Rating updated on server:", response.data);
-      console.log(response.data);
 
-      // Update the post state with the new rating
-      setPost(updatedPost);
-    } catch (error) {
-      console.error("Error updating rating on server:", error);
-    }
-  };
   return (
     <div className="container mx-auto p-6">
       <BackButton />
@@ -104,7 +89,7 @@ export default function ShowPost() {
               {post.description}
             </p>
           )}
-          <Stars post={post} onRatingChange={handleRatingChange} />
+
           <div className="flex items-center gap-4 mt-6">
             <Link to={`/posts/delete/${id}`}>
               <span className="bg-red-600 text-white px-4 py-2 rounded-md">
@@ -134,7 +119,6 @@ export default function ShowPost() {
           <h3 className="text-teal-600 text-3xl mt-4">{post.title}</h3>
           <p className="text-slate-800 font-semibold mt-2">{post.place}</p>
           <p className="text-slate-900 mt-4 leading-snug">{post.description}</p>
-          <Stars post={post} onRatingChange={handleRatingChange} />
         </>
       )}
     </div>

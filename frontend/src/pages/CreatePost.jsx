@@ -52,7 +52,7 @@ export default function CreatePost() {
   };
 
   const handleConversion = (dataURL) => {
-    // console.log("Data URL:", dataURL);
+    
     setImage(dataURL);
     // Handle the converted data URL as needed
   };

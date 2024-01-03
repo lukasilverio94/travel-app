@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns"; //To format date
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -8,18 +7,14 @@ import Stars from "./Stars";
 import axios from "axios";
 
 const Post = ({ post }) => {
-  // const [newRating, setNewRating] = useState(0);
-  // const [localPost, setLocalPost] = useState(post);
+
   const handleRatingChange = async (updatedPost) => {
     try {
       // Update the server with the new rating
-      const response = await axios.put(`/posts/update/${post._id}`, {
+       await axios.put(`/posts/update/${post._id}`, {
         rating: updatedPost.rating,
       });
-      console.log("Rating updated on server:", response.data);
-
-      // Update the post state with the new rating
-      // setLocalPost(updatedPost);
+  
     } catch (error) {
       console.error("Error updating rating on server:", error);
     }

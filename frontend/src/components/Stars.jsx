@@ -1,16 +1,25 @@
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import axios from "axios";
-import PropTypes from 'prop-types';
+
+import PropTypes from "prop-types";
 
 export default function Stars({ post, onRatingChange }) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
+
+  const averageRating =
+  post.ratings && post.ratings.length > 0
+    ? post.ratings.reduce((sum, rating) => sum + rating, 0) / post.ratings.length
+    : 0;
+
+
   useEffect(() => {
+    
     // Check if post is defined before trying to access its properties
     if (post && post._id) {
-      setRating(post.rating);
+      console.log(post);
+      setRating(post.rating || averageRating);
     }
   }, [post]);
 
@@ -39,6 +48,7 @@ export default function Stars({ post, onRatingChange }) {
       <div className="flex">
         {[...Array(5)].map((star, index) => {
           const currentRating = index + 1;
+          
           return (
             <label key={Math.random() * 1000000}>
               <input
@@ -70,9 +80,8 @@ export default function Stars({ post, onRatingChange }) {
 Stars.propTypes = {
   post: PropTypes.shape({
     _id: PropTypes.string,
-    // Add the rating property to propTypes
     rating: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
-    // Add other properties of the post object as needed
+    ratings: PropTypes.array,
   }),
-  onRatingChange: PropTypes.func.isRequired, // Ensure onRatingChange is a required function prop
+  onRatingChange: PropTypes.func.isRequired,
 };

@@ -42,8 +42,8 @@ export const getAllTravels = async (req, res) => {
     const travels = await Post.find({})
       .sort({ createdAt: -1 })
       .populate({
-        path: 'comments',
-        options: { sort: { created_at: -1 } },
+        path: "comments ratings", // Specify the fields to populate
+        options: { sort: { created_at: -1 } }, // Sorting options
       })
       .skip((page - 1) * limit)
       .limit(Number(limit));

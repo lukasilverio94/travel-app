@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+// import React, { useState } from "react";
+import { Link} from "react-router-dom";
 import { formatDistance } from "date-fns"; //To format date
 import Comments from "./Comments";
 import PropTypes from 'prop-types';
@@ -61,11 +61,17 @@ const Post = ({ post }) => {
       </span>
     </Link>
   </div>
-)}
-Post.propTypes = {
-  post: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    // Add other properties of the post object as needed
-  }).isRequired,
+)
+    }
+    Post.propTypes = {
+      post: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        place: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        writer: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
+        image: PropTypes.string, 
+      }).isRequired,
 };
 export default Post;

@@ -46,10 +46,10 @@ export default function ShowPost() {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 ">
       <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
-        <div className="bg-white p-6 rounded-md shadow-md">
+        <div className="bg-white p-6 rounded-md shadow-md mt-7">
           <h3 className="text-teal-600 text-3xl mb-4">
             {isEditMode ? (
               <input

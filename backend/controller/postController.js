@@ -75,31 +75,46 @@ export const getTravel = async (req, res) => {
 
 //Update Travel
 export const updateTravel = async (req, res) => {
+  const { id } = req.params;
+
+  // Check if Id matches mongo standard
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such post" });
+  }
+
   try {
-    const { id } = req.params;
-    const { title, place, description } = req.body;
+    let updatedTravel;
 
-    if (!title || !place || !description) {
-      return res.status(400).json({
-        message: "All fields are required",
-      });
-    }
-    // Check if the provided id is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({
-        message: "Invalid Book ID. Please provide a valid ID.",
-      });
-    }
-    const travel = await Post.findByIdAndUpdate(id, req.body);
+    // Check if the 'rating' property is present in the request body
+    if ("rating" in req.body) {
+      const { rating } = req.body;
 
-    return res.status(200).json({
-      message: "Post updated successfully",
-    });
+      updatedTravel = await Post.findOneAndUpdate(
+        { _id: id },
+        { $push: { ratings: rating } },
+        { new: true }
+      );
+      const averageRating =
+        updatedTravel.ratings.reduce((sum, rating) => sum + rating, 0) /
+        updatedTravel.ratings.length;
+
+      res.json({ post: updatedTravel, averageRating });
+      // Send back the updated post and average rating as the response
+    } else {
+      // Update general travel information
+      updatedTravel = await Post.findOneAndUpdate(
+        { _id: id },
+        { ...req.body },
+        { new: true }
+      );
+    }
+    // Check if the post was found and updated
+    if (!updatedTravel) {
+      return res.status(404).json({ error: "No such post" });
+    }
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({
-      message: error.message,
-    });
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

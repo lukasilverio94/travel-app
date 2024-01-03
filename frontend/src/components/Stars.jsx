@@ -71,7 +71,7 @@ export default function Stars({ post, onRatingChange }) {
         })}
       </div>
 
-      <p className="text-slate-500 my-2">Rating: {rating}</p>
+      <p className="text-slate-500">Rating: {rating}</p>
     </>
   );
 }

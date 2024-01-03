@@ -1,5 +1,7 @@
+
 import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns";
+
 import Comments from "./Comments";
 import Stars from "./Stars";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -49,6 +51,20 @@ const Post = ({ post }) => (
       )}
     </div>
   </div>
-);
+
+)
+    }
+    Post.propTypes = {
+      post: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        place: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        writer: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
+        image: PropTypes.string, 
+      }).isRequired,
+};
+
 
 export default Post;

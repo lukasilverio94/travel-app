@@ -1,25 +1,36 @@
-
+// import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { formatDistance } from "date-fns";
-
-import Comments from "./Comments";
-import Stars from "./Stars";
+import { formatDistance } from "date-fns"; //To format date
 import { FaArrowRightLong } from "react-icons/fa6";
+import Comments from "./Comments";
+import PropTypes from "prop-types";
+import Stars from "./Stars";
+import axios from "axios";
 
-const Post = ({ post }) => (
-  <div
-    key={post._id}
-    className="grid grid-cols-1 md:grid-cols-2 gap-x-4 border-b-2 py-5"
-  >
-    {/* Text Section */}
-    <div className="flex flex-col gap-y-2 md:col-span-1 md:pr-4">
-      <h3 className="text-teal-600 text-3xl">{post.title}</h3>
-      <div>
-        <p className="text-sm">Where: </p>
-        <p className="text-slate-800 text-2xl">{post.place}</p>
-      </div>
+const Post = ({ post }) => {
+  // const [newRating, setNewRating] = useState(0);
+  // const [localPost, setLocalPost] = useState(post);
+  const handleRatingChange = async (updatedPost) => {
+    try {
+      // Update the server with the new rating
+      const response = await axios.put(`/posts/update/${post._id}`, {
+        rating: updatedPost.rating,
+      });
+      console.log("Rating updated on server:", response.data);
 
-      <p>{post.description.slice(0, 50)}...</p>
+      // Update the post state with the new rating
+      // setLocalPost(updatedPost);
+    } catch (error) {
+      console.error("Error updating rating on server:", error);
+    }
+  };
+
+  return (
+    <div key={post._id} className="flex flex-col gap-y-2 mt-2">
+      <h3 className="text-teal-600 text-3xl ">{post.title}</h3>
+      <p className="text-sm">Where: </p>
+      <p className="text-slate-800 text-2xl "> {post.place}</p>
+      <p>{post.description.slice(0, 25)}...</p>
       <Link to={`posts/details/${post._id}`} className="my-1">
         <span className="flex items-center text-teal-700">
           <span className="hover:border-b hover:border-teal-700">
@@ -34,37 +45,38 @@ const Post = ({ post }) => (
         })}{" "}
         by {post.writer}
       </small>
-      <Comments post={post} />
-      <Stars />
-    </div>
 
-    {/* Image Section */}
-    <div className="md:col-span-1 md:ms-5 mt-3 ">
       {post.image && (
         <figure>
           <img
-            className="rounded-md w-full object-cover max-w-[450px] h-auto"
+            className="rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-4"
             src={post.image}
             alt="Post"
           />
         </figure>
       )}
-    </div>
-  </div>
 
-)
-    }
-    Post.propTypes = {
-      post: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        place: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        writer: PropTypes.string.isRequired,
-        createdAt: PropTypes.string.isRequired,
-        image: PropTypes.string, 
-      }).isRequired,
+      {/* comment */}
+      <Comments post={post} />
+
+      {/* <Link to={`posts/details/${post._id}`}>Read more...</Link> */}
+      <hr />
+      <Stars post={post} onRatingChange={handleRatingChange} />
+      {/* <Stars post={post} /> */}
+    </div>
+  );
 };
 
+Post.propTypes = {
+  post: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    place: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    writer: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    image: PropTypes.string,
+  }).isRequired,
+};
 
 export default Post;

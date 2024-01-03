@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 
 function UploadImg({ onConversion }) {
   const fileInputRef = useRef(null);
@@ -6,10 +6,10 @@ function UploadImg({ onConversion }) {
 
   const convertToDataURLviaCanvas = (url, callback, outputFormat) => {
     var img = new Image();
-    img.crossOrigin = 'Anonymous';
+    img.crossOrigin = "Anonymous";
     img.onload = function () {
-      var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
       var dataURL;
       canvas.height = this.height;
       canvas.width = this.width;
@@ -32,7 +32,7 @@ function UploadImg({ onConversion }) {
         const dataURL = e.target.result;
 
         // Call the convertToDataURLviaCanvas function
-        convertToDataURLviaCanvas(dataURL, onConversion, 'image/jpeg');
+        convertToDataURLviaCanvas(dataURL, onConversion, "image/jpeg");
       };
 
       reader.readAsDataURL(file);
@@ -43,13 +43,20 @@ function UploadImg({ onConversion }) {
     <div>
       <input
         type="file"
+        className="my-2"
         ref={fileInputRef}
         onChange={handleFileChange}
       />
       {convertedDataURL && (
         <div>
           <p>Converted Image:</p>
-          <img src={convertedDataURL} alt="Converted" />
+          <img
+            src={convertedDataURL}
+            alt="Converted"
+            width="100"
+            height="100"
+            className="rounded-xl"
+          />
         </div>
       )}
     </div>
@@ -57,4 +64,3 @@ function UploadImg({ onConversion }) {
 }
 
 export default UploadImg;
-

@@ -69,7 +69,7 @@ export const login = async (req, res) => {
 
     if (!isCorrectPass) {
       // If the password is incorrect, send a 400 Bad Request response
-      return res.status(400).json({ error: 'Email or password incorrect' });
+      return res.status(400).send('User or password are not correct');
     }
 
     // If the user and password are correct, generate a JWT token for authentication
@@ -92,11 +92,11 @@ export const login = async (req, res) => {
 
 export const verifyUser = async (req, res) => {
   const token = req.headers.authorization;
-  console.log('Token:', token);
+
 
   try {
     const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.SECRET);
-    console.log('Decoded:', decoded);
+    
 
     res.status(200).json({
       userId: decoded?.userInfoForToken?.id,

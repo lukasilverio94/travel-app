@@ -24,7 +24,7 @@ export const addNewComment = async (req, res) => {
 
 //Delete comment
 export const deleteComment = async (req, res) => {
-  console.log(req.params);
+  console.log("Request to delete:",req.params);
   const { id } = req.params;
   //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {

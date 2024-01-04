@@ -57,14 +57,17 @@ const Post = ({ post }) => {
           <Comments post={post} />
         </div>
 
-        {post.image && (
+        {post.images[0] && (
           <div className="md:w-2/3 md:ms-6">
             <figure>
-              <img
-                className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
-                src={post.image}
-                alt="Post"
-              />
+              {post.images.map((imageUrl, index) => (
+                <img
+                  key={index}
+                  className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
+                  src={`../../../backend/public/images/images-1704376428015.jpg`}
+                  alt={`Photo ${index + 1} from ${post.place}`}
+                />
+              ))}
             </figure>
           </div>
         )}

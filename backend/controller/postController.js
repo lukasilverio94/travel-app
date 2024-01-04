@@ -4,7 +4,9 @@ import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-  const { title, place, description, writer, image, rating } = req.body;
+  console.log(req.body); // Log the body of the request
+  console.log(req.files);
+  const { title, place, description, writer, rating } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
@@ -24,10 +26,17 @@ export const addNewTravel = async (req, res) => {
         emptyFields,
       });
     }
+
     //Add Doc
-    const newTravel = { title, place, description, writer, image, rating };
+    const newTravel = { title, place, description, writer, rating };
+
+    // Check if there are uploaded images
+    if (req.files && req.files.length > 0) {
+      newTravel.images = req.files.map((file) => file.path);
+    }
+
     const travel = await Post.create(newTravel);
-    console.log(travel);
+    console.log(req.files);
     return res.status(201).json(travel);
   } catch (error) {
     console.log(error.message);
@@ -94,12 +103,8 @@ export const updateTravel = async (req, res) => {
         { $push: { ratings: rating } },
         { new: true }
       );
-      // const averageRating =
-      //   updatedTravel.ratings.reduce((sum, rating) => sum + rating, 0) /
-      //   updatedTravel.ratings.length;
 
       res.json({ post: updatedTravel });
-      // Send back the updated post and average rating as the response
     } else {
       // Update general travel information
       updatedTravel = await Post.findOneAndUpdate(

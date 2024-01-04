@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Loader from "../components/Loader";
-import UploadImg from "../components/UploadImg";
+
 import BackButton from "../components/BackButton";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
+  const [files, setFiles] = useState([]);
+  const [postId, setPostId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -19,24 +20,29 @@ export default function CreatePost() {
     e.preventDefault();
 
     try {
-      const data = {
-        title,
-        place,
-        description,
-        writer: JSON.parse(localStorage.getItem("user")).username,
-        image: image,
-      };
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("place", place);
+      formData.append("description", description);
+      formData.append(
+        "writer",
+        JSON.parse(localStorage.getItem("user")).username
+      );
+      // Append each file to the FormData
+      for (let i = 0; i < files.length; i++) {
+        formData.append("images", files[i]);
+      }
 
       setLoading(true);
 
-      axios.post(
-        "/posts",
-        data,
-        {
-          maxContentLength: Infinity, // or set a specific value
+      const response = await axios.post("/posts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        { withCredentials: true }
-      );
+        withCredentials: true,
+      });
+      console.log(response.data);
+      setPostId(response.data._id);
 
       navigate("/");
     } catch (error) {
@@ -50,13 +56,6 @@ export default function CreatePost() {
       }
     }
   };
-
-  const handleConversion = (dataURL) => {
-    // console.log("Data URL:", dataURL);
-    setImage(dataURL);
-    // Handle the converted data URL as needed
-  };
-
   return (
     <div className="p-4">
       <BackButton />
@@ -73,7 +72,7 @@ export default function CreatePost() {
             placeholder="Title for your experience"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            required // Add required attribute for validation
+            required
           />
         </div>
         <div className="my-4">
@@ -84,7 +83,7 @@ export default function CreatePost() {
             placeholder="location where happened the adventure"
             value={place}
             onChange={(e) => setPlace(e.target.value)}
-            required // Add required attribute for validation
+            required
           />
         </div>
         <div className="my-4">
@@ -94,11 +93,13 @@ export default function CreatePost() {
             placeholder="Tell us your experience..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required // Add required attribute for validation
+            required
           />
         </div>
-
-        <UploadImg onConversion={handleConversion} />
+        {/* Upload image */}
+        <div>
+          <input type="file" onChange={(e) => setFiles(e.target.files)} />
+        </div>
 
         <button
           className="p-2 bg-teal-700 w-100 text-white my-3"

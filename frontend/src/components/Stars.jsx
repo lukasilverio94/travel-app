@@ -16,7 +16,6 @@ export default function Stars({ post, onRatingChange }) {
   useEffect(() => {
     // Check if post is defined before trying to access its properties
     if (post && post._id) {
-      console.log(post);
       setRating(post.rating || Math.round(averageRating));
     }
   }, [post]);

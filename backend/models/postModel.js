@@ -21,15 +21,16 @@ const postSchema = new Schema(
       // ref: 'User',
       required: false,
     },
+    images: [
+      {
+        type: String, // Assuming you're storing the file paths or URLs
+        required: false,
+      },
+    ],
 
-    image: {
-      type: String,
-      required: false,
-    },
- 
     ratings: {
-      type: [Number], 
-      default: [],   
+      type: [Number],
+      default: [],
     },
     comments: [
       {

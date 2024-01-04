@@ -34,6 +34,9 @@ export default function Navbar() {
     setIsNavOpen(!isNavOpen);
   };
 
+  const handleLinkClick = () => {
+    toggleNav(false); // close  navigation menu when a link is clicked
+  };
   const isLoggedIn = localStorage.getItem("token");
 
   return (
@@ -100,13 +103,14 @@ export default function Navbar() {
                   </small>
                 </li>
                 <li>
-                  <Link to="/logout">
+                  <Link to="/logout" onClick={handleLinkClick}>
                     <span className="text-red-800 ">Logout</span>
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/"
+                    onClick={handleLinkClick}
                     className="block py-2 px-3 text-gray-700 hover:text-blue-700 rounded md:bg-transparent  md:p-0 "
                   >
                     Home
@@ -115,6 +119,7 @@ export default function Navbar() {
                 <li>
                   <Link
                     to="/posts/create"
+                    onClick={handleLinkClick}
                     className="block py-2 px-3 text-gray-900 rounded hover:text-blue-700  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Add Experience
@@ -123,6 +128,7 @@ export default function Navbar() {
                 <li>
                   <Link
                     to="/explore"
+                    onClick={handleLinkClick}
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Explore Travels
@@ -132,7 +138,7 @@ export default function Navbar() {
             ) : (
               <>
                 <li>
-                  <Link to="/signin">
+                  <Link to="/signin" onClick={handleLinkClick}>
                     <h2>Login</h2>
                   </Link>
                 </li>

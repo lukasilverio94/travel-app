@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns"; //To format date
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -6,24 +5,38 @@ import Comments from "./Comments";
 import PropTypes from "prop-types";
 import Stars from "./Stars";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Post = ({ post }) => {
-  // const [newRating, setNewRating] = useState(0);
-  // const [localPost, setLocalPost] = useState(post);
+  const [imgData, setImgData] = useState([]);
+
+  const imageUrls = post.images.map((imageUrl) => `/uploads/${imageUrl}`);
+  console.log("Image URLs:", imageUrls);
+
+  if (imageUrls.length === 0) {
+    console.warn("No image URLs found. Check the post data.");
+  }
+
   const handleRatingChange = async (updatedPost) => {
     try {
       // Update the server with the new rating
-      const response = await axios.put(`/posts/update/${post._id}`, {
+      await axios.put(`/posts/update/${post._id}`, {
         rating: updatedPost.rating,
       });
-      console.log("Rating updated on server:", response.data);
-
-      // Update the post state with the new rating
-      // setLocalPost(updatedPost);
     } catch (error) {
       console.error("Error updating rating on server:", error);
     }
   };
+
+  useEffect(() => {
+    axios
+      .get("/posts/get-imgs")
+      .then((res) => {
+        console.log(res.data.images[0]);
+        setImgData(res.data.images);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
 
   return (
     <div
@@ -57,19 +70,12 @@ const Post = ({ post }) => {
           <Comments post={post} />
         </div>
 
-        {post.images[0] && (
-          <div className="md:w-2/3 md:ms-6">
-            <figure>
-              {post.images.map((imageUrl, index) => (
-                <img
-                  key={index}
-                  className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
-                  src={`../../../backend/public/images/images-1704376428015.jpg`}
-                  alt={`Photo ${index + 1} from ${post.place}`}
-                />
-              ))}
-            </figure>
-          </div>
+        {imgData.length > 0 && (
+          <img
+            className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
+            src={`/uploads/${imgData[0]}`} // Assuming you want to display the first image
+            alt={`Photo from ${post.place}`}
+          />
         )}
       </div>
     </div>

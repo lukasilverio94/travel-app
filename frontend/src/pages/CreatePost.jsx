@@ -28,6 +28,9 @@ export default function CreatePost() {
         "writer",
         JSON.parse(localStorage.getItem("user")).username
       );
+      // Log the contents of the files array
+      console.log("Files:", files);
+
       // Append each file to the FormData
       for (let i = 0; i < files.length; i++) {
         formData.append("images", files[i]);
@@ -98,7 +101,11 @@ export default function CreatePost() {
         </div>
         {/* Upload image */}
         <div>
-          <input type="file" onChange={(e) => setFiles(e.target.files)} />
+          <input
+            type="file"
+            multiple
+            onChange={(e) => setFiles(e.target.files)}
+          />
         </div>
 
         <button

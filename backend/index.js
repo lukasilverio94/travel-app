@@ -9,13 +9,13 @@ import cors from "cors";
 
 const app = express();
 // middleware for parsing req.body (json read)
-app.use(express.json({ limit: '10mb' })); 
+app.use(express.json());
 
 app.use(
   cors({
     origin: ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: 'Authorization,Content-Type',
+    allowedHeaders: "Authorization,Content-Type",
     credentials: true,
   })
 );
@@ -24,6 +24,8 @@ app.use(
 app.use("/user", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
+
+app.use(express.static("public"));
 
 //Connect db
 mongoose

@@ -9,7 +9,7 @@ export default {
       },
     },
     backgroundImage: {
-      parallax: 'url("../public/assets/banner.jpg")',
+      parallax: 'url("../assets/banner.jpg")',
     },
   },
   plugins: [],

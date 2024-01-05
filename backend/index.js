@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
-import path from "path";
 import postRoutes from "./routes/postRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
@@ -26,16 +25,13 @@ app.use("/user", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
 
-// Get the directory name
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
-
-app.use("/uploads", express.static("uploads"));
+app.use(express.static("public"));
 
 //Connect db
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
+    console.log("Database Connected");
     app.listen(process.env.PORT, () =>
       console.log(`App started at http://localhost:${process.env.PORT}`)
     );

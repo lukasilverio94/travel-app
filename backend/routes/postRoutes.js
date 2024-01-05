@@ -5,7 +5,6 @@ import {
   getTravel,
   updateTravel,
   deleteTravel,
-  getImgs,
 } from "../controller/postController.js";
 
 //Upload middleware
@@ -15,7 +14,6 @@ const router = express.Router();
 
 // Post routes
 router.get("/", getAllTravels); // Get All Posts
-router.get("/get-imgs", getImgs);
 router.post("/", upload.array("images", 10), addNewTravel); // Add New Post
 router.get("/details/:id", getTravel); // Single Post
 router.put("/update/:id", updateTravel); // Edit post

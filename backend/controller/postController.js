@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
+  console.log(req.body); // Log the body of the request
+  console.log(req.files);
   const { title, place, description, writer, rating } = req.body;
   try {
     //Handling Errors (handle in frontend)
@@ -28,19 +30,13 @@ export const addNewTravel = async (req, res) => {
     //Add Doc
     const newTravel = { title, place, description, writer, rating };
 
-    console.log("Uploaded files:", req.files);
-
     // Check if there are uploaded images
     if (req.files && req.files.length > 0) {
       newTravel.images = req.files.map((file) => file.path);
     }
 
     const travel = await Post.create(newTravel);
-    console.log("New travel created:", travel);
-
-    // Console log to check if the images are being saved correctly
-    console.log("Saved images:", travel.images);
-
+    console.log(req.files);
     return res.status(201).json(travel);
   } catch (error) {
     console.log(error.message);
@@ -143,18 +139,4 @@ export const deleteTravel = async (req, res) => {
   }
 
   res.status(200).json(workout);
-};
-
-// Get Image URLs
-export const getImgs = async (req, res) => {
-  try {
-    const images = await Post.find({}, "images");
-
-    const imageUrls = images.flatMap((post) => post.images);
-
-    res.status(200).json({ images: imageUrls });
-  } catch (error) {
-    console.error("Error fetching image URLs:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
 };

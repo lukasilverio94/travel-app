@@ -24,6 +24,7 @@ export default function CreatePost() {
       formData.append("title", title);
       formData.append("place", place);
       formData.append("description", description);
+      formData.append("images", files[0]);
       formData.append(
         "writer",
         JSON.parse(localStorage.getItem("user")).username
@@ -32,9 +33,6 @@ export default function CreatePost() {
       console.log("Files:", files);
 
       // Append each file to the FormData
-      for (let i = 0; i < files.length; i++) {
-        formData.append("images", files[i]);
-      }
 
       setLoading(true);
 

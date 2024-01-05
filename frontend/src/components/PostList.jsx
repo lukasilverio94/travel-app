@@ -69,7 +69,7 @@ const PostList = () => {
   };
 
   return (
-    <div className="container px-6">
+    <div className="container px-6 mt-20">
       <Banner />
       <h1 className="text-4xl pt-6 pb-2 text-teal-700 font-semibold border-b-2 border-teal-700">
         Get inspired by some experiences:

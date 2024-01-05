@@ -91,6 +91,7 @@ export const login = async (req, res) => {
 };
 
 export const verifyUser = async (req, res) => {
+  console.log(req.body);
   const token = req.headers.authorization;
 
 
@@ -108,5 +109,47 @@ export const verifyUser = async (req, res) => {
   }
 };
 
+export const searchUser = async (req, res) => {
+  console.log(req);
+//   // Log the incoming login request data
+//   console.log('Request to login:', req.body);
+
+  try {
+    // Find a user in the database with the provided id
+    let userInfo = await User.findOne({ _id: req.body});
+    console.log(userInfo);
+    // if (!user) {
+    //   // If the user is not found, send a 400 Bad Request response
+    //   return res.status(400).send('Usernot found');
+    // }
+
+//     // Compare the provided password with the hashed password stored in the database
+//     let isCorrectPass = await bcrypt.compareSync(
+//       req.body.password,
+//       user.password,
+//     );
+
+//     if (!isCorrectPass) {
+//       // If the password is incorrect, send a 400 Bad Request response
+//       return res.status(400).send('User or password are not correct');
+//     }
+
+//     // If the user and password are correct, generate a JWT token for authentication
+//     let userInfoForToken = {
+//       id: user._id,
+//       userName: user.userName,
+//       email: user.email,
+//     };
+
+//     let userToken = jwt.sign({ userInfoForToken }, process.env.SECRET);
+
+//     // Send the generated token in the response
+    res.status(200).send(userInfo);
+//     console.log(`${userInfoForToken.userName} is inLogged`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred during login.');
+  }
+};
 
 

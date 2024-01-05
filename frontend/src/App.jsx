@@ -12,7 +12,7 @@ import SignIn from "./pages/SignIn";
 import PostList from "./components/PostList";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
-
+import UserPanel from "./pages/UserPanel"
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -30,6 +30,8 @@ function App() {
             <Route exact path="/posts/details/:id" element={<ShowPost />} />
             <Route exact path="/posts/delete/:id" element={<DeletePost />} />
             <Route exact path="/logout" element={<Logout />} />
+            <Route exact path="/userPanel" element={<UserPanel userId={JSON.parse(localStorage.getItem("user")).userId}/>} />
+            
           </>
         ) : (
           <>

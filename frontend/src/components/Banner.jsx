@@ -7,6 +7,5 @@ export default function Banner() {
         share your adventures
       </h1>
     </div>
-    //
   );
 }

@@ -21,7 +21,7 @@ export default function Stars({ post, onRatingChange }) {
   }, [post]);
 
   const handleRatingChange = (newRating) => {
-    console.log("New rating:", newRating);
+   
     // Update the local state
     setRating(newRating);
 

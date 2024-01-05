@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import {useNavigate} from 'react-router-dom'
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState();
-  //  const navigate = useNavigate()
+ 
 
   const submitLogIn = (e) => {
     e.preventDefault();
@@ -21,12 +20,12 @@ export default function SignIn() {
         .post("/user/login", data)
         .then((result) => {
           localStorage.setItem("token", result.data);
-          // navigate('allPosts')
+        
           window.location.href = "/";
         })
         .catch((error) => {
           setErr(error.response.data);
-          
+         
           
         });
     } else {
@@ -57,6 +56,7 @@ export default function SignIn() {
         </button>
       </form>
       {err && <h5 className="text-red-500 mt-2 font-semibold">{err}</h5>}
+
 
       <Link to="/signUp" className="mt-4 text-blue-500">
         <span>Do not have an account?</span>

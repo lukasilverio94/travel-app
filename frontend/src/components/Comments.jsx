@@ -30,8 +30,8 @@ export default function Comments({ post }) {
           withCredentials: true,
         })
         .then((result) => {
-          console.log("Comment added: ", result.data);
-          setComment({ ...comment, commentText: "" }); // Clear the input field
+          
+          setComment({ ...comment, commentText: "" }); 
           // Toggle the refreshComments state to trigger a re-render of CommentList
           setRefreshComments((prevRefresh) => !prevRefresh);
         })

@@ -57,6 +57,7 @@ export default function CreatePost() {
       }
     }
   };
+
   return (
     <div className="p-4">
       <BackButton />

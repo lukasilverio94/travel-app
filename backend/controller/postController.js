@@ -37,9 +37,10 @@ export const addNewTravel = async (req, res) => {
 
     const travel = await Post.create(newTravel);
     console.log(req.files);
+    console.log("New post added",travel);
     return res.status(201).json(travel);
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     res.status(500).json({ message: "error.message" });
   }
 };
@@ -59,7 +60,7 @@ export const getAllTravels = async (req, res) => {
 
     return res.status(200).json(travels);
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     res.status(500).json({ message: error.message });
   }
 };

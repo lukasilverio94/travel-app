@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -38,7 +38,7 @@ export default function ShowPost() {
   const handleSave = async () => {
     try {
       const response = await axios.put(`/posts/update/${id}`, post);
-      console.log("Post updated successfully:", response.data);
+    
       setIsEditMode(false);
     } catch (error) {
       console.error("Error updating post:", error);

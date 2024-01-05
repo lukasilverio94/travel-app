@@ -4,7 +4,6 @@ const commentSchema = new mongoose.Schema({
   
   writer: {
     type: String,
-    // ref: 'User',
     required: false,
   },
   commentText: {

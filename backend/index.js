@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: "Authorization,Content-Type",
+    allowedHeaders: ["Authorization,Content-Type"],
     credentials: true,
   })
 );
@@ -25,7 +25,12 @@ app.use("/user", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
 
-app.use(express.static("public"));
+app.use("/uploads", express.static("public/uploads"));
+
+// Logging the rejected field from multer error
+app.use((error, req, res, next) => {
+  console.log("This is the rejected field ->", error.field);
+});
 
 //Connect db
 mongoose

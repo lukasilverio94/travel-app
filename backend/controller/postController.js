@@ -37,11 +37,11 @@ export const addNewTravel = async (req, res) => {
 
     const travel = await Post.create(newTravel);
     console.log(req.files);
-    console.log("New post added",travel);
+    console.log("New post added", travel);
     return res.status(201).json(travel);
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: "error.message" });
+    console.error("Error adding new travel:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

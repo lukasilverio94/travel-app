@@ -27,7 +27,6 @@ const postSchema = new Schema(
         required: false,
       },
     ],
-
     ratings: {
       type: [Number],
       default: [],

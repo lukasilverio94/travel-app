@@ -56,15 +56,20 @@ const Post = ({ post }) => {
           {/* comment */}
           <Comments post={post} />
         </div>
-        <div className="md:w-2/3 md:ms-6">
-          <figure>
-            <img
-              className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
-              src={`http://localhost:4000/uploads/${post.images[0].slice(-24)}`}
-              alt="fgfgf"
-            />
-          </figure>
-        </div>
+        {post.images[0] && (
+          <div className="md:w-2/3 md:ms-6">
+            <figure>
+              <img
+                className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
+                src={`http://localhost:4000/uploads/${post.images[0].slice(
+                  -24
+                )}`}
+                alt={`Photo  from ${post.place}`}
+              />
+            </figure>
+          </div>
+        )}
+
         {/* {post.images[0] && (
           <div className="md:w-2/3 md:ms-6">
             <figure>

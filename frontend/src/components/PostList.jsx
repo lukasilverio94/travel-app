@@ -4,6 +4,7 @@ import Loader from "./Loader";
 import Post from "./Post";
 import Banner from "./Banner";
 import SearchInput from "./SearchInput";
+import Carousel from "./Carousel";
 const MemoizedPost = React.memo(Post);
 
 const PostList = () => {
@@ -105,6 +106,8 @@ const PostList = () => {
           Load More
         </button>
       )}
+
+      <Carousel />
     </div>
   );
 };

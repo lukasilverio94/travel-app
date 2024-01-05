@@ -7,14 +7,12 @@ import Stars from "./Stars";
 import axios from "axios";
 
 const Post = ({ post }) => {
-
   const handleRatingChange = async (updatedPost) => {
     try {
       // Update the server with the new rating
-       await axios.put(`/posts/update/${post._id}`, {
+      await axios.put(`/posts/update/${post._id}`, {
         rating: updatedPost.rating,
       });
-  
     } catch (error) {
       console.error("Error updating rating on server:", error);
     }
@@ -64,22 +62,8 @@ const Post = ({ post }) => {
             </figure>
           </div>
         )}
-
-        {/* {post.images[0] && (
-          <div className="md:w-2/3 md:ms-6">
-            <figure>
-              {post.images.map((imageUrl, index) => (
-                <img
-                  key={index}
-                  className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
-                  src={`http://localhost:4000/images/${imageUrl.slice('uploads')}`}
-                  alt={`Photo ${index + 1} from ${post.place}`}
-                />
-              ))}
-            </figure>
-          </div>
-        )} */}
       </div>
+      {/* temporary carousel here */}
     </div>
   );
 };

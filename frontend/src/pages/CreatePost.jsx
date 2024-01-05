@@ -24,11 +24,13 @@ export default function CreatePost() {
       formData.append("title", title);
       formData.append("place", place);
       formData.append("description", description);
-      formData.append("images", files[0]);
       formData.append(
         "writer",
         JSON.parse(localStorage.getItem("user")).username
       );
+      for (let i = 0; i < files.length; i++) {
+        formData.append("images", files[i]);
+      }
       // Log the contents of the files array
       console.log("Files:", files);
 
@@ -62,6 +64,7 @@ export default function CreatePost() {
     <div className="p-4">
       <BackButton />
       <form
+        encType="multipart/form-data"
         className="flex flex-col border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:w-1/2 p-4 mx-auto"
         onSubmit={handleSubmit}
       >
@@ -102,6 +105,7 @@ export default function CreatePost() {
         <div>
           <input
             type="file"
+            name="images"
             multiple
             onChange={(e) => setFiles(e.target.files)}
           />

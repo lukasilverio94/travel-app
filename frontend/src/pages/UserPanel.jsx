@@ -26,7 +26,7 @@ const UserPanel = () => {
     };
 
     fetchUserDetails();
-  }, [username]);
+  }, [username ]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -70,10 +70,22 @@ const UserPanel = () => {
     // Trigger the avatar upload when the "Send" button is clicked
     handleUpload();
   };
+  
+ 
 
+  
   return (
     <div className="container mx-auto p-6">
       <BackButton />
+      {user.avatar && (
+  <img
+    className="rounded-md w-full max-w-[200px] mb-4 md:mb-0 md:mr-4"
+    src={`http://localhost:4000/uploads/${user.avatar.slice(
+      -24
+    )}`}
+    alt={`avatar from ${user.userName}`}
+  />
+)}
       <h1>User Details for: {username}</h1>
       {loading ? (
         <p>Loading...</p>
@@ -85,17 +97,7 @@ const UserPanel = () => {
 
           {/* <h2>User Avatar:{user.avatar && ({user.avatar})}</h2> */}
           
-       {user.avatar && (
-  <img
-    className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
-    src={`http://localhost:4000/public/uploads/${user.avatar.slice(
-      -24
-    )}`}
-    alt={`http://localhost:4000/public/uploads/${user.avatar.slice(
-      -24
-    )}`}
-  />
-)}
+      
 
           {/* <p>`http://localhost:4000/public/uploads/${user.avatar.slice(
                   -24

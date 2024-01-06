@@ -66,20 +66,6 @@ const Post = ({ post }) => {
           </div>
         )}
 
-        {/* {post.images[0] && (
-          <div className="md:w-2/3 md:ms-6">
-            <figure>
-              {post.images.map((imageUrl, index) => (
-                <img
-                  key={index}
-                  className="rounded-md w-full max-w-[500px] mb-4 md:mb-0 md:mr-4"
-                  src={`http://localhost:4000/images/${imageUrl.slice('uploads')}`}
-                  alt={`Photo ${index + 1} from ${post.place}`}
-                />
-              ))}
-            </figure>
-          </div>
-        )} */}
       </div>
     </div>
   );

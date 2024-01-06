@@ -69,10 +69,10 @@ const PostList = () => {
   };
 
   return (
-    <div className="container px-6 mt-20">
+    <div className="container px-6 mt-20 mb-24">
       <Banner />
-      <h1 className="text-4xl pt-6 pb-2 text-teal-700 font-semibold border-b-2 border-teal-700">
-        Get inspired by some experiences:
+      <h1 className="text-4xl pt-6 pb-2 my-3 text-teal-700 font-light border-b-2 border-teal-700">
+        Travellers adventures:
       </h1>
 
       <SearchInput onChange={handleSearchChange} value={search} />

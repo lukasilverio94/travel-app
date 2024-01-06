@@ -44,7 +44,7 @@ export default function SignUp() {
       <h2 className="text-2xl font-bold mb-4">Sign up</h2>
       <form onSubmit={signUpUser} className="w-96">
         <label htmlFor="userName" className="block mb-1">
-          Username
+          * Username
         </label>
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
@@ -56,7 +56,7 @@ export default function SignUp() {
         />
 
         <label htmlFor="email" className="block mb-1">
-          Email
+          * Email
         </label>
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
@@ -68,7 +68,7 @@ export default function SignUp() {
         />
 
         <label htmlFor="password" className="block mb-1">
-          Password
+          * Password
         </label>
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"

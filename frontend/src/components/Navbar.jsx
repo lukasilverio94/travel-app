@@ -40,7 +40,7 @@ export default function Navbar() {
   const isLoggedIn = localStorage.getItem("token");
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"

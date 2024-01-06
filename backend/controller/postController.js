@@ -38,9 +38,7 @@ export const addNewTravel = async (req, res) => {
     }
     
     const travel = await Post.create(newTravel);
-    console.log('line 39 postCon', req.files);
-    console.log('New post added', travel);
-    console.log('writerId', req.body.writerId);
+   
     
     // Push only the post ID to the user's posts array
     await User.findByIdAndUpdate(
@@ -52,8 +50,8 @@ export const addNewTravel = async (req, res) => {
     return res.status(201).json(travel);
     
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: 'error.message' });
+    console.error("Error adding new travel:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

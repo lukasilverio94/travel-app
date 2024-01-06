@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -38,7 +38,7 @@ export default function ShowPost() {
   const handleSave = async () => {
     try {
       const response = await axios.put(`/posts/update/${id}`, post);
-    
+
       setIsEditMode(false);
     } catch (error) {
       console.error("Error updating post:", error);
@@ -46,7 +46,7 @@ export default function ShowPost() {
   };
 
   return (
-    <div className="container mx-auto p-6 ">
+    <div className="container mx-auto p-10 mt-20 mb-8 overflow-hidden ">
       <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
         <div className="bg-white p-6 rounded-md shadow-md mt-7">
@@ -90,7 +90,7 @@ export default function ShowPost() {
             </p>
           )}
 
-          <div className="flex items-center gap-4 mt-6">
+          <div className="flex items-center gap-4 mt-2">
             <Link to={`/posts/delete/${id}`}>
               <span className="bg-red-600 text-white px-4 py-2 rounded-md">
                 Delete

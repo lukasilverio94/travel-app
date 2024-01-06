@@ -16,6 +16,17 @@ export default function CreatePost() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  //Validate image format
+  const isImageValid = (files) => {
+    const validFormats = ["image/jpeg", "image/png"];
+
+    for (let i = 0; i < files.length; i++) {
+      if (!validFormats.includes(files[i].type)) {
+        return false;
+      }
+    }
+    return true;
+  };
   // Add Post
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,17 +36,26 @@ export default function CreatePost() {
       formData.append("title", title);
       formData.append("place", place);
       formData.append("description", description);
-      formData.append("images", files[0]);
       formData.append(
         "writer",
         JSON.parse(localStorage.getItem("user")).username
       );
-      // console.log("writerID:", JSON.parse(localStorage.getItem("user")).userId);
       formData.append("writerId", JSON.parse(localStorage.getItem("user")).userId);
-      // Log the contents of the files array
-      console.log("Files:", files);
+      for (let i = 0; i < files.length; i++) {
+        formData.append("images", files[i]);
+      }
 
-      // Append each file to the FormData
+      // Check if the image format is valid
+      if (!isImageValid(files)) {
+        setError("Invalid image format. Please use JPEG or PNG.");
+
+        // Clear the error message after 3 seconds
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
+
+        return;
+      }
 
       setLoading(true);
 
@@ -62,10 +82,11 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 mt-20">
       <BackButton />
       <form
-        className="flex flex-col border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:w-1/2 p-4 mx-auto"
+        encType="multipart/form-data"
+        className="flex flex-col my-6 border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:max-w-[800px] p-8 mx-auto"
         onSubmit={handleSubmit}
       >
         <h1 className="text-3xl my-4">Create Travel Story: </h1>
@@ -105,6 +126,7 @@ export default function CreatePost() {
         <div>
           <input
             type="file"
+            name="images"
             multiple
             onChange={(e) => setFiles(e.target.files)}
           />
@@ -116,9 +138,7 @@ export default function CreatePost() {
         >
           {loading ? "Saving..." : "Save"}
         </button>
-        {error && (
-          <p className="text-red-600 text-center font-semibold">{error}</p>
-        )}
+        {error && <p className="text-red-600 text-center">{error}</p>}
       </form>
     </div>
   );

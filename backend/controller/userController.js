@@ -91,7 +91,7 @@ export const login = async (req, res) => {
 };
 
 export const verifyUser = async (req, res) => {
-  console.log(req.body);
+
   const token = req.headers.authorization;
 
 
@@ -110,46 +110,52 @@ export const verifyUser = async (req, res) => {
 };
 
 export const searchUser = async (req, res) => {
-  console.log(req);
-//   // Log the incoming login request data
-//   console.log('Request to login:', req.body);
-
   try {
-    // Find a user in the database with the provided id
-    let userInfo = await User.findOne({ _id: req.body});
-    console.log(userInfo);
-    // if (!user) {
-    //   // If the user is not found, send a 400 Bad Request response
-    //   return res.status(400).send('Usernot found');
-    // }
-
-//     // Compare the provided password with the hashed password stored in the database
-//     let isCorrectPass = await bcrypt.compareSync(
-//       req.body.password,
-//       user.password,
-//     );
-
-//     if (!isCorrectPass) {
-//       // If the password is incorrect, send a 400 Bad Request response
-//       return res.status(400).send('User or password are not correct');
-//     }
-
-//     // If the user and password are correct, generate a JWT token for authentication
-//     let userInfoForToken = {
-//       id: user._id,
-//       userName: user.userName,
-//       email: user.email,
-//     };
-
-//     let userToken = jwt.sign({ userInfoForToken }, process.env.SECRET);
-
-//     // Send the generated token in the response
-    res.status(200).send(userInfo);
-//     console.log(`${userInfoForToken.userName} is inLogged`);
+    // Get the username from the request parameters
+    const { username } = req.params;
+    let user = await User.findOne({ userName: username }).populate('posts');
+    if (user) {
+      let userInfo = {
+        id: user._id,
+        userName: user.userName,
+        email: user.email,
+        posts:user.posts,
+        avatar:user.avatar,
+      };
+      res.status(200).json({ userInfo });
+    } else {
+      console.log('User not found');
+      res.status(404).json({ error: 'User not found' });
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).send('An error occurred during login.');
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  console.log("hello137uc", id);
 
+  // Check if Id matches the MongoDB standard
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such user' });
+  }
+
+  try {
+    const newUser = {};
+
+    // Check if there is an uploaded image
+    if (req.file) {
+      newUser.avatar = req.file.path;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, { avatar: newUser.avatar }, { new: true });
+
+    // Handle the updated user as needed
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

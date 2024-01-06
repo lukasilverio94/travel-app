@@ -62,6 +62,7 @@ const Post = ({ post }) => {
                 alt={`Photo  from ${post.place}`}
               />
             </figure>
+            
           </div>
         )}
 

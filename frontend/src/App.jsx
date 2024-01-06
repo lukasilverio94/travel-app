@@ -30,7 +30,7 @@ function App() {
             <Route exact path="/posts/details/:id" element={<ShowPost />} />
             <Route exact path="/posts/delete/:id" element={<DeletePost />} />
             <Route exact path="/logout" element={<Logout />} />
-            <Route exact path="/userPanel" element={<UserPanel userId={JSON.parse(localStorage.getItem("user")).userId}/>} />
+            <Route path="/userPanel/:username" element={<UserPanel />} />
             
           </>
         ) : (

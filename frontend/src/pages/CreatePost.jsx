@@ -9,8 +9,9 @@ export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
+  // const [writerID, setWriterID] = useState("");
   const [files, setFiles] = useState([]);
-  const [postId, setPostId] = useState(null);
+  // const [postId, setPostId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ export default function CreatePost() {
         "writer",
         JSON.parse(localStorage.getItem("user")).username
       );
+      // console.log("writerID:", JSON.parse(localStorage.getItem("user")).userId);
+      formData.append("writerId", JSON.parse(localStorage.getItem("user")).userId);
       // Log the contents of the files array
       console.log("Files:", files);
 
@@ -43,7 +46,7 @@ export default function CreatePost() {
         withCredentials: true,
       });
       console.log(response.data);
-      setPostId(response.data._id);
+      // setPostId(response.data._id);
 
       navigate("/");
     } catch (error) {

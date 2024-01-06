@@ -7,7 +7,7 @@ import {
   deleteTravel,
 } from "../controller/postController.js";
 
-//Upload middleware
+// middlewares
 import upload from "../middlewares/upload.js";
 
 const router = express.Router();

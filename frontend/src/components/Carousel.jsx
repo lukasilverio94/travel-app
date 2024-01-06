@@ -32,7 +32,7 @@ export default function Carousel({ images }) {
   }
 
   return (
-    <div className="max-w-[550px] h-[400px]  w-full md:ms-24 lg:ms-10 py-5 px-4 relative group">
+    <div className="max-w-[550px] h-[400px]  w-full md:ms-24 lg:ms-10 pb-10 px-4 relative group">
       <div
         style={{ backgroundImage: `url(${images[currentIndex]?.url})` }}
         className="w-full h-full rounded-2xl bg-center bg-cover duration-500"

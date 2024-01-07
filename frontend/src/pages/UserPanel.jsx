@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import BackButton from '../components/BackButton';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import BackButton from "../components/BackButton";
 
 const UserPanel = () => {
   const { username } = useParams();
@@ -34,38 +33,38 @@ const UserPanel = () => {
       setAvatar(file);
       // setRefresh((prevRefresh) => !prevRefresh);
     } else {
-      console.warn('No file selected.');
+      console.warn("No file selected.");
     }
   };
 
   const handleUpload = async () => {
     try {
       if (!avatar) {
-        console.error('Please select a file for upload.');
+        console.error("Please select a file for upload.");
         return;
       }
 
       const formData = new FormData();
-      formData.append('avatar', avatar);
+      formData.append("avatar", avatar);
       setUploading(true);
 
       const response = await axios.put(
-        `/user/update/${JSON.parse(localStorage.getItem('user')).userId}`,
+        `/user/update/${JSON.parse(localStorage.getItem("user")).userId}`,
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        },
+        }
       );
 
-      console.log('Avatar upload successful:', response.data);
+      console.log("Avatar upload successful:", response.data);
 
       // Update user data with the new avatar URL
       setUser((prevUser) => ({ ...prevUser, avatar: response.data.avatar }));
     } catch (error) {
-      console.error('Error uploading avatar:', error);
+      console.error("Error uploading avatar:", error);
     } finally {
       setUploading(false);
     }
@@ -88,11 +87,11 @@ const UserPanel = () => {
       ) : (
         <img
           className="rounded-full w-full max-w-[150px] mb-4 md:mb-0 md:mr-4"
-          src={`http://localhost:4000/uploads/avatar-1704625711816.png`}
+          src="/assets/avatar.png"
           alt={`avatar from`}
         />
       )}
-      backend/public/default/default-avatar.png
+
       <h1>User Details for: {username}</h1>
       {loading ? (
         <p>Loading...</p>
@@ -106,7 +105,7 @@ const UserPanel = () => {
             <h2>Upload Avatar:</h2>
             <input type="file" accept="image/*" onChange={handleFileChange} />
             <button onClick={handleUpload} disabled={uploading || !avatar}>
-              {uploading ? 'Uploading...' : 'Upload'}
+              {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
 
@@ -122,11 +121,21 @@ const UserPanel = () => {
           {user.posts && user.posts.length > 0 ? (
             <ul>
               {user.posts.map((post) => (
-                <li key={uuidv4()}>
+                <li key={Math.random() * 1000000}>
                   <div className="text-teal-600 font-bold mb-2 uppercase">
                     <p>ID: {post._id}</p>
                     <p>Title: {post.title}</p>
                     <p>Description: {post.description}</p>
+                    {/* Image  */}
+                    <div>
+                      {post.images && (
+                        <img
+                          src={`http://localhost:4000/uploads/${post.images[0].slice(
+                            -24
+                          )}`}
+                        />
+                      )}
+                    </div>
                   </div>
                 </li>
               ))}

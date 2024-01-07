@@ -11,6 +11,7 @@ import Logout from "./components/Logout";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PostList from "./components/PostList";
+import ChatPage from "./pages/ChatPage";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 
@@ -30,6 +31,7 @@ function App() {
             <Route exact path="/posts/create" element={<CreatePost />} />
             <Route exact path="/posts/details/:id" element={<ShowPost />} />
             <Route exact path="/posts/delete/:id" element={<DeletePost />} />
+            <Route exact path="/chats" element={<ChatPage />} />
             <Route exact path="/logout" element={<Logout />} />
           </>
         ) : (

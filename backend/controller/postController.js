@@ -6,9 +6,8 @@ import mongoose from 'mongoose';
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-  console.log('line 7 postCon', req.body); // Log the body of the request
-  console.log('line 8 postCon', req.files);
-  const { title, place, description, writer, rating ,writerId } = req.body;
+
+  const { title, place, description, writer, rating, writerId } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
@@ -36,22 +35,20 @@ export const addNewTravel = async (req, res) => {
     if (req.files && req.files.length > 0) {
       newTravel.images = req.files.map((file) => file.path);
     }
-    
+
     const travel = await Post.create(newTravel);
-   
-    
+
     // Push only the post ID to the user's posts array
     await User.findByIdAndUpdate(
       req.body.writerId,
       { $push: { posts: travel._id } }, // Change newTravel._id to travel._id
       { new: true },
-    )
-     
+    );
+
     return res.status(201).json(travel);
-    
   } catch (error) {
-    console.error("Error adding new travel:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error adding new travel:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 

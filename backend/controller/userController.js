@@ -77,6 +77,7 @@ export const login = async (req, res) => {
       id: user._id,
       userName: user.userName,
       email: user.email,
+      avatar:user.avatar
     };
 
     let userToken = jwt.sign({ userInfoForToken }, process.env.SECRET);
@@ -102,6 +103,8 @@ export const verifyUser = async (req, res) => {
     res.status(200).json({
       userId: decoded?.userInfoForToken?.id,
       username: decoded?.userInfoForToken?.userName,
+      avatar: decoded?.userInfoForToken?.avatar,
+      
     });
   } catch (error) {
     console.error('Error fetching user details:', error);
@@ -135,7 +138,7 @@ export const searchUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  console.log("hello137uc", id);
+ 
 
   // Check if Id matches the MongoDB standard
   if (!mongoose.Types.ObjectId.isValid(id)) {

@@ -1,28 +1,32 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [username, setUsername] = useState(null);
+  const [avatar, setAvatar] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     if (token) {
       axios
-        .get("/user/me", {
+        .get('/user/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          localStorage.setItem("user", JSON.stringify(response.data));
-          setUsername(JSON.parse(localStorage.getItem("user")).username);
+          localStorage.setItem('user', JSON.stringify(response.data));
+          setUsername(JSON.parse(localStorage.getItem('user')).username);
+
+          setAvatar(JSON.parse(localStorage.getItem('user')).avatar);
         })
         .catch((error) => {
-          console.error("Error fetching user information:", error.message);
+          console.error('Error fetching user information:', error.message);
         })
         .finally(() => {
           setIsLoading(false);
@@ -37,8 +41,8 @@ export default function Navbar() {
   const handleLinkClick = () => {
     toggleNav(false); // close  navigation menu when a link is clicked
   };
-  const isLoggedIn = localStorage.getItem("token");
-
+  const isLoggedIn = localStorage.getItem('token');
+ 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -50,7 +54,29 @@ export default function Navbar() {
             Travel App
           </span>
         </Link>
-
+        {isLoggedIn && (
+          <Link
+            to={`/userPanel/${username}`}
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="flex items-center space-x-3 self-center text-sm font-light text-green-700 whitespace-nowrap dark:text-white">
+              <small>{isLoading ? 'Loading...' : `Welcome, ${username}`}</small>
+              {avatar ? (
+                <img
+                  className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
+                  src={`http://localhost:4000/uploads/${avatar.slice(-24)}`}
+                  alt={`avatar from `}
+                />
+              ) : (
+                <img
+                  className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
+                  src={`http://localhost:4000/uploads/avatar-1704625711816.png`}
+                  alt={`avatar from`}
+                />
+              )}
+            </span>
+          </Link>
+        )}
         <button
           onClick={toggleNav}
           className="md:hidden text-gray-700 focus:outline-none"
@@ -90,18 +116,13 @@ export default function Navbar() {
 
         <div
           className={`${
-            isNavOpen ? "block" : "hidden"
+            isNavOpen ? 'block' : 'hidden'
           } w-full md:flex md:w-auto md:order-1`}
           id="navbar-search"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {isLoggedIn ? (
               <>
-                <li>
-                  <small>
-                    {isLoading ? "Loading..." : `Welcome, ${username}`}
-                  </small>
-                </li>
                 <li>
                   <Link to="/logout" onClick={handleLinkClick}>
                     <span className="text-red-800 ">Logout</span>
@@ -135,12 +156,17 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                <Link to={`/userPanel/${username}`} className="my-1">
-  <span className="flex items-center text-teal-700">
-    <span className="hover:border-b hover:border-teal-700">Profile</span>
-  </span>
-</Link>
-                
+                  <Link
+                    to={`/userPanel/${username}`}
+                    className="my-1"
+                    onClick={handleLinkClick}
+                  >
+                    <span className="flex items-center text-teal-700">
+                      <span className="hover:border-b hover:border-teal-700">
+                        Profile
+                      </span>
+                    </span>
+                  </Link>
                 </li>
               </>
             ) : (

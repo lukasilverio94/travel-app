@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -10,23 +10,23 @@ export default function Navbar() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token) {
       axios
-        .get('/user/me', {
+        .get("/user/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          setUsername(JSON.parse(localStorage.getItem('user')).username);
+          localStorage.setItem("user", JSON.stringify(response.data));
+          setUsername(JSON.parse(localStorage.getItem("user")).username);
 
-          setAvatar(JSON.parse(localStorage.getItem('user')).avatar);
+          setAvatar(JSON.parse(localStorage.getItem("user")).avatar);
         })
         .catch((error) => {
-          console.error('Error fetching user information:', error.message);
+          console.error("Error fetching user information:", error.message);
         })
         .finally(() => {
           setIsLoading(false);
@@ -41,8 +41,8 @@ export default function Navbar() {
   const handleLinkClick = () => {
     toggleNav(false); // close  navigation menu when a link is clicked
   };
-  const isLoggedIn = localStorage.getItem('token');
- 
+  const isLoggedIn = localStorage.getItem("token");
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -50,9 +50,12 @@ export default function Navbar() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <span className="self-center text-3xl font-light text-green-700 whitespace-nowrap dark:text-white">
-            Travel App
-          </span>
+          <div className="flex gap-1">
+            <img src="/assets/logo.png" alt="Logo" style={{ width: "45px" }} />
+            <span className="self-center text-3xl  text-teal-800  whitespace-nowrap dark:text-white">
+              On the road
+            </span>
+          </div>
         </Link>
         {isLoggedIn && (
           <Link
@@ -60,7 +63,15 @@ export default function Navbar() {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="flex items-center space-x-3 self-center text-sm font-light text-green-700 whitespace-nowrap dark:text-white">
-              <small>{isLoading ? 'Loading...' : `Welcome, ${username}`}</small>
+              <span className="text-sm">
+                {isLoading
+                  ? "Loading..."
+                  : `Welcome, ${
+                      username.charAt(0).toUpperCase() +
+                      username.slice(1).toLowerCase()
+                    }`}
+              </span>
+
               {avatar ? (
                 <img
                   className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
@@ -116,7 +127,7 @@ export default function Navbar() {
 
         <div
           className={`${
-            isNavOpen ? 'block' : 'hidden'
+            isNavOpen ? "block" : "hidden"
           } w-full md:flex md:w-auto md:order-1`}
           id="navbar-search"
         >
@@ -125,14 +136,14 @@ export default function Navbar() {
               <>
                 <li>
                   <Link to="/logout" onClick={handleLinkClick}>
-                    <span className="text-red-800 ">Logout</span>
+                    <span className="text-red-800 text-sm">Logout</span>
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/"
                     onClick={handleLinkClick}
-                    className="block py-2 px-3 text-gray-700 hover:text-blue-700 rounded md:bg-transparent  md:p-0 "
+                    className="block py-2 pe-3 text-gray-700 hover:text-blue-700 rounded md:bg-transparent  md:p-0 "
                   >
                     Home
                   </Link>
@@ -141,18 +152,18 @@ export default function Navbar() {
                   <Link
                     to="/posts/create"
                     onClick={handleLinkClick}
-                    className="block py-2 px-3 text-gray-900 rounded hover:text-blue-700  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    className="block py-2 pe-3 text-gray-900 rounded hover:text-blue-700  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Add Experience
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/explore"
+                    to="/locations"
                     onClick={handleLinkClick}
-                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    className="block py-2 pe-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
-                    Explore Travels
+                    Around you
                   </Link>
                 </li>
                 <li>

@@ -77,6 +77,7 @@ export const login = async (req, res) => {
       id: user._id,
       userName: user.userName,
       email: user.email,
+      avatar:user.avatar
     };
 
     let userToken = jwt.sign({ userInfoForToken }, process.env.SECRET);
@@ -91,6 +92,7 @@ export const login = async (req, res) => {
 };
 
 export const verifyUser = async (req, res) => {
+
   const token = req.headers.authorization;
 
 
@@ -101,6 +103,8 @@ export const verifyUser = async (req, res) => {
     res.status(200).json({
       userId: decoded?.userInfoForToken?.id,
       username: decoded?.userInfoForToken?.userName,
+      avatar: decoded?.userInfoForToken?.avatar,
+      
     });
   } catch (error) {
     console.error('Error fetching user details:', error);
@@ -108,5 +112,53 @@ export const verifyUser = async (req, res) => {
   }
 };
 
+export const searchUser = async (req, res) => {
+  try {
+    // Get the username from the request parameters
+    const { username } = req.params;
+    let user = await User.findOne({ userName: username }).populate('posts');
+    if (user) {
+      let userInfo = {
+        id: user._id,
+        userName: user.userName,
+        email: user.email,
+        posts:user.posts,
+        avatar:user.avatar,
+      };
+      res.status(200).json({ userInfo });
+    } else {
+      console.log('User not found');
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+ 
 
+  // Check if Id matches the MongoDB standard
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such user' });
+  }
+
+  try {
+    const newUser = {};
+
+    // Check if there is an uploaded image
+    if (req.file) {
+      newUser.avatar = req.file.path;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, { avatar: newUser.avatar }, { new: true });
+
+    // Handle the updated user as needed
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

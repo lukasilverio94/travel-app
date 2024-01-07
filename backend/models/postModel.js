@@ -21,12 +21,18 @@ const postSchema = new Schema(
       // ref: 'User',
       required: false,
     },
+    writerId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: false,
+    },
     images: [
       {
         type: String, // Assuming you're storing the file paths or URLs
         required: false,
       },
     ],
+
     ratings: {
       type: [Number],
       default: [],

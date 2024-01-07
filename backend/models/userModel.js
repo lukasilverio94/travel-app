@@ -21,7 +21,12 @@ const userSchema = new Schema(
   posts:[{
     type:mongoose.Schema.Types.ObjectId,
     ref :'Post'
-  }]
+  }],
+  avatar: {
+    type: String,
+    required: false,
+  },
+  
 });
 
 

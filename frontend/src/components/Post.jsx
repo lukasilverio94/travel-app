@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Stars from "./Stars";
 import Carousel from "./Carousel";
 import axios from "axios";
+import { FaStar } from "react-icons/fa";
 
 const Post = ({ post }) => {
   const handleRatingChange = async (updatedPost) => {
@@ -18,7 +19,12 @@ const Post = ({ post }) => {
       console.error("Error updating rating on server:", error);
     }
   };
-
+ 
+  const averageRating =
+  post.ratings && post.ratings.length > 0
+    ? post.ratings.reduce((sum, rating) => sum + rating, 0) /
+      post.ratings.length
+    : 0;
   return (
     <div
       key={post._id}
@@ -26,11 +32,17 @@ const Post = ({ post }) => {
     >
       <div className="flex flex-col md:flex-row ">
         <div className="md:w-2/3 flex flex-col gap-y-1 flex-grow">
-          <h3 className="text-teal-600 text-3xl">{post.title}</h3>
+          <h3 className="text-teal-600 text-3xl">
+            {post.title}
+            <span className="cursor-pointer">
+              <FaStar size={70} color={"#gggggg"} />
+              {averageRating}
+            </span>
+          </h3>
           <div className="my-1">
             <Stars post={post} onRatingChange={handleRatingChange} />
           </div>
-
+  
           <p className="text-slate-800 text-2xl"> {post.place}</p>
           <p>{post.description.slice(0, 25)}...</p>
           <Link to={`posts/details/${post._id}`} className="my-1">
@@ -47,7 +59,7 @@ const Post = ({ post }) => {
             })}{" "}
             by {post.writer}
           </small>
-          {/* comment */}
+       
           <Comments post={post} />
         </div>
         {post.images && (
@@ -58,9 +70,10 @@ const Post = ({ post }) => {
           />
         )}
       </div>
-      {/* temporary carousel here */}
+     
     </div>
   );
+  
 };
 
 Post.propTypes = {
@@ -71,7 +84,8 @@ Post.propTypes = {
     description: PropTypes.string.isRequired,
     writer: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    image: PropTypes.string,
+    images: PropTypes.array,
+    ratings: PropTypes.array,
   }).isRequired,
 };
 

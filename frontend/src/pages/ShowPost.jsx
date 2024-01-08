@@ -66,6 +66,7 @@ const ShowPost = () => {
         <PostDetails
           post={post}
           isEditMode={isEditMode}
+          handleSave={handleSave}
           handleInputChange={handleInputChange}
           handleImageDelete={handleImageDelete}
           handleEditMode={handleEditMode}

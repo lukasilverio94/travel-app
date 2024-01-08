@@ -99,8 +99,8 @@ const PostList = () => {
     <div className="container mx-auto px-6 mt-20 mb-24">
       {/* Use 'mx-auto' to center the container and 'w-full' to take full width on smaller screens */}
       <Banner />
-      <h1 className="text-4xl pt-6 pb-2 my-3 text-teal-700 font-light border-b-2 border-teal-700">
-        Travellers adventures:
+      <h1 className="text-5xl font-bold md:text-6xl pt-6 pb-2 my-4 text-teal-700  border-b-2 border-teal-700">
+        Traveller's posts
       </h1>
 
       <SearchInput onChange={handleSearchChange} value={search} />

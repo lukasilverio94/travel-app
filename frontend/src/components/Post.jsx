@@ -19,30 +19,30 @@ const Post = ({ post }) => {
       console.error("Error updating rating on server:", error);
     }
   };
- 
+
   const averageRating =
-  post.ratings && post.ratings.length > 0
-    ? post.ratings.reduce((sum, rating) => sum + rating, 0) /
-      post.ratings.length
-    : 0;
+    post.ratings && post.ratings.length > 0
+      ? post.ratings.reduce((sum, rating) => sum + rating, 0) /
+        post.ratings.length
+      : 0;
   return (
     <div
       key={post._id}
       className="w-full flex flex-col border-b-2 pb-5 mt-5 mb-3 md:col-span-1"
     >
       <div className="flex flex-col md:flex-row ">
-        <div className="md:w-2/3 flex flex-col gap-y-1 flex-grow">
+        <div className="w-full md:w-full sm:w-full lg:w-2/3 flex flex-col gap-y-1 flex-grow">
           <h3 className="text-teal-600 text-3xl">
             {post.title}
-            <span className="cursor-pointer">
+            {/* <span className="cursor-pointer">
               <FaStar size={70} color={"#gggggg"} />
               {averageRating}
-            </span>
+            </span> */}
           </h3>
           <div className="my-1">
             <Stars post={post} onRatingChange={handleRatingChange} />
           </div>
-  
+
           <p className="text-slate-800 text-2xl"> {post.place}</p>
           <p>{post.description.slice(0, 25)}...</p>
           <Link to={`posts/details/${post._id}`} className="my-1">
@@ -59,7 +59,7 @@ const Post = ({ post }) => {
             })}{" "}
             by {post.writer}
           </small>
-       
+
           <Comments post={post} />
         </div>
         {post.images && (
@@ -70,10 +70,8 @@ const Post = ({ post }) => {
           />
         )}
       </div>
-     
     </div>
   );
-  
 };
 
 Post.propTypes = {

@@ -1,37 +1,22 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { fetchUserInfo } from "../utils/authUtil.js";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [username, setUsername] = useState(null);
   const [avatar, setAvatar] = useState(null);
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const loadUserInfo = async () => {
+      const userInfo = await fetchUserInfo();
+      setUsername(userInfo.username);
+      setAvatar(userInfo.avatar);
+      setIsLoading(false);
+    };
 
-    if (token) {
-      axios
-        .get("/user/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          localStorage.setItem("user", JSON.stringify(response.data));
-          setUsername(JSON.parse(localStorage.getItem("user")).username);
-
-          setAvatar(JSON.parse(localStorage.getItem("user")).avatar);
-        })
-        .catch((error) => {
-          console.error("Error fetching user information:", error.message);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+    loadUserInfo();
   }, []);
 
   const toggleNav = () => {
@@ -44,7 +29,7 @@ export default function Navbar() {
   const isLoggedIn = localStorage.getItem("token");
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10">
+    <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10 px-3">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"

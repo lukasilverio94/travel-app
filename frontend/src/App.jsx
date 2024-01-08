@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import UserPanel from "./pages/UserPanel";
 import LocationsPage from "./pages/LocationsPage";
+import ScrollToTop from "./components/ScrollToTop";
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -23,7 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-
+      <ScrollToTop />
       <Routes>
         {localStorage.getItem("token") ? (
           <>

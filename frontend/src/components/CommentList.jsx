@@ -4,10 +4,9 @@ import PropTypes from "prop-types";
 import { MdOutlineDelete } from "react-icons/md";
 
 const CommentList = ({ post }) => {
-  const [comments, setComments] = useState(post.comments); // Use state to manage comments
+  const [comments, setComments] = useState(post.comments);
   const [refresh, setRefresh] = useState(false);
 
-  // Fetch comments when the component mounts or when 'refresh' changes
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -22,12 +21,10 @@ const CommentList = ({ post }) => {
     fetchComments();
   }, [post._id, refresh]);
 
-  // Delete Comment
   const handleDeleteComment = (id) => {
     axios
       .delete(`/comments/delete/${id}`)
       .then(() => {
-        // Toggle the refresh state to trigger a re-render
         setRefresh((prevRefresh) => !prevRefresh);
       })
       .catch((error) => {
@@ -38,9 +35,12 @@ const CommentList = ({ post }) => {
   return (
     <div>
       <h3>Comments:</h3>
-      <ul>
+      <ul className="space-y-4">
         {comments.map((comment) => (
-          <li key={comment._id} className="pt-2 bg-slate-100 p-3 my-2">
+          <li
+            key={comment._id}
+            className="pt-2 bg-slate-100 p-3 my-2 lg:w-full"
+          >
             <strong>{comment.writer}: </strong>
             <div className="flex items-center justify-between">
               <p>{comment.commentText}</p>

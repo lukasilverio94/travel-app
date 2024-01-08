@@ -5,6 +5,7 @@ import {
   getTravel,
   updateTravel,
   deleteTravel,
+  deletePostImage,
 } from "../controller/postController.js";
 
 // middlewares
@@ -18,5 +19,6 @@ router.post("/", upload.array("images", 5), addNewTravel); // Add New Post
 router.get("/details/:id", getTravel); // Single Post
 router.put("/update/:id", updateTravel); // Edit post
 router.delete("/delete/:id", deleteTravel); // Delete post
+router.delete("/images/delete/:postId/:filename", deletePostImage); //delete image of post
 
 export default router;

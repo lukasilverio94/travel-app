@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import BackButton from "../components/BackButton";
+import { IoMdClose } from "react-icons/io";
 
 export default function ShowPost() {
   const [post, setPost] = useState({});
@@ -43,6 +44,21 @@ export default function ShowPost() {
       setIsEditMode(false);
     } catch (error) {
       console.error("Error updating post:", error);
+    }
+  };
+
+  //delete img
+  const handleImageDelete = async (index) => {
+    try {
+      const filename = post.images[index].slice(-24);
+      await axios.delete(`/posts/images/delete/${post._id}/${filename}`);
+      // Update the post state to reflect the changes
+      setPost((prevPost) => ({
+        ...prevPost,
+        images: prevPost.images.filter((_, i) => i !== index),
+      }));
+    } catch (error) {
+      console.error("Error deleting image:", error);
     }
   };
 
@@ -115,20 +131,30 @@ export default function ShowPost() {
             )}
           </div>
           {/* IMAGES */}
-          <h1 className="my-3 text-2xl">Post images</h1>
           {post.images && post.images.length > 0 && (
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {post.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={`http://localhost:4000/uploads/${image.slice(-24)}`}
-                  alt={`Image ${index + 1}`}
-                  className="w-full h-full object-cover rounded-md cursor-pointer"
-                  onClick={() => console.log(`Clicked on image ${index + 1}`)}
-                />
+                <div key={index} className="relative">
+                  <img
+                    src={`http://localhost:4000/uploads/${image.slice(-24)}`}
+                    alt={`Image ${index + 1}`}
+                    className="w-full h-full object-cover rounded-md cursor-pointer"
+                    onClick={() => console.log(`Clicked on image ${index + 1}`)}
+                  />
+                  {JSON.parse(localStorage.getItem("user")).username ===
+                    post.writer && (
+                    <button
+                      className="absolute top-2 right-2 text-2xl bg-transparent text-white px-2 py-1 rounded-md"
+                      onClick={() => handleImageDelete(index)}
+                    >
+                      <IoMdClose />
+                    </button>
+                  )}
+                </div>
               ))}
             </div>
           )}
+
           {/* End images */}
         </div>
       ) : (

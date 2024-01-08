@@ -1,29 +1,29 @@
-import Post from '../models/postModel.js';
-import Comment from '../models/commentModel.js';
-import User from '../models/userModel.js';
+import Post from "../models/postModel.js";
+import Comment from "../models/commentModel.js";
+import User from "../models/userModel.js";
+import fs from "fs";
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 //Add New Travel
 export const addNewTravel = async (req, res) => {
-
   const { title, place, description, writer, rating, writerId } = req.body;
   try {
     //Handling Errors (handle in frontend)
     let emptyFields = [];
 
-    if (title.trim() === '') {
-      emptyFields.push('title');
+    if (title.trim() === "") {
+      emptyFields.push("title");
     }
-    if (place.trim() === '') {
-      emptyFields.push('load');
+    if (place.trim() === "") {
+      emptyFields.push("load");
     }
-    if (description.trim() === '') {
-      emptyFields.push('reps');
+    if (description.trim() === "") {
+      emptyFields.push("reps");
     }
     if (emptyFields.length > 0) {
       return res.status(400).json({
-        error: 'Please fill in all fields',
+        error: "Please fill in all fields",
         emptyFields,
       });
     }
@@ -42,13 +42,13 @@ export const addNewTravel = async (req, res) => {
     await User.findByIdAndUpdate(
       req.body.writerId,
       { $push: { posts: travel._id } }, // Change newTravel._id to travel._id
-      { new: true },
+      { new: true }
     );
 
     return res.status(201).json(travel);
   } catch (error) {
-    console.error('Error adding new travel:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error adding new travel:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -59,7 +59,7 @@ export const getAllTravels = async (req, res) => {
     const travels = await Post.find({})
       .sort({ createdAt: -1 })
       .populate({
-        path: 'comments ratings', // Specify the fields to populate
+        path: "comments ratings", // Specify the fields to populate
         options: { sort: { created_at: -1 } }, // Sorting options
       })
       .skip((page - 1) * limit)
@@ -77,15 +77,15 @@ export const getTravel = async (req, res) => {
   const { id } = req.params;
   //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
   const travel = await Post.findById(id).populate({
-    path: 'comments',
+    path: "comments",
     options: { sort: { created_at: -1 } },
   });
 
   if (!travel) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
   return res.status(200).json(travel);
 };
@@ -96,20 +96,20 @@ export const updateTravel = async (req, res) => {
 
   // Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
 
   try {
     let updatedTravel;
 
     // Check if the 'rating' property is present in the request body
-    if ('rating' in req.body) {
+    if ("rating" in req.body) {
       const { rating } = req.body;
 
       updatedTravel = await Post.findOneAndUpdate(
         { _id: id },
         { $push: { ratings: rating } },
-        { new: true },
+        { new: true }
       );
 
       res.json({ post: updatedTravel });
@@ -118,17 +118,17 @@ export const updateTravel = async (req, res) => {
       updatedTravel = await Post.findOneAndUpdate(
         { _id: id },
         { ...req.body },
-        { new: true },
+        { new: true }
       );
       res.json({ post: updatedTravel });
     }
     // Check if the post was found and updated
     if (!updatedTravel) {
-      return res.status(404).json({ error: 'No such post' });
+      return res.status(404).json({ error: "No such post" });
     }
   } catch (error) {
-    console.error('Error updating post:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -137,14 +137,52 @@ export const deleteTravel = async (req, res) => {
   const { id } = req.params;
   //Check if Id matches mongo standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
 
   const workout = await Post.findOneAndDelete({ _id: id });
 
   if (!workout) {
-    return res.status(404).json({ error: 'No such post' });
+    return res.status(404).json({ error: "No such post" });
   }
 
   res.status(200).json(workout);
+};
+
+//Delete image
+export const deletePostImage = async (req, res) => {
+  const { postId, filename } = req.params;
+  console.log(filename);
+
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "No such post" });
+    }
+    //find image index of the image in the post' image array
+    const imageIndex = post.images.findIndex((image) =>
+      image.includes(filename)
+    );
+
+    if (imageIndex === -1) {
+      return res.status(404).json({ error: "Image not found" });
+    }
+
+    //remove the img file from the server
+    fs.unlinkSync(
+      `C:/Users/Lucas/Documents/Matrix Master Bootcamp/MERN Projects/travel-app/backend/public/uploads/${filename}`
+    );
+
+    // remove the image from the post's images array
+    post.images.splice(imageIndex, 1);
+
+    // save the updated post
+    await post.save();
+
+    res.status(204).end();
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };

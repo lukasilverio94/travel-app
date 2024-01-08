@@ -5,6 +5,7 @@ import Post from "./Post";
 import Banner from "./Banner";
 import SearchInput from "./SearchInput";
 import { FaArrowUp } from "react-icons/fa6";
+
 const MemoizedPost = React.memo(Post);
 
 const PostList = () => {

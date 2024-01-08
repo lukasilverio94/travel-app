@@ -15,6 +15,7 @@ export default function ShowPost() {
       try {
         setLoading(true);
         const response = await axios.get(`/posts/details/${id}`);
+        console.log(response.data);
         setPost(response.data);
       } catch (error) {
         console.error(error);
@@ -82,7 +83,7 @@ export default function ShowPost() {
               value={post.description}
               onChange={handleInputChange}
               className="w-full border-2 border-teal-600 focus:outline-none mb-4 resize-y"
-              style={{ minHeight: "100px" }}
+              style={{ minHeight: "200px" }}
             />
           ) : (
             <p className="text-slate-900 mb-4 leading-snug">
@@ -113,6 +114,22 @@ export default function ShowPost() {
               </button>
             )}
           </div>
+          {/* IMAGES */}
+          <h1 className="my-3 text-2xl">Post images</h1>
+          {post.images && post.images.length > 0 && (
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {post.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={`http://localhost:4000/uploads/${image.slice(-24)}`}
+                  alt={`Image ${index + 1}`}
+                  className="w-full h-full object-cover rounded-md cursor-pointer"
+                  onClick={() => console.log(`Clicked on image ${index + 1}`)}
+                />
+              ))}
+            </div>
+          )}
+          {/* End images */}
         </div>
       ) : (
         <>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import CommentList from "./CommentList";
@@ -29,7 +29,7 @@ export default function Comments({ post }) {
         .post("/comments/newComment", comment, {
           withCredentials: true,
         })
-        .then((result) => {
+        .then(() => {
           
           setComment({ ...comment, commentText: "" }); 
           // Toggle the refreshComments state to trigger a re-render of CommentList

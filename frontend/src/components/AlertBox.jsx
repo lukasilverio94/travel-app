@@ -10,7 +10,7 @@ const AlertBox = () => {
 
   return (
     showAlert && (
-      <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mt-4">
+      <div className="w-full max-w-[650px] rounded-xl  bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mt-4">
         <div className="flex">
           <div className="flex-shrink-0">
             {/* Icon */}

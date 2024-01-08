@@ -11,7 +11,7 @@ export default function LocationCard({
 }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h4 className="pb-3 text-3xl font-bold text-gray-800">{title}</h4>
+      <h4 className="pb-3 text-3xl font-bold text-teal-600">{title}</h4>
       <p className="pb-6 text-gray-600">{description}</p>
 
       <h4 className="pb-3 text-2xl font-bold text-gray-800 flex items-center gap-1">

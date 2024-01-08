@@ -3,7 +3,7 @@ export default function Hero() {
     <div className="grid grid-cols-2 grid-rows-6 h-[80vh]">
       <img
         className="row-span-3 object-cover w-full h-full p-2"
-        src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1368&q=80"
+        src="https://plus.unsplash.com/premium_photo-1672855635926-c0c4c0483bf6?q=80&w=1922&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="/"
       />
       <img
@@ -13,12 +13,12 @@ export default function Hero() {
       />
       <img
         className="row-span-2 object-cover w-full h-full p-2"
-        src="https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1772&q=80"
+        src="https://images.unsplash.com/photo-1704251647476-63620121ad8c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="/"
       />
       <img
         className="row-span-3 object-cover w-full h-full p-2"
-        src="https://images.unsplash.com/photo-1468413253725-0d5181091126?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+        src="https://images.unsplash.com/photo-1547991476-3ac613673c46?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="/"
       />
       <img

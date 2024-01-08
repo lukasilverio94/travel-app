@@ -39,8 +39,26 @@ export const locationsData = [
       "Estonia, nestled in the Baltic region of Northern Europe, is a country known for its rich history, vibrant culture, and forward-thinking approach. From medieval architecture in Tallinn to the pristine nature of Lahemaa National Park, Estonia offers a blend of old-world charm and modern innovation.",
     markerIcon: "Tallinn - Old Town Beauty",
     imageSrc:
-      "https://images.unsplash.com/photo-1634937810870-4ce3744c3a42?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1585906725330-0444121fecad?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     altText: "Tallinn - Old Town Beauty in Estonia",
+  },
+  {
+    title: "Croatia",
+    description:
+      "Plitvice Lakes National Park is a breathtaking natural wonder in Croatia, known for its cascading waterfalls, crystal-clear lakes, and lush greenery. Explore wooden pathways that wind through the park, allowing you to witness the beauty of interconnected lakes and vibrant flora and fauna.",
+    markerIcon: "Plitvice Lakes - Natural Paradise",
+    imageSrc:
+      "https://images.unsplash.com/photo-1570135430888-b195b8c21622?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    altText: "Plitvice Lakes - Natural Paradise in Croatia",
+  },
+  {
+    title: "Vietnam",
+    description:
+      "Hoi An, a charming town on Vietnam's central coast, is known for its well-preserved ancient architecture, vibrant lantern-lit streets, and a rich cultural heritage. Explore the historic district, enjoy local cuisine, and experience the magical atmosphere that makes Hoi An a must-visit destination in Asia.",
+    markerIcon: "Hội An, Quang Nam Province",
+    imageSrc:
+      "https://images.unsplash.com/photo-1590119329604-0c0caab2a4e6?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    altText: "Lanterns in Hoi An, Vietnam",
   },
 ];
 
@@ -51,7 +69,7 @@ export default function LocationsPage() {
       <Hero />
       {/* Right Side */}
       <div className="flex flex-col h-full justify-center mx-4">
-        <h3 className="text-5xl md:text-6xl font-bold mt-6 mb-3">
+        <h3 className="text-5xl md:text-6xl font-bold mt-6 mb-3 px-3">
           Ideas for Your Next Trip
         </h3>
 

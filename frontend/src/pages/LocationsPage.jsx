@@ -3,8 +3,7 @@ import React from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Hero from "../components/LocationComponents/Hero";
 import LocationsContainer from "../components/LocationComponents/LocationsContainer";
-// import LocationsContainer from "..components/LocationsContainer";
-// locationsData.js
+
 export const locationsData = [
   {
     title: "Ecuador",

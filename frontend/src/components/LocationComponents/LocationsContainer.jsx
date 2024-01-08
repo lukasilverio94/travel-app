@@ -1,6 +1,6 @@
 // LocationsContainer.jsx
 import React from "react";
-import LocationCard from "./LocationCard";
+import LocationCard from "../LocationComponents/LocationsCard";
 
 export default function LocationsContainer({ locations }) {
   return (

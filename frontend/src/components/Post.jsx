@@ -44,7 +44,7 @@ const Post = ({ post }) => {
           </div>
 
           <p className="text-slate-800 text-2xl"> {post.place}</p>
-          <p>{post.description.slice(0, 25)}...</p>
+          <p>{post.description.slice(0, 125)}...</p>
           <Link to={`posts/details/${post._id}`} className="my-1">
             <span className="flex items-center text-teal-700">
               <span className="hover:border-b hover:border-teal-700">

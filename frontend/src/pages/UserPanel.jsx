@@ -104,9 +104,9 @@ const UserPanel = () => {
           <div>
             <h2>Upload Avatar:</h2>
             <input type="file" accept="image/*" onChange={handleFileChange} />
-            <button onClick={handleUpload} disabled={uploading || !avatar}>
-              {uploading ? "Uploading..." : "Upload"}
-            </button>
+                                                                                              <button onClick={handleUpload} disabled={uploading || !avatar}>
+                                                                                                {uploading ? "Uploading..." : "Upload"}
+                                                                                              </button>
           </div>
 
           {/* "Send" button */}

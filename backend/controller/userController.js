@@ -1,10 +1,14 @@
+// test
+import Post from '../models/postModel.js';
+import Comment from '../models/commentModel.js';
+import Reply from '../models/replyModel.js';
+
 import dotenv from 'dotenv';
 dotenv.config();
 import User from '../models/userModel.js';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
 
 //Function sign up
 export const signup = async (req, res) => {
@@ -77,7 +81,7 @@ export const login = async (req, res) => {
       id: user._id,
       userName: user.userName,
       email: user.email,
-      avatar:user.avatar
+      avatar: user.avatar,
     };
 
     let userToken = jwt.sign({ userInfoForToken }, process.env.SECRET);
@@ -92,19 +96,18 @@ export const login = async (req, res) => {
 };
 
 export const verifyUser = async (req, res) => {
-
   const token = req.headers.authorization;
 
-
   try {
-    const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.SECRET);
-    
+    const decoded = jwt.verify(
+      token.replace('Bearer ', ''),
+      process.env.SECRET,
+    );
 
     res.status(200).json({
       userId: decoded?.userInfoForToken?.id,
       username: decoded?.userInfoForToken?.userName,
       avatar: decoded?.userInfoForToken?.avatar,
-      
     });
   } catch (error) {
     console.error('Error fetching user details:', error);
@@ -122,8 +125,8 @@ export const searchUser = async (req, res) => {
         id: user._id,
         userName: user.userName,
         email: user.email,
-        posts:user.posts,
-        avatar:user.avatar,
+        posts: user.posts,
+        avatar: user.avatar,
       };
       res.status(200).json({ userInfo });
     } else {
@@ -132,13 +135,12 @@ export const searchUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
- 
 
   // Check if Id matches the MongoDB standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -153,10 +155,16 @@ export const updateUser = async (req, res) => {
       newUser.avatar = req.file.path;
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, { avatar: newUser.avatar }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { avatar: newUser.avatar },
+      { new: true },
+    );
 
     // Handle the updated user as needed
-    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+    res
+      .status(200)
+      .json({ message: 'User updated successfully', user: updatedUser });
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ error: 'Internal Server Error' });

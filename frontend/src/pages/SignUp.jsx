@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [user, setUser] = useState({
@@ -8,8 +9,6 @@ export default function SignUp() {
     email: "",
     password: "",
   });
-  const [err, setErr] = useState();
-  const [success, setSuccess] = useState();
 
   const signUpUser = (e) => {
     e.preventDefault();
@@ -19,15 +18,16 @@ export default function SignUp() {
           withCredentials: true,
         })
         .then((result) => {
-          setSuccess(result.data);
+          console.log(result.data);
+          toast.success("Account created with success");
           window.location.href = "/signIn";
         })
         .catch((err) => {
           console.error(err);
-          setErr(err.response.data);
+          toast.error(err.response.data);
         });
     } else {
-      setErr("Email, Username  and Password are required");
+      toast.error("All fields are required");
     }
   };
 
@@ -40,9 +40,9 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen ">
       <h2 className="text-2xl font-bold mb-4">Sign up</h2>
-      <form onSubmit={signUpUser} className="w-96">
+      <form onSubmit={signUpUser} className="w-full max-w-md px-4">
         <label htmlFor="userName" className="block mb-1">
           * Username
         </label>
@@ -86,8 +86,6 @@ export default function SignUp() {
           Sign up
         </button>
       </form>
-      <h5 className="text-red-500 mt-2">{err}</h5>
-      <h5 className="text-green-500 mt-2">{success}</h5>
 
       <Link to="/signIn" className="mt-4 text-blue-500">
         <span>Have an account?</span>

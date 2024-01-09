@@ -23,7 +23,7 @@ const commentSchema = new Schema({
   replies: [
     {
       replyText: String, // Assuming replyText is a string
-      // Add other fields if needed
+      writer: String,
     },
   ],
 },

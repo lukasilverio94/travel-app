@@ -35,7 +35,7 @@ const CommentList = ({ post }) => {
   
     try {
       const response = await axios.put(`/comments/update/${commentId}`, {
-        replyText: reply.replyText,
+        replyText: reply.replyText,writer: JSON.parse(localStorage.getItem('user')).username
       });
   console.log(response);
       // Update the comment in the state with the new reply
@@ -80,6 +80,14 @@ const CommentList = ({ post }) => {
             <strong>{comment.writer}: </strong>
             <div className="flex items-center justify-between">
               <p>{comment.commentText}</p>
+              <ul>
+                {comment.replies.map((reply) => (
+                  <li key={reply._id}>
+                    <strong>{reply.writer} </strong>
+                    <p>{reply.replyText}</p>
+                  </li>
+                ))}
+              </ul>
               {user && user.username === comment.writer ? (
                 <div>
                   {isReplyMode ? (

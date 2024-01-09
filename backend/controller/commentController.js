@@ -52,7 +52,7 @@ export const updateComment = async (req, res) => {
     // Update general comment information
     const updatedComment = await Comment.findOneAndUpdate(
       { _id: id },
-      { $push: { replies: { replyText: req.body.replyText } } },// Fix the typo here
+      { $push: { replies: { replyText: req.body.replyText, writer: req.body.writer } } },
       { new: true },
     );
 

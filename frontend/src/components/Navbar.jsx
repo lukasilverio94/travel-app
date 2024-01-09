@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchUserInfo } from "../utils/authUtil.js";
+import ThemeBtn from "./ThemeBtn.jsx";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -164,6 +165,7 @@ export default function Navbar() {
                     </span>
                   </Link>
                 </li>
+                <ThemeBtn />
               </>
             ) : (
               <>

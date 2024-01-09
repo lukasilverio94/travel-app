@@ -54,7 +54,7 @@ export const addNewTravel = async (req, res) => {
 
 //Get All Travels
 export const getAllTravels = async (req, res) => {
-  const { page = 1, limit = 3 } = req.query;
+  const { page = 1, limit = 5 } = req.query;
   try {
     const travels = await Post.find({})
       .sort({ createdAt: -1 })

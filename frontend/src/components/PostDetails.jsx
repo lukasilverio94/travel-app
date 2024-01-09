@@ -12,7 +12,7 @@ const PostDetails = ({
   handleEditMode,
 }) => {
   return (
-    <div className="bg-white p-6 rounded-md shadow-md mt-7">
+    <div className="w-full bg-white p-6 rounded-md shadow-md mt-7">
       <h3 className="text-teal-600 text-3xl mb-4">
         {isEditMode ? (
           <input
@@ -45,10 +45,16 @@ const PostDetails = ({
           value={post.description}
           onChange={handleInputChange}
           className="w-full border-2 border-teal-600 focus:outline-none mb-4 resize-y"
-          style={{ minHeight: "200px" }}
+          style={{
+            minHeight: "200px",
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+          }}
         />
       ) : (
-        <p className="text-slate-900 mb-4 leading-snug">{post.description}</p>
+        <p className="text-slate-900 mb-4 leading-snug break-words overflow-hidden">
+          {post.description}
+        </p>
       )}
 
       <div className="flex items-center gap-4 mt-2">

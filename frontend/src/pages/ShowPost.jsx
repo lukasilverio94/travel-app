@@ -16,7 +16,7 @@ const ShowPost = () => {
       try {
         setLoading(true);
         const response = await axios.get(`/posts/details/${id}`);
-        console.log(response.data);
+
         setPost(response.data);
       } catch (error) {
         console.error(error);
@@ -46,6 +46,24 @@ const ShowPost = () => {
     }
   };
 
+  // Function to handle image upload
+
+  const handleImageUpload = async (files) => {
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append("images", files[i]);
+    }
+
+    try {
+      const response = await axios.put(`/posts/update/${id}`, formData);
+      console.log(response.data.post);
+      setPost(response.data.post);
+    } catch (error) {
+      console.error("Error updating post with new image:", error);
+    }
+  };
+
   const handleImageDelete = async (index) => {
     try {
       const filename = post.images[index].slice(-24);
@@ -63,14 +81,40 @@ const ShowPost = () => {
     <div className="container mx-auto p-10 mt-20 mb-8 overflow-hidden ">
       <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
-        <PostDetails
-          post={post}
-          isEditMode={isEditMode}
-          handleSave={handleSave}
-          handleInputChange={handleInputChange}
-          handleImageDelete={handleImageDelete}
-          handleEditMode={handleEditMode}
-        />
+        <>
+          <PostDetails
+            post={post}
+            isEditMode={isEditMode}
+            handleSave={handleSave}
+            handleInputChange={handleInputChange}
+            handleImageUpload={handleImageUpload}
+            handleImageDelete={handleImageDelete}
+            handleEditMode={handleEditMode}
+          />
+          {/* Add new image */}
+          <div className="mb-4">
+            <label
+              htmlFor="newImage"
+              className="text-green-900 block mt-5 text-2xl"
+            >
+              Add new image(s) to current post
+            </label>
+            <input
+              type="file"
+              name="images"
+              multiple
+              accept="image/*"
+              onChange={(e) => setNewImage(e.target.files)}
+              className="border-2 p-2 mt-2"
+            />
+            <button
+              onClick={() => handleImageUpload(newImage)}
+              className="bg-gray-800 text-white p-3 px-5 mt-2 rounded"
+            >
+              Upload
+            </button>
+          </div>
+        </>
       ) : (
         <>
           <h3 className="text-teal-600 text-3xl mt-4">{post.title}</h3>

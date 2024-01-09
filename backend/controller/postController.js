@@ -102,7 +102,6 @@ export const updateTravel = async (req, res) => {
   try {
     let updatedTravel;
 
-    // Check if the 'rating' property is present in the request body
     if ("rating" in req.body) {
       const { rating } = req.body;
 
@@ -112,23 +111,31 @@ export const updateTravel = async (req, res) => {
         { new: true }
       );
 
-      res.json({ post: updatedTravel });
-    } else {
-      // Update general travel information
-      updatedTravel = await Post.findOneAndUpdate(
-        { _id: id },
-        { ...req.body },
-        { new: true }
-      );
-      res.json({ post: updatedTravel });
+      return res.json({ post: updatedTravel });
     }
-    // Check if the post was found and updated
-    if (!updatedTravel) {
-      return res.status(404).json({ error: "No such post" });
+
+    // retrieve the post with existing information
+    updatedTravel = await Post.findById(id);
+
+    if (req.files && req.files.length > 0) {
+      if (updatedTravel.images && updatedTravel.images.length > 0) {
+        const newImages = req.files.map((file) => file.path);
+        updatedTravel.images = [...updatedTravel.images, ...newImages];
+      } else {
+        updatedTravel.images = req.files.map((file) => file.path);
+      }
     }
+    // Update general travel information
+    updatedTravel = await Post.findOneAndUpdate(
+      { _id: id },
+      { ...req.body, images: updatedTravel.images },
+      { new: true }
+    );
+
+    return res.json({ post: updatedTravel });
   } catch (error) {
     console.error("Error updating post:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

@@ -48,8 +48,7 @@ const ShowPost = () => {
     }
   };
 
-  // Function to handle image upload
-
+  // Images upload
   const handleImageUpload = async (files) => {
     const formData = new FormData();
 

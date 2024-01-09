@@ -2,6 +2,7 @@ import PostDetails from "../components/PostDetails";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
+import { isImageValid } from "../utils/imageFormatUtils";
 import axios from "axios";
 
 const ShowPost = () => {
@@ -9,6 +10,7 @@ const ShowPost = () => {
   const [loading, setLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [newImage, setNewImage] = useState(null);
+  const [formatError, setFormatError] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -56,6 +58,19 @@ const ShowPost = () => {
     }
 
     try {
+      // Check if the image format is valid
+      if (!isImageValid(files)) {
+        setFormatError(
+          "Some of the selected files are not in a supported. Please only upload files in JPEG or PNG format."
+        );
+        //clear error after 3 seconds
+        setTimeout(() => {
+          setFormatError(null);
+        }, 3000);
+
+        return;
+      }
+
       const response = await axios.put(`/posts/update/${id}`, formData);
       console.log(response.data.post);
       setPost(response.data.post);
@@ -113,6 +128,9 @@ const ShowPost = () => {
             >
               Upload
             </button>
+            {formatError && (
+              <p className="text-red-600 mt-2 font-semibold">{formatError}</p>
+            )}
           </div>
         </>
       ) : (

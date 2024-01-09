@@ -18,10 +18,9 @@ export default function SignUp() {
           withCredentials: true,
         })
         .then((result) => {
-          console.log(result.data);
-          toast.success("Account created with success");
           window.location.href = "/signIn";
         })
+
         .catch((err) => {
           console.error(err);
           toast.error(err.response.data);

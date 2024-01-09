@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { isImageValid } from "../utils/imageFormatUtils.js";
 import BackButton from "../components/BackButton";
+import { toast } from "react-toastify";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
-  // const [writerID, setWriterID] = useState("");
   const [files, setFiles] = useState([]);
-  // const [postId, setPostId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -58,8 +57,11 @@ export default function CreatePost() {
         },
         withCredentials: true,
       });
-      console.log(response.data);
-      // setPostId(response.data._id);
+
+      toast.success("Post added successfully", {
+        autoClose: 1000,
+        position: "top-right",
+      });
 
       navigate("/");
     } catch (error) {
@@ -79,36 +81,38 @@ export default function CreatePost() {
       <BackButton />
       <form
         encType="multipart/form-data"
-        className="flex flex-col my-6 border-2 border-teal-700 rounded-xl w-full sm:w-100 lg:max-w-[800px] p-8 mx-auto"
+        className="flex flex-col mb-6 rounded-xl w-full sm:w-100 lg:max-w-[800px] p-3 m-auto"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-3xl my-4">Create Travel Story: </h1>
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Post title</label>
+        <h1 className="text-3xl lg:text-5xl sm:text-3xl my-2 text-teal-600 underline">
+          New post:
+        </h1>
+        <div className="my-3">
+          <label className="text-xl mr-4 text-gray-600">Post title</label>
           <input
             type="text"
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="border-2 border-gray-500 px-4 py-2 w-full rounded-lg"
             placeholder="Title for your experience"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Location</label>
+        <div className="my-3">
+          <label className="text-xl mr-4 text-gray-600">Location</label>
           <input
             type="text"
-            className="border-2 border-gray-500 px-4 py-2  w-full "
-            placeholder="location where happened the adventure"
+            className="border-2 border-gray-500 px-4 py-2  w-full rounded-lg"
+            placeholder="Location from your adventure"
             value={place}
             onChange={(e) => setPlace(e.target.value)}
             required
           />
         </div>
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Description</label>
+        <div className="my-3">
+          <label className="text-xl mr-4 text-gray-600">Description</label>
           <textarea
-            className="border-2 border-gray-500 px-4 py-2  w-full resize-none"
+            className="border-2 border-gray-500 px-4 py-2 w-full min-h-20 resize-none rounded-lg"
             placeholder="Tell us your experience..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -117,6 +121,9 @@ export default function CreatePost() {
         </div>
         {/* Upload image */}
         <div>
+          <h4 className="text-teal-600 text-lg font-semibold">
+            Add images to post
+          </h4>
           <input
             type="file"
             name="images"

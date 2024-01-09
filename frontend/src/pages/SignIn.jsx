@@ -67,7 +67,7 @@ export default function SignIn() {
         </form>
 
         <Link to="/signUp">
-          <p className="mt-2 text-blue-500">
+          <p className="mt-2 text-blue-700">
             Don't have an account yet?
             <span className="font-bold hover:underline ml-1">Sign up!</span>
           </p>

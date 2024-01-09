@@ -17,11 +17,13 @@ export default function LocationCard({
         <FaMapMarkerAlt className="text-orange-700" />
         <span>{markerIcon}</span>
       </h4>
-      <img
-        className="w-full h-full max-h-[300px] object-cover bg-center rounded-md shadow-lg"
-        src={imageSrc}
-        alt={altText}
-      />
+      <div className="relative overflow-hidden max-h-[350px] h-auto rounded-md shadow-lg">
+        <img
+          className="w-full h-full object-cover bg-center"
+          src={imageSrc}
+          alt={altText}
+        />
+      </div>
     </div>
   );
 }

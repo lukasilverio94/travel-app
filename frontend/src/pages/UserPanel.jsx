@@ -70,11 +70,6 @@ const UserPanel = () => {
     }
   };
 
-  const handleSendButtonClick = () => {
-    // Trigger the avatar upload when the "Send" button is clicked
-    handleUpload();
-  };
-
   return (
     <div className="container mx-auto p-6 mt-20">
       <BackButton />
@@ -101,18 +96,16 @@ const UserPanel = () => {
           <p>User ID: {user.id}</p>
           <p>Username: {user.userName}</p>
 
-          <div>
+          <div className="flex flex-col">
             <h2>Upload Avatar:</h2>
             <input type="file" accept="image/*" onChange={handleFileChange} />
-                                                                                              <button onClick={handleUpload} disabled={uploading || !avatar}>
-                                                                                                {uploading ? "Uploading..." : "Upload"}
-                                                                                              </button>
+            {uploading ? "Uploading..." : ""}
           </div>
 
           {/* "Send" button */}
           <button
             className="w-full bg-teal-500 text-white py-2 rounded"
-            onClick={handleSendButtonClick}
+            onClick={handleUpload}
           >
             Save
           </button>

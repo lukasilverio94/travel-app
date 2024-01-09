@@ -4,7 +4,8 @@ import Loader from "./Loader";
 import Post from "./Post";
 import Banner from "./Banner";
 import SearchInput from "./SearchInput";
-import Carousel from "./Carousel";
+import { FaArrowUp } from "react-icons/fa6";
+
 const MemoizedPost = React.memo(Post);
 
 const PostList = () => {
@@ -13,11 +14,33 @@ const PostList = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
     loadPosts();
   }, [currentPage]);
+
+  useEffect(() => {
+    // Update showScrollToTop state based on scroll position
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 200
+      ) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Remove event listener when component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const loadPosts = () => {
     setLoading(true);
@@ -68,11 +91,17 @@ const PostList = () => {
     setCurrentPage(1); // Reset current page when the search term changes
   };
 
+  // Scroll configs
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="container px-6 mt-20 mb-24">
+    <div className="container mx-auto px-6 mt-20 mb-24">
+      {/* Use 'mx-auto' to center the container and 'w-full' to take full width on smaller screens */}
       <Banner />
-      <h1 className="text-4xl pt-6 pb-2 my-3 text-teal-700 font-light border-b-2 border-teal-700">
-        Travellers adventures:
+      <h1 className="text-5xl font-bold md:text-6xl pt-6 pb-2 my-4 text-teal-700  border-b-2 border-teal-700">
+        Traveller's posts
       </h1>
 
       <SearchInput onChange={handleSearchChange} value={search} />
@@ -106,8 +135,14 @@ const PostList = () => {
           Load More
         </button>
       )}
-
-      <Carousel />
+      {showScrollToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-4 right-4 p-2 bg-teal-700 text-white rounded-full"
+        >
+          <FaArrowUp />
+        </button>
+      )}
     </div>
   );
 };

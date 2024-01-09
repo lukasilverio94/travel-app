@@ -74,9 +74,12 @@ const CommentList = ({ post }) => {
   return (
     <div>
       <h3>Comments:</h3>
-      <ul>
+      <ul className="space-y-4">
         {comments.map((comment) => (
-          <li key={comment._id} className="pt-2 bg-slate-100 p-3 my-2">
+          <li
+            key={comment._id}
+            className="pt-2 bg-slate-100 p-3 my-2 lg:w-full"
+          >
             <strong>{comment.writer}: </strong>
             <div className="flex items-center justify-between">
               <p>{comment.commentText}</p>

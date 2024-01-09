@@ -49,7 +49,8 @@ export default function Comments({ post }) {
 
   return (
     <div className="container mb-2">
-      <form onSubmit={submitComment} className="max-w-md">
+      <form onSubmit={submitComment} className="w-full lg:max-w-[80%]">
+        {/* Use md:w-full to make it full width on md screens and lg:w-1/2 to make it half width on lg screens */}
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
           type="text"
@@ -70,8 +71,7 @@ export default function Comments({ post }) {
       <button onClick={toggleShowComment} className="my-2 italic text-teal-600">
         {showComment ? "Hide Comment" : "View all Comments"}
       </button>
-      {showComment && <CommentList post={post} refresh={refreshComments} />}{" "}
-      {/* Pass the refresh state to CommentList */}
+      {showComment && <CommentList post={post} refresh={refreshComments} />}
     </div>
   );
 }

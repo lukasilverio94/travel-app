@@ -40,7 +40,10 @@ export default function CreatePost() {
         "writer",
         JSON.parse(localStorage.getItem("user")).username
       );
-      formData.append("writerId", JSON.parse(localStorage.getItem("user")).userId);
+      formData.append(
+        "writerId",
+        JSON.parse(localStorage.getItem("user")).userId
+      );
       for (let i = 0; i < files.length; i++) {
         formData.append("images", files[i]);
       }
@@ -133,7 +136,7 @@ export default function CreatePost() {
         </div>
 
         <button
-          className="p-2 bg-teal-700 w-100 text-white my-3"
+          className="rounded-lg p-2 bg-teal-700 w-100 text-white my-3"
           disabled={loading}
         >
           {loading ? "Saving..." : "Save"}

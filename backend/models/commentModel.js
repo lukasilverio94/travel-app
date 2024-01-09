@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
-const commentSchema = new mongoose.Schema({
-  
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
+
+const commentSchema = new Schema({
   writer: {
     type: String,
     required: false,
@@ -10,7 +11,6 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  
   created_at: {
     type: Date,
     default: Date.now,
@@ -20,10 +20,16 @@ const commentSchema = new mongoose.Schema({
     ref: 'Post',
     required: false,
   },
+  replies: [
+    {
+      replyText: String, // Assuming replyText is a string
+      writer: String,
+    },
+  ],
+},
+{ timestamps: true }
+);
 
-}
-,
-  { timestamps: true });
 
 const Comment = mongoose.model('Comment', commentSchema);
 

@@ -1,43 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import classNames from "classnames";
+import useTheme from "../context/theme";
 
 export default function ThemeBtn() {
+  const { themeMode, lightTheme, darkTheme } = useTheme();
+  const [isSelected, setIsSelected] = useState(false);
+
+  const onChangeBtn = () => {
+    setIsSelected(!isSelected);
+    isSelected ? lightTheme() : darkTheme();
+  };
+
   return (
-    <button
-      title="Toggle Theme"
-      class="
-        w-12 
-        h-6 
-        rounded-full 
-        p-1 
-        bg-transparent
-        relative 
-        transition-colors 
-        duration-500 
-        ease-in
-        focus:outline-none 
-        focus:ring-2 
-        focus:ring-blue-700 
-        dark:focus:ring-blue-600 
-        focus:border-transparent
-      "
+    <div
+      onClick={onChangeBtn}
+      checked={themeMode === "dark"}
+      className={classNames(
+        "flex  w-12 h-6 bg-gray-600 rounded-full transition-all duration-500",
+        {
+          "bg-green-500": isSelected,
+        }
+      )}
     >
-      <div
-        id="toggle"
-        class="
-            rounded-full 
-            w-4 
-            h-4 
-            bg-blue-600 
-            dark:bg-blue-500 
-            relative 
-            ml-0 
-            dark:ml-6 
-            pointer-events-none 
-            transition-all 
-            duration-300 
-            ease-out
-        "
-      ></div>
-    </button>
+      <span
+        className={classNames(
+          "cursor-pointer w-6 h-6 bg-white shadow-lg rounded-full transition-all duration-500",
+          {
+            "ml-6": isSelected,
+          }
+        )}
+      ></span>
+    </div>
+    // <div
+    //   className={`bg-gray-500 w-20 mx-auto mt-10 cursor-pointer rounded-3xl toggler ${
+    //     isDarkMode ? "dark:bg-green-500" : "dark:bg-blue-500"
+    //   }`}
+    //   onClick={handleToggleClick}
+    // >
+    //   <div
+    //     className={`bg-white w-10 h-10 scale-75 rounded-3xl transition-transform ${
+    //       isDarkMode ? "dark:bg-black" : "dark:bg-gray-300"
+    //     }`}
+    //   ></div>
+    // </div>
   );
 }

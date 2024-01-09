@@ -33,43 +33,47 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center h-screen mx-6 md:w-full ">
+    <div className="flex flex-col  md:flex-row items-center justify-center h-screen md:w-full dark:bg-gray-900 ">
       {/* Left column with image (to be added) */}
-      <div className="md:w-1/2 p-4 hidden md:block">
+      <div className="p-4 hidden md:block dark:bg-gray-900">
         {/* image */}
         <div>
-          <img src="/assets/login-photo.png" alt="Login photo" />
+          <img src="/assets/hero_banner.png" alt="Login photo" />
         </div>
       </div>
 
       {/* Right column with login form */}
       <div className="md:w-1/2">
-        <h2 className="text-2xl font-bold mb-4 ">Sign In</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-700 dark:text-teal-500 ">
+          Sign in
+        </h2>
         <form onSubmit={submitLogIn} className="w-full max-w-md">
           <input
-            className="w-full border border-gray-300 mb-4  p-2 rounded"
+            className="w-full border-2 border-gray-300 mb-4  p-2 rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
             type="email"
             placeholder=" * Enter your email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            className="w-full border border-gray-300 mb-4  p-2  rounded"
+            className="w-full border-2 border-gray-300 mb-4  p-2 rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
             type="password"
             placeholder=" * Enter your password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
-            className="w-full bg-teal-500 text-white py-2 rounded"
+            className="w-full bg-teal-500 text-white py-2 rounded-lg"
             type="submit"
           >
-            Sign In
+            Login
           </button>
         </form>
 
         <Link to="/signUp">
-          <p className="mt-2 text-blue-700">
+          <p className="mt-2 text-blue-700 dark:text-gray-300">
             Don't have an account yet?
-            <span className="font-bold hover:underline ml-1">Sign up!</span>
+            <span className="font-bold hover:underline ml-1 dark:text-teal-300">
+              Sign up!
+            </span>
           </p>
         </Link>
       </div>

@@ -21,7 +21,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ThemeProvider } from "./context/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
@@ -37,8 +37,14 @@ function App() {
   const lightTheme = () => {
     setThemeMode("light");
   };
+  useEffect(() => {
+    const htmlElement = document.querySelector("html");
+    htmlElement.classList.remove("dark", "light");
+    htmlElement.classList.add(themeMode);
+  }, [themeMode]);
+
   return (
-    <ThemeProvider>
+    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
       <BrowserRouter>
         <ToastContainer />
         <Navbar />

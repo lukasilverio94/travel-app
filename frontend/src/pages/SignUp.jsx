@@ -39,14 +39,16 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen ">
-      <h2 className="text-2xl font-bold mb-4">Sign up</h2>
+    <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-900 text-gray-700 dark:text-gray-300">
+      <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-12 text-gray-700 dark:text-teal-500">
+        Sign up
+      </h2>
       <form onSubmit={signUpUser} className="w-full max-w-md px-4">
         <label htmlFor="userName" className="block mb-1">
           * Username
         </label>
         <input
-          className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
+          className="w-full border-2 border-gray-300 mb-4  p-2 rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
           type="text"
           id="userName"
           name="userName"
@@ -58,7 +60,7 @@ export default function SignUp() {
           * Email
         </label>
         <input
-          className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
+          className="w-full border-2 border-gray-300 mb-4  p-2 rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
           type="email"
           id="email"
           name="email"
@@ -70,7 +72,7 @@ export default function SignUp() {
           * Password
         </label>
         <input
-          className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
+          className="w-full border-2 border-gray-300 mb-4  p-2 rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
           type="password"
           id="password"
           name="password"
@@ -79,16 +81,20 @@ export default function SignUp() {
         />
 
         <button
-          className="w-full bg-teal-500 text-white py-2 rounded"
+          className="w-full bg-teal-500 text-white py-2 rounded-lg"
           type="submit"
         >
           Sign up
         </button>
       </form>
 
-      <Link to="/signIn" className="mt-4 text-blue-500">
-        <span>Have an account?</span>
-        <span className="ml-1 font-bold">Sign In!</span>
+      <Link to="/signIn">
+        <p className="mt-2 text-blue-700 dark:text-gray-300">
+          Already have account?
+          <span className="font-bold hover:underline ml-1 dark:text-teal-300">
+            Sign in!
+          </span>
+        </p>
       </Link>
     </div>
   );

@@ -12,5 +12,6 @@ export default {
       parallax: 'url("../assets/banner.jpg")',
     },
   },
+  darkMode: "class",
   plugins: [],
 };

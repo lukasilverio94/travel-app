@@ -28,26 +28,27 @@ const Post = ({ post }) => {
   return (
     <div
       key={post._id}
-      className="w-full flex flex-col border-b-2 pb-5 mt-5 mb-3 md:col-span-1"
+      className="w-full flex flex-col border-b-2 dark:border-teal-500 pb-5 mt-5 mb-3 md:col-span-1"
     >
       <div className="flex flex-col md:flex-row ">
         <div className="w-full md:w-full sm:w-full lg:w-2/3 flex flex-col gap-y-1 flex-grow">
-          <h3 className="text-teal-600 text-3xl">
+          <h3 className="text-teal-600 text-3xl dark:text-teal-500">
             {post.title}
-            {/* <span className="cursor-pointer">
-              <FaStar size={70} color={"#gggggg"} />
-              {averageRating}
-            </span> */}
           </h3>
           <div className="my-1">
             <Stars post={post} onRatingChange={handleRatingChange} />
           </div>
 
-          <p className="text-slate-800 text-2xl"> {post.place}</p>
-          <p>{post.description.slice(0, 35)}...</p>
+          <p className="text-slate-800 text-2xl dark:text-slate-300">
+            {" "}
+            {post.place}
+          </p>
+          <p className="dark:text-slate-300">
+            {post.description.slice(0, 35)}...
+          </p>
           <Link to={`posts/details/${post._id}`} className="my-1">
             <span className="flex items-center text-teal-700">
-              <span className="hover:border-b hover:border-teal-700">
+              <span className="hover:border-b hover:border-teal-700 dark:text-teal-500">
                 Read more
               </span>
               <FaArrowRightLong className="ms-1" />

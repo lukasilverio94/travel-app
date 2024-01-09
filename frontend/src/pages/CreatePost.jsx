@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import Loader from "../components/Loader";
-
+import { isImageValid } from "../utils/imageFormatUtils.js";
 import BackButton from "../components/BackButton";
 
 export default function CreatePost() {
@@ -16,17 +15,6 @@ export default function CreatePost() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  //Validate image format
-  const isImageValid = (files) => {
-    const validFormats = ["image/jpeg", "image/png"];
-
-    for (let i = 0; i < files.length; i++) {
-      if (!validFormats.includes(files[i].type)) {
-        return false;
-      }
-    }
-    return true;
-  };
   // Add Post
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,12 +38,14 @@ export default function CreatePost() {
 
       // Check if the image format is valid
       if (!isImageValid(files)) {
-        setError("Invalid image format. Please use JPEG or PNG.");
+        setError(
+          "Some of the selected files are not in a supported. Please only upload files in JPEG or PNG format."
+        );
 
-        // Clear the error message after 3 seconds
+        // clear the error message after 3 seconds
         setTimeout(() => {
           setError(null);
-        }, 3000);
+        }, 4000);
 
         return;
       }
@@ -141,7 +131,9 @@ export default function CreatePost() {
         >
           {loading ? "Saving..." : "Save"}
         </button>
-        {error && <p className="text-red-600 text-center">{error}</p>}
+        {error && (
+          <p className="text-red-600 text-center font-semibold">{error}</p>
+        )}
       </form>
     </div>
   );

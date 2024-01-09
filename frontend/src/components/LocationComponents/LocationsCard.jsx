@@ -11,21 +11,19 @@ export default function LocationCard({
 }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h4 className="pb-3 text-3xl font-bold text-gray-800">{title}</h4>
+      <h4 className="pb-3 text-3xl font-bold text-teal-600">{title}</h4>
       <p className="pb-6 text-gray-600">{description}</p>
-
       <h4 className="pb-3 text-2xl font-bold text-gray-800 flex items-center gap-1">
         <FaMapMarkerAlt className="text-orange-700" />
         <span>{markerIcon}</span>
       </h4>
-
-      <p className="pb-6 text-gray-600">{markerIcon}</p>
-
-      <img
-        className="w-full h-full max-h-[300px] object-cover bg-center rounded-md shadow-lg"
-        src={imageSrc}
-        alt={altText}
-      />
+      <div className="relative overflow-hidden max-h-[350px] h-auto rounded-md shadow-lg">
+        <img
+          className="w-full h-full object-cover bg-center"
+          src={imageSrc}
+          alt={altText}
+        />
+      </div>
     </div>
   );
 }

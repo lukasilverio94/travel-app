@@ -77,18 +77,18 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="p-4 mt-16 dark:bg-gray-900 dark:text-teal-500">
+    <div className="p-4 mt-16 dark:bg-gray-950 dark:text-slate-200">
       <BackButton />
       <form
         encType="multipart/form-data"
         className="flex flex-col mb-6 rounded-xl w-full sm:w-100 lg:max-w-[800px] p-3 m-auto"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-3xl lg:text-5xl sm:text-3xl my-2 text-teal-600 mb-5 dark:text-teal-500">
+        <h1 className="text-3xl lg:text-5xl sm:text-3xl my-2 text-teal-600 mb-5 dark:text-slate-200">
           New post:
         </h1>
         <div className="my-4">
-          <label className="text-xl mr-4 text-gray-600 dark:text-teal-500">
+          <label className="text-xl mr-4 text-gray-600 dark:text-slate-200">
             Post title
           </label>
           <input
@@ -101,7 +101,7 @@ export default function CreatePost() {
           />
         </div>
         <div className="my-4">
-          <label className="text-xl mr-4 text-gray-600 dark:text-teal-500">
+          <label className="text-xl mr-4 text-gray-600 dark:text-slate-200">
             Location
           </label>
           <input
@@ -114,7 +114,7 @@ export default function CreatePost() {
           />
         </div>
         <div className="my-4">
-          <label className="text-xl mr-4 text-gray-600 dark:text-teal-500">
+          <label className="text-xl mr-4 text-gray-600 dark:text-slate-200">
             Description
           </label>
           <textarea
@@ -127,7 +127,7 @@ export default function CreatePost() {
         </div>
         {/* Upload image */}
         <div>
-          <h4 className="text-teal-600 text-lg font-semibold">
+          <h4 className="text-teal-600 dark:text-slate-200 text-lg font-semibold">
             Add images to post
           </h4>
           <input
@@ -139,7 +139,7 @@ export default function CreatePost() {
         </div>
 
         <button
-          className="rounded-lg p-2 bg-teal-700 w-100 text-white my-3"
+          className="rounded-lg p-2 bg-teal-700 w-100 dark:bg-gray-500 dark:hover:bg-gray-400 text-white my-3"
           disabled={loading}
         >
           {loading ? "Saving..." : "Save"}

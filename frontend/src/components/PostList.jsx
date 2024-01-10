@@ -97,10 +97,10 @@ const PostList = () => {
   };
 
   return (
-    <div className="mx-auto px-6 mt-16 pb-12 dark:bg-gray-900 dark:text-slate-300">
+    <div className="mx-auto px-6 mt-16 pb-12 dark:bg-gray-950 dark:text-slate-200">
       {/* Use 'mx-auto' to center the container and 'w-full' to take full width on smaller screens */}
       <Banner />
-      <h1 className="text-5xl font-bold md:text-6xl pt-6 pb-2 my-4 text-teal-700 dark:text-teal-500 border-b-2 border-teal-700 dark-border-teal-500">
+      <h1 className="text-5xl font-bold md:text-6xl pt-6 pb-2 my-4 text-teal-700 dark:text-gray-300   dark:border-slate-200">
         Traveller's posts
       </h1>
 
@@ -130,7 +130,7 @@ const PostList = () => {
       {hasMore && (
         <button
           onClick={loadMore}
-          className="mt-4 p-2 bg-teal-500 text-white rounded"
+          className="mt-4 p-2 bg-teal-500 text-white rounded dark:bg-gray-500"
         >
           Load More
         </button>

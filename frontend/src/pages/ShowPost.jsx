@@ -92,7 +92,7 @@ const ShowPost = () => {
   };
 
   return (
-    <div className="mx-auto p-10 mt-16  overflow-hidden dark:bg-gray-900">
+    <div className="mx-auto p-10 mt-16  overflow-hidden dark:bg-gray-950">
       <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
         <>
@@ -106,10 +106,10 @@ const ShowPost = () => {
             handleEditMode={handleEditMode}
           />
           {/* Add new image */}
-          <div className="mb-4 dark:text-slate-200 dark:bg-gray-900">
+          <div className="mb-4 dark:text-slate-200 dark:bg-gray-950">
             <label
               htmlFor="newImage"
-              className="dark:text-green-300 block mt-5 text-2xl"
+              className="dark:text-slate-300 block mt-5 text-2xl"
             >
               Add new image(s) to current post
             </label>
@@ -123,7 +123,7 @@ const ShowPost = () => {
             />
             <button
               onClick={() => handleImageUpload(newImage)}
-              className="bg-gray-800 text-white p-4 px-6 mt-2 rounded dark:bg-teal-500"
+              className="bg-gray-800 text-white p-4 px-6 mt-2  dark:bg-slate-300 dark:text-gray-900"
             >
               Upload
             </button>

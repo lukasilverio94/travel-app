@@ -12,15 +12,15 @@ const PostDetails = ({
   handleEditMode,
 }) => {
   return (
-    <div className="w-full bg-white p-6 mt-7 dark:bg-gray-900 dark:text-slate-200 leading-loose">
-      <h3 className="text-teal-600 text-3xl mb-4 dark:text-teal-400">
+    <div className="w-full bg-white p-6 mt-7 dark:bg-gray-950 dark:text-slate-200 leading-loose">
+      <h3 className="text-teal-600 text-3xl mb-4 dark:text-white">
         {isEditMode ? (
           <input
             type="text"
             name="title"
             value={post.title}
             onChange={handleInputChange}
-            className="w-full border-b-2 border-teal-600 focus:outline-none text-xl dark:bg-transparent dark:border-2 dark:p-2"
+            className="w-full border-b-2 border-teal-600 focus:outline-none text-xl dark:bg-transparent dark:border-gray-300 dark:p-2"
           />
         ) : (
           post.title
@@ -33,7 +33,7 @@ const PostDetails = ({
             name="place"
             value={post.place}
             onChange={handleInputChange}
-            className="w-full border-b-2 border-teal-600 focus:outline-none dark:bg-transparent dark:border-2 dark:p-2"
+            className="w-full border-b-2 border-teal-600 focus:outline-none dark:bg-transparent dark:border-2 dark:p-2 dark:border-gray-300"
           />
         ) : (
           post.place
@@ -44,7 +44,7 @@ const PostDetails = ({
           name="description"
           value={post.description}
           onChange={handleInputChange}
-          className="w-full border-2 p-2 border-teal-600 focus:outline-none mb-4 resize-none dark:bg-transparent dark:border-2 "
+          className="w-full border-2 p-2 border-teal-600 focus:outline-none mb-4 resize-none dark:bg-transparent dark:border-2 dark:border-gray-300"
           style={{
             minHeight: "200px",
             wordWrap: "break-word",
@@ -59,13 +59,13 @@ const PostDetails = ({
 
       <div className="flex items-center gap-4 mt-2">
         <Link to={`/posts/delete/${post._id}`}>
-          <span className="bg-red-600 text-white px-4 py-2 rounded-md dark:bg-pink-800">
+          <span className="bg-red-600 text-white px-4 py-2 rounded-md dark:bg-red-600">
             Delete
           </span>
         </Link>
         {isEditMode && (
           <button
-            className="bg-teal-600 text-white px-4 py-2 rounded-md"
+            className="bg-teal-600 text-white px-4 py-1 rounded-md"
             onClick={handleSave}
           >
             Save
@@ -73,7 +73,7 @@ const PostDetails = ({
         )}
         {!isEditMode && (
           <button
-            className="bg-slate-800 text-white px-4 py-2 rounded-md dark:bg-blue-500"
+            className="bg-slate-800 text-white px-4 py-1 rounded-md dark:bg-gray-500"
             onClick={handleEditMode}
           >
             Edit

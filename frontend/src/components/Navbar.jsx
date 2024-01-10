@@ -38,7 +38,7 @@ export default function Navbar() {
         >
           <div className="flex gap-1">
             <img src="/assets/logo.png" alt="Logo" style={{ width: "45px" }} />
-            <span className="self-center text-3xl  text-teal-800  whitespace-nowrap dark:text-teal-500">
+            <span className="self-center text-3xl  text-teal-800  whitespace-nowrap dark:text-slate-200">
               On the road
             </span>
           </div>

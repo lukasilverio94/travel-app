@@ -7,7 +7,7 @@ const CommentList = ({ post }) => {
   const [comments, setComments] = useState(post.comments);
   const [refresh, setRefresh] = useState(false);
   const [isReplyMode, setIsReplyMode] = useState(false);
-  const [reply, setReply] = useState({ replyText: '' });
+  const [reply, setReply] = useState({ replyText: "" });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -32,31 +32,34 @@ const CommentList = ({ post }) => {
   const submitReply = async (e, commentId) => {
     e.preventDefault();
     setLoading(true);
-  
+
     try {
       const response = await axios.put(`/comments/update/${commentId}`, {
-        replyText: reply.replyText,writer: JSON.parse(localStorage.getItem('user')).username
+        replyText: reply.replyText,
+        writer: JSON.parse(localStorage.getItem("user")).username,
       });
-  console.log(response);
+      console.log(response);
       // Update the comment in the state with the new reply
       setComments((prevComments) => {
         const updatedComments = prevComments.map((comment) =>
           comment._id === commentId
-            ? { ...comment, replies: [...comment.replies, response.data.comment] }
+            ? {
+                ...comment,
+                replies: [...comment.replies, response.data.comment],
+              }
             : comment
         );
         return updatedComments;
       });
-  
-      setReply({ replyText: '' });
+
+      setReply({ replyText: "" });
       setIsReplyMode(false);
       setLoading(false);
     } catch (error) {
-      console.error('Error updating comment:', error);
+      console.error("Error updating comment:", error);
       setLoading(false);
     }
   };
-  
 
   const handleDeleteComment = (id) => {
     axios
@@ -78,7 +81,7 @@ const CommentList = ({ post }) => {
         {comments.map((comment) => (
           <li
             key={comment._id}
-            className="pt-2 bg-slate-100 p-3 my-2 lg:w-full"
+            className="pt-2 bg-slate-100 p-3 my-2 lg:w-full dark:bg-gray-500 dark:text-slate-200"
           >
             <strong>{comment.writer}: </strong>
             <div className="flex items-center justify-between">
@@ -94,49 +97,55 @@ const CommentList = ({ post }) => {
               {user && user.username === comment.writer ? (
                 <div>
                   {isReplyMode ? (
-                    <form onSubmit={(e) => submitReply(e, comment._id)} className="max-w-md">
+                    <form
+                      onSubmit={(e) => submitReply(e, comment._id)}
+                      className="max-w-md"
+                    >
                       <input
                         className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
                         type="text"
                         placeholder={`add a reply to ${comment.writer}'s comment `}
-                        onChange={(e) => setReply({ ...reply, replyText: e.target.value })}
+                        onChange={(e) =>
+                          setReply({ ...reply, replyText: e.target.value })
+                        }
                       />
                       <button
-                        className="w-full bg-teal-500 text-white py-2 rounded"
+                        className="w-full bg-teal-500 text-white  py-2 rounded"
                         type="submit"
                       >
-                        {loading ? 'Posting...' : `Send reply `}
+                        {loading ? "Posting..." : `Send reply `}
                       </button>
                     </form>
                   ) : null}
-                  <button onClick={handleReplyMode}>
-                    Reply
-                  </button>
+                  <button onClick={handleReplyMode}>Reply</button>
                   <button onClick={() => handleDeleteComment(comment._id)}>
-                    <MdOutlineDelete className="text-red-600 text-3xl cursor-pointer mb-4" />
+                    <MdOutlineDelete className="text-red-600 dark:text-gray-200 text-3xl cursor-pointer mb-4" />
                   </button>
                 </div>
               ) : (
                 <div>
                   {isReplyMode ? (
-                    <form onSubmit={(e) => submitReply(e, comment._id)} className="max-w-md">
+                    <form
+                      onSubmit={(e) => submitReply(e, comment._id)}
+                      className="max-w-md"
+                    >
                       <input
                         className="w-full border border-gray-300 mb-4 px-3 py-2 rounded"
                         type="text"
                         placeholder={`add a reply to ${comment.writer}'s comment `}
-                        onChange={(e) => setReply({ ...reply, replyText: e.target.value })}
+                        onChange={(e) =>
+                          setReply({ ...reply, replyText: e.target.value })
+                        }
                       />
                       <button
                         className="w-full bg-teal-500 text-white py-2 rounded"
                         type="submit"
                       >
-                        {loading ? 'Posting...' : `Send reply `}
+                        {loading ? "Posting..." : `Send reply `}
                       </button>
                     </form>
                   ) : null}
-                  <button onClick={handleReplyMode}>
-                    Reply
-                  </button>
+                  <button onClick={handleReplyMode}>Reply</button>
                 </div>
               )}
             </div>

@@ -39,8 +39,8 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-900 text-gray-700 dark:text-gray-300">
-      <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-12 text-gray-700 dark:text-teal-500">
+    <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-950 text-gray-700 dark:text-gray-300">
+      <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-12 text-gray-700 dark:text-slate-200">
         Sign up
       </h2>
       <form onSubmit={signUpUser} className="w-full max-w-md px-4">

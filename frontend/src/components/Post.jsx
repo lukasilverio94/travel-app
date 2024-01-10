@@ -28,11 +28,11 @@ const Post = ({ post }) => {
   return (
     <div
       key={post._id}
-      className="w-full flex flex-col border-b-2 dark:border-teal-500 pb-5 mt-5 mb-3 md:col-span-1"
+      className="w-full flex flex-col border-b-2 dark:border-slate-200 pb-5 mt-5 mb-3 md:col-span-1"
     >
       <div className="flex flex-col md:flex-row ">
         <div className="w-full md:w-full sm:w-full lg:w-2/3 flex flex-col gap-y-1 flex-grow">
-          <h3 className="text-teal-600 text-3xl dark:text-teal-500">
+          <h3 className="text-teal-600 text-3xl dark:text-slate-200">
             {post.title}
           </h3>
           <div className="my-1">
@@ -47,8 +47,8 @@ const Post = ({ post }) => {
             {post.description.slice(0, 35)}...
           </p>
           <Link to={`posts/details/${post._id}`} className="my-1">
-            <span className="flex items-center text-teal-700">
-              <span className="hover:border-b hover:border-teal-700 dark:text-teal-500">
+            <span className="flex items-center text-teal-700 dark:text-teal-400 ">
+              <span className="hover:text-lg  dark:text-teal-400">
                 Read more
               </span>
               <FaArrowRightLong className="ms-1" />
@@ -57,7 +57,7 @@ const Post = ({ post }) => {
           <small>
             {formatDistance(new Date(post.createdAt), new Date(), {
               addSuffix: true,
-            })}{" "}
+            })}
             by {post.writer}
           </small>
 

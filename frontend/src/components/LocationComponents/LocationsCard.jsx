@@ -10,8 +10,8 @@ export default function LocationCard({
   altText,
 }) {
   return (
-    <div className="bg-white mt-4 p-6 rounded-lg shadow-md dark:shadow-sm dark:shadow-white  dark:bg-gray-900 dark:text-slate-300 leading-loose">
-      <h4 className="pb-3 text-4xl font-bold text-teal-600 dark:text-orange-500">
+    <div className="bg-white mt-4 p-6 rounded-lg shadow-md dark:shadow-sm dark:shadow-white  dark:bg-gray-950 dark:text-slate-300 leading-loose">
+      <h4 className="pb-3 text-4xl font-bold text-teal-600 dark:text-white">
         {title}
       </h4>
       <p className="pb-6 text-lg text-gray-600 dark:text-slate-200">

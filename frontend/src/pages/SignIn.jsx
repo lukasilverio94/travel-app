@@ -33,9 +33,9 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex flex-col  md:flex-row items-center justify-center h-screen md:w-full dark:text-gray-300 dark:bg-gray-900 ">
+    <div className="flex flex-col  md:flex-row items-center justify-center h-screen md:w-full dark:text-gray-300 dark:bg-gray-950 px-4">
       {/* Left column with image (to be added) */}
-      <div className="p-4 hidden md:block dark:bg-gray-900">
+      <div className="p-4 hidden md:block dark:bg-gray-950">
         {/* image */}
         <div>
           <img src="/assets/hero_banner.png" alt="Login photo" />
@@ -44,7 +44,7 @@ export default function SignIn() {
 
       {/* Right column with login form */}
       <div className="md:w-1/2">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-700 dark:text-teal-500 ">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-700 dark:text-slate-200 ">
           Sign in
         </h2>
         <form onSubmit={submitLogIn} className="w-full max-w-md">

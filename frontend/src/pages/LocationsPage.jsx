@@ -64,12 +64,12 @@ export const locationsData = [
 
 export default function LocationsPage() {
   return (
-    <div className="mt-16 pb-16 min-h-screen dark:bg-gray-900 dark:text-slate-100">
+    <div className="mt-16 pb-16 min-h-screen dark:bg-gray-950 dark:text-slate-100">
       {/* Images top hero */}
       <Hero />
       {/* Right Side */}
       <div className="flex flex-col h-full justify-center mx-4">
-        <h3 className="text-5xl md:text-6xl font-bold mt-6 mb-3 px-3 dark:text-teal-500">
+        <h3 className="text-5xl md:text-6xl font-bold mt-6 mb-3 px-3 dark:text-slate-200">
           Ideas for Your Next Trip
         </h3>
 

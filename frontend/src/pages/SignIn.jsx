@@ -33,7 +33,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex flex-col  md:flex-row items-center justify-center h-screen md:w-full dark:bg-gray-900 ">
+    <div className="flex flex-col  md:flex-row items-center justify-center h-screen md:w-full dark:text-gray-300 dark:bg-gray-900 ">
       {/* Left column with image (to be added) */}
       <div className="p-4 hidden md:block dark:bg-gray-900">
         {/* image */}
@@ -61,7 +61,7 @@ export default function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
-            className="w-full bg-teal-500 text-white py-2 rounded-lg"
+            className="w-full bg-teal-600 hover:bg-teal-500 text-white py-2 rounded-lg"
             type="submit"
           >
             Login

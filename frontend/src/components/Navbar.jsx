@@ -140,7 +140,7 @@ export default function Navbar() {
                   <Link
                     to="/posts/create"
                     onClick={handleLinkClick}
-                    className="block py-2 pe-3 text-gray-900 rounded   md:hover:bg-transparent md: md:p-0 dark:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
+                    className="block py-2 pe-3 text-gray-900 rounded   md:hover:bg-transparent md: md:p-0 dark:text-white  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
                   >
                     Add Experience
                   </Link>
@@ -149,7 +149,7 @@ export default function Navbar() {
                   <Link
                     to="/locations"
                     onClick={handleLinkClick}
-                    className="block py-2 pe-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md: md:p-0  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
+                    className="block py-2 pe-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md: md:p-0  dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
                   >
                     Get inspired
                   </Link>

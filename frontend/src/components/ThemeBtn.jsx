@@ -1,9 +1,10 @@
+// ThemeBtn.jsx
 import React, { useState } from "react";
 import classNames from "classnames";
-import useTheme from "../context/theme";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function ThemeBtn() {
-  const { themeMode, lightTheme, darkTheme } = useTheme();
+  const { themeMode, darkTheme, lightTheme } = React.useContext(ThemeContext);
   const [isSelected, setIsSelected] = useState(false);
 
   const onChangeBtn = () => {
@@ -31,17 +32,5 @@ export default function ThemeBtn() {
         )}
       ></span>
     </div>
-    // <div
-    //   className={`bg-gray-500 w-20 mx-auto mt-10 cursor-pointer rounded-3xl toggler ${
-    //     isDarkMode ? "dark:bg-green-500" : "dark:bg-blue-500"
-    //   }`}
-    //   onClick={handleToggleClick}
-    // >
-    //   <div
-    //     className={`bg-white w-10 h-10 scale-75 rounded-3xl transition-transform ${
-    //       isDarkMode ? "dark:bg-black" : "dark:bg-gray-300"
-    //     }`}
-    //   ></div>
-    // </div>
   );
 }

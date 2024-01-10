@@ -7,7 +7,7 @@ const SearchInput = ({ onChange, value }) => {
         <input
           type="text"
           placeholder="Search post by title or place..."
-          className="w-full p-4 rounded-full bg-gray-100 text-gray-800 focus:outline-teal-800 focus:border-teal-600"
+          className="w-full p-4 rounded-full bg-gray-100 dark:bg-transparent dark:border-2 text-gray-800 focus:outline-teal-600 focus:border-teal-600 dark:text-slate-200"
           onChange={onChange}
           value={value}
         />

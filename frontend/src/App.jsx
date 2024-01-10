@@ -8,6 +8,7 @@ import ShowPost from "./pages/ShowPost";
 import DeletePost from "./pages/DeletePost";
 import Navbar from "./components/Navbar";
 import Logout from "./components/Logout";
+import { useAvatar } from './components/AvatarContext.jsx';
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PostList from "./components/PostList";
@@ -16,12 +17,17 @@ import Footer from "./components/Footer";
 import UserPanel from "./pages/UserPanel";
 import LocationsPage from "./pages/LocationsPage";
 import ScrollToTop from "./components/ScrollToTop";
+
 // Default axios
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 function App() {
+  const { avatar } = useAvatar();
+
   return (
+    <div>
+    {avatar && <img src={avatar} alt="Avatar" />}
     <BrowserRouter>
       <Navbar />
       <ScrollToTop />
@@ -47,6 +53,7 @@ function App() {
       </Routes>
       <Footer />
     </BrowserRouter>
+    </div>
   );
 }
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchUserInfo } from "../utils/authUtil.js";
 import ThemeBtn from "./ThemeBtn.jsx";
+import { MdLogout } from "react-icons/md";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -43,37 +44,6 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-        {isLoggedIn && (
-          <Link
-            to={`/userPanel/${username}`}
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <span className="flex items-center space-x-3 self-center text-sm font-light text-green-700 whitespace-nowrap dark:text-white">
-              <span className="text-sm">
-                {isLoading
-                  ? "Loading..."
-                  : `Welcome, ${
-                      username.charAt(0).toUpperCase() +
-                      username.slice(1).toLowerCase()
-                    }`}
-              </span>
-
-              {avatar ? (
-                <img
-                  className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
-                  src={`http://localhost:4000/uploads/${avatar.slice(-24)}`}
-                  alt={`avatar from `}
-                />
-              ) : (
-                <img
-                  className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
-                  src={`http://localhost:4000/uploads/avatar-1704625711816.png`}
-                  alt={`avatar from`}
-                />
-              )}
-            </span>
-          </Link>
-        )}
         <button
           onClick={toggleNav}
           className="md:hidden text-gray-700 focus:outline-none"
@@ -117,16 +87,9 @@ export default function Navbar() {
           } w-full md:flex md:w-auto md:order-1`}
           id="navbar-search"
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col md:items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {isLoggedIn ? (
               <>
-                <li>
-                  <Link to="/logout" onClick={handleLinkClick}>
-                    <span className="text-slate-400 text-sm hover:underline dark:hover:text-teal-500">
-                      Logout
-                    </span>
-                  </Link>
-                </li>
                 <li>
                   <Link
                     to="/"
@@ -160,14 +123,41 @@ export default function Navbar() {
                     className="my-1"
                     onClick={handleLinkClick}
                   >
-                    <span className="flex items-center text-teal-700">
-                      <span className="hover:border-b hover:border-teal-700 dark:text-white hover:text-teal-800  dark:hover:text-teal-500">
-                        Profile
-                      </span>
+                    {avatar ? (
+                      <div className="flex items-center gap-1 ">
+                        <span className="text-sm dark:text-gray-400">
+                          {username.charAt(0).toUpperCase() +
+                            username.slice(1).toLowerCase()}
+                        </span>
+                        <img
+                          className="rounded-full w-full max-w-[35px] mb-4 md:mb-0 md:mr-4"
+                          src={`http://localhost:4000/uploads/${avatar.slice(
+                            -24
+                          )}`}
+                          alt={`avatar from `}
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <img
+                          className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
+                          src="/assets/avatar.png"
+                          alt={`avatar from`}
+                        />
+                      </div>
+                    )}
+                  </Link>
+                </li>
+                <li className="flex ">
+                  <Link to="/logout" onClick={handleLinkClick}>
+                    <span className="text-gray-800 dark:text-slate-300 text-sm font-bold hover:underline dark:hover:text-teal-500">
+                      Logout
                     </span>
                   </Link>
                 </li>
-                <ThemeBtn />
+                <li className="mb-1">
+                  <ThemeBtn />
+                </li>
               </>
             ) : (
               <>

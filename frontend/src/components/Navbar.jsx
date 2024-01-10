@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchUserInfo } from "../utils/authUtil.js";
+import ThemeBtn from "./ThemeBtn.jsx";
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function Navbar() {
         >
           <div className="flex gap-1">
             <img src="/assets/logo.png" alt="Logo" style={{ width: "45px" }} />
-            <span className="self-center text-3xl  text-teal-800  whitespace-nowrap dark:text-white">
+            <span className="self-center text-3xl  text-teal-800  whitespace-nowrap dark:text-slate-200">
               On the road
             </span>
           </div>
@@ -121,14 +122,16 @@ export default function Navbar() {
               <>
                 <li>
                   <Link to="/logout" onClick={handleLinkClick}>
-                    <span className="text-red-800 text-sm">Logout</span>
+                    <span className="text-slate-400 text-sm hover:underline dark:hover:text-teal-500">
+                      Logout
+                    </span>
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/"
                     onClick={handleLinkClick}
-                    className="block py-2 pe-3 text-gray-700 hover:text-blue-700 rounded md:bg-transparent  md:p-0 "
+                    className="block py-2 pe-3  rounded md:bg-transparent  md:p-0 hover:text-teal-800 hover:underline dark:hover:text-teal-500 dark:text-white"
                   >
                     Home
                   </Link>
@@ -137,7 +140,7 @@ export default function Navbar() {
                   <Link
                     to="/posts/create"
                     onClick={handleLinkClick}
-                    className="block py-2 pe-3 text-gray-900 rounded hover:text-blue-700  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    className="block py-2 pe-3 text-gray-900 rounded   md:hover:bg-transparent md: md:p-0 dark:text-white  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
                   >
                     Add Experience
                   </Link>
@@ -146,7 +149,7 @@ export default function Navbar() {
                   <Link
                     to="/locations"
                     onClick={handleLinkClick}
-                    className="block py-2 pe-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    className="block py-2 pe-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md: md:p-0  dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
                   >
                     Get inspired
                   </Link>
@@ -158,20 +161,24 @@ export default function Navbar() {
                     onClick={handleLinkClick}
                   >
                     <span className="flex items-center text-teal-700">
-                      <span className="hover:border-b hover:border-teal-700">
+                      <span className="hover:border-b hover:border-teal-700 dark:text-white hover:text-teal-800  dark:hover:text-teal-500">
                         Profile
                       </span>
                     </span>
                   </Link>
                 </li>
+                <ThemeBtn />
               </>
             ) : (
               <>
                 <li>
                   <Link to="/signin" onClick={handleLinkClick}>
-                    <h2>Login</h2>
+                    <h2 className="text-slate-800 text-lg hover:underline dark:text-gray-200 dark:hover:text-teal-300">
+                      Login
+                    </h2>
                   </Link>
                 </li>
+                <ThemeBtn />
               </>
             )}
           </ul>

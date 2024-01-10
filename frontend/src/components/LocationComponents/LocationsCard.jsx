@@ -10,10 +10,14 @@ export default function LocationCard({
   altText,
 }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h4 className="pb-3 text-3xl font-bold text-teal-600">{title}</h4>
-      <p className="pb-6 text-gray-600">{description}</p>
-      <h4 className="pb-3 text-2xl font-bold text-gray-800 flex items-center gap-1">
+    <div className="bg-white mt-4 p-6 rounded-lg shadow-md dark:shadow-sm dark:shadow-white  dark:bg-gray-950 dark:text-slate-300 leading-loose">
+      <h4 className="pb-3 text-4xl font-bold text-teal-600 dark:text-white">
+        {title}
+      </h4>
+      <p className="pb-6 text-lg text-gray-600 dark:text-slate-200">
+        {description}
+      </p>
+      <h4 className="pb-3 text-2xl font-bold text-gray-800 dark:text-slate-200 flex items-center gap-1">
         <FaMapMarkerAlt className="text-orange-700" />
         <span>{markerIcon}</span>
       </h4>

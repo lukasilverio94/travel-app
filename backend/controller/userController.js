@@ -1,14 +1,14 @@
 // test
-import Post from '../models/postModel.js';
-import Comment from '../models/commentModel.js';
-import Reply from '../models/replyModel.js';
+import Post from "../models/postModel.js";
+import Comment from "../models/commentModel.js";
+import Reply from "../models/replyModel.js";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-import User from '../models/userModel.js';
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import User from "../models/userModel.js";
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 //Function sign up
 export const signup = async (req, res) => {
@@ -26,27 +26,21 @@ export const signup = async (req, res) => {
 
   try {
     // Save the new user to the database
-    console.log('Received signup request:', req.body);
+    console.log("Received signup request:", req.body);
     await newUser.save();
 
     // Send a success response if the user is saved successfully
-    res.status(200).send('User saved successfully');
-    console.log('User is saved', req.body);
+    res.status(200).send("User saved successfully");
+    console.log("User is saved", req.body);
   } catch (error) {
     // Handle errors during user saving process
     if (error.code === 11000) {
       // Duplicate key error (unique constraint violation)
-      res
-        .status(400)
-        .send(
-          `This ${Object.keys(error.keyValue)}: ${Object.values(
-            error.keyValue,
-          )} is already used`,
-        );
+      res.status(400).send("This email is already taken");
     } else {
       // Other errors
       console.error(error);
-      res.status(500).send('An error occurred while saving the user.');
+      res.status(500).send("An error occurred while saving the user.");
     }
   }
 };
@@ -54,7 +48,7 @@ export const signup = async (req, res) => {
 // Function for user login
 export const login = async (req, res) => {
   // Log the incoming login request data
-  console.log('Request to login:', req.body);
+  console.log("Request to login:", req.body);
 
   try {
     // Find a user in the database with the provided email
@@ -62,18 +56,18 @@ export const login = async (req, res) => {
 
     if (!user) {
       // If the user is not found, send a 400 Bad Request response
-      return res.status(400).send('User or password are not correct');
+      return res.status(400).send("User not found");
     }
 
     // Compare the provided password with the hashed password stored in the database
     let isCorrectPass = await bcrypt.compareSync(
       req.body.password,
-      user.password,
+      user.password
     );
 
     if (!isCorrectPass) {
       // If the password is incorrect, send a 400 Bad Request response
-      return res.status(400).send('User or password are not correct');
+      return res.status(400).send("Invalid email or password");
     }
 
     // If the user and password are correct, generate a JWT token for authentication
@@ -91,7 +85,7 @@ export const login = async (req, res) => {
     console.log(`${userInfoForToken.userName} is inLogged`);
   } catch (error) {
     console.error(error);
-    res.status(500).send('An error occurred during login.');
+    res.status(500).send("An error occurred during login.");
   }
 };
 
@@ -100,8 +94,8 @@ export const verifyUser = async (req, res) => {
 
   try {
     const decoded = jwt.verify(
-      token.replace('Bearer ', ''),
-      process.env.SECRET,
+      token.replace("Bearer ", ""),
+      process.env.SECRET
     );
 
     res.status(200).json({
@@ -110,8 +104,8 @@ export const verifyUser = async (req, res) => {
       avatar: decoded?.userInfoForToken?.avatar,
     });
   } catch (error) {
-    console.error('Error fetching user details:', error);
-    res.status(401).json({ error: 'Unauthorized: Invalid token' });
+    console.error("Error fetching user details:", error);
+    res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 };
 
@@ -119,7 +113,7 @@ export const searchUser = async (req, res) => {
   try {
     // Get the username from the request parameters
     const { username } = req.params;
-    let user = await User.findOne({ userName: username }).populate('posts');
+    let user = await User.findOne({ userName: username }).populate("posts");
     if (user) {
       let userInfo = {
         id: user._id,
@@ -130,12 +124,12 @@ export const searchUser = async (req, res) => {
       };
       res.status(200).json({ userInfo });
     } else {
-      console.log('User not found');
-      res.status(404).json({ error: 'User not found' });
+      console.log("User not found");
+      res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -144,7 +138,7 @@ export const updateUser = async (req, res) => {
 
   // Check if Id matches the MongoDB standard
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such user' });
+    return res.status(404).json({ error: "No such user" });
   }
 
   try {
@@ -158,15 +152,15 @@ export const updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       id,
       { avatar: newUser.avatar },
-      { new: true },
+      { new: true }
     );
 
     // Handle the updated user as needed
     res
       .status(200)
-      .json({ message: 'User updated successfully', user: updatedUser });
+      .json({ message: "User updated successfully", user: updatedUser });
   } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

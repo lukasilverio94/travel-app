@@ -27,6 +27,10 @@ const Post = ({ post }) => {
       : 0;
   return (
     <div
+      style={{
+        wordWrap: "break-word",
+        overflowWrap: "break-word",
+      }}
       key={post._id}
       className="w-full flex flex-col border-b-2 dark:border-slate-200 pb-5 mt-5 mb-3 md:col-span-1"
     >

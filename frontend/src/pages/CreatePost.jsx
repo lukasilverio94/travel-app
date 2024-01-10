@@ -77,8 +77,10 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="p-4 mt-16 dark:bg-gray-950 dark:text-slate-200">
-      <BackButton />
+    <div className="p-4 mt-16 dark:bg-gray-950 dark:text-slate-200 w-full">
+      <div className="mt-8 ml-2 lg:ml-56">
+        <BackButton />
+      </div>
       <form
         encType="multipart/form-data"
         className="flex flex-col mb-6 rounded-xl w-full sm:w-100 lg:max-w-[800px] p-3 m-auto"
@@ -127,7 +129,7 @@ export default function CreatePost() {
         </div>
         {/* Upload image */}
         <div>
-          <h4 className="text-teal-600 dark:text-slate-200 text-lg font-semibold">
+          <h4 className="text-teal-600 dark:text-slate-200 text-lg font-semibold mb-2">
             Add images to post
           </h4>
           <input

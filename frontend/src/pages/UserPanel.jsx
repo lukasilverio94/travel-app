@@ -28,7 +28,7 @@ const UserPanel = () => {
   }, [username, refresh]);
   useEffect(() => {
     console.log("Updated Avatar:", avatar);
-  }, [avatar]);
+  }, []);
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -79,82 +79,112 @@ const UserPanel = () => {
     }
   };
 
-
-
-
   return (
-    
-    <div className="container mx-auto p-6 mt-20">
-      <BackButton />
-      {user.avatar ? (
-        <img
-        key={refresh}
-          className="rounded-full w-full max-w-[150px] mb-4 md:mb-0 md:mr-4"
-          src={`http://localhost:4000/uploads/${user.avatar.slice(-24)}?t=${refresh}`}
+    <div className="w-full py-6 mx-auto mt-16 px-4  dark:bg-gray-950 dark:text-slate-300 leading-normal">
+      <div className="max-w-2xl mx-auto p-6 shadow-md dark:shadow-sm dark:shadow-white rounded-md">
+        <BackButton />
 
-        />
-      ) : (
-        <div>
-        <img
-          className="rounded-full w-full max-w-[150px] mb-4 md:mb-0 md:mr-4"
-          src="/assets/avatar.png"
-          alt={`avatar from`}
-        />
-        <p>defalt avatar</p>
-        </div>
-      )}
-
-      <h1>User Details for: {username}</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <p>Email: {user.email}</p>
-          <p>User ID: {user.id}</p>
-          <p>Username: {user.userName}</p>
-
-          <div className="flex flex-col">
-            <h2>Upload Avatar:</h2>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
-            {uploading ? "Uploading..." : ""}
-          </div>
-
-          {/* "Send" button */}
-          <button
-            className="w-full bg-teal-500 text-white py-2 rounded"
-            onClick={handleUpload}
-          >
-            Save
-          </button>
-
-          <h2>User Posts:</h2>
-          {user.posts && user.posts.length > 0 ? (
-            <ul>
-              {user.posts.map((post) => (
-                <li key={post._id}>
-                  <div className="text-teal-600 font-bold mb-2 uppercase">
-                    <p>ID: {post._id}</p>
-                    <p>Title: {post.title}</p>
-                    <p>Description: {post.description}</p>
-                    {/* Image  */}
-                    <div>
-                      {post.images && (
-                        <img
-                          src={`http://localhost:4000/uploads/${post.images[0].slice(
-                            -24
-                          )}`}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+        <div className="mb-4 text-center">
+          {user.avatar ? (
+            <img
+              key={refresh}
+              className="rounded-full w-full max-w-[150px]"
+              src={`http://localhost:4000/uploads/${user.avatar.slice(
+                -24
+              )}?t=${refresh}`}
+              alt={`avatar from ${username}`}
+            />
           ) : (
-            <p>No posts available for this user.</p>
+            <div>
+              <img
+                className="rounded-full w-full max-w-[150px]"
+                src="/assets/avatar.png"
+                alt={`default avatar`}
+              />
+              <p className="text-gray-500">Default Avatar</p>
+            </div>
           )}
         </div>
-      )}
+        <h1 className="text-2xl font-bold mb-4 mt-3">
+          User Details for: {username}
+        </h1>
+
+        {loading ? (
+          <p className="text-center">Loading...</p>
+        ) : (
+          <div>
+            <p>
+              <span className="font-semibold">Email:</span> {user.email}
+            </p>
+            <p>
+              <span className="font-semibold">Username:</span> {user.userName}
+            </p>
+
+            <div className="flex flex-col mt-4">
+              <h2 className="text-lg font-semibold mb-2">Upload Avatar:</h2>
+              <input type="file" accept="image/*" onChange={handleFileChange} />
+              {uploading && <p className="text-sm mt-2">Uploading...</p>}
+            </div>
+
+            <button
+              className="w-full max-w-[200px] bg-teal-500 text-white py-2 rounded mt-2 dark:bg-gray-500"
+              onClick={handleUpload}
+            >
+              Add/Upload Avatar
+            </button>
+
+            <h2 className="text-3xl md:text-5xl text-teal-600 font-bold mt-6 mb-4 dark:text-white">
+              Your posts:
+            </h2>
+            {console.log(user)}
+            {user.posts && user.posts.length > 0 ? (
+              <ul className="text-lg flex flex-col gap-y-5">
+                {user.posts.map((post) => (
+                  <li
+                    key={post._id}
+                    className="mb-4 border-b pb-7 border-gray-300"
+                  >
+                    <div className="text-gray-950 dark:text-slate-300 ">
+                      <p className="flex flex-col">
+                        <span className="text-teal-600 dark:text-white font-semibold text-2xl">
+                          Title:
+                        </span>
+                        {post.title}
+                      </p>
+                      <p className="flex flex-col">
+                        <span className="text-teal-600 dark:text-white font-semibold text-2xl">
+                          Location:
+                        </span>
+                        {post.place}
+                      </p>
+                      <p className="flex flex-col">
+                        <span className="text-teal-600 dark:text-white font-semibold  text-2xl">
+                          Description:
+                        </span>
+                        {post.description}
+                      </p>
+
+                      {post.images && (
+                        <div>
+                          <img
+                            className="w-full h-full max-h-[350px] object-cover max-w-md mt-4"
+                            src={`http://localhost:4000/uploads/${post.images[0].slice(
+                              -24
+                            )}`}
+                            alt={`post image for ${post.title}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-center">No posts available for this user.</p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

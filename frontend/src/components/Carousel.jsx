@@ -8,7 +8,6 @@ export default function Carousel({ images }) {
   useEffect(() => {
     // Reset the current index when the images prop changes
     setCurrentIndex(0);
-    console.log("images prop:", images);
   }, [images]);
 
   const prevSlide = () => {

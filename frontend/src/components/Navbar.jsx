@@ -9,16 +9,16 @@ export default function Navbar() {
   const [avatar, setAvatar] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      const userInfo = await fetchUserInfo();
-      setUsername(userInfo.username);
-      setAvatar(userInfo.avatar);
-      setIsLoading(false);
-    };
+  const loadUserInfo = async () => {
+    const userInfo = await fetchUserInfo();
+    setUsername(userInfo.username);
+    setAvatar(userInfo.avatar);
+    setIsLoading(false);
+  };
 
+  useEffect(() => {
     loadUserInfo();
-  }, [avatar]);
+  }, []);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);

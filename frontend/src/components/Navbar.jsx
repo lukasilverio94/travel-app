@@ -17,7 +17,7 @@ export default function Navbar() {
     };
 
     loadUserInfo();
-  }, []);
+  }, [avatar]);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);

@@ -2,22 +2,26 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchUserInfo } from "../utils/authUtil.js";
 import ThemeBtn from "./ThemeBtn.jsx";
-import { MdLogout } from "react-icons/md";
+import { useUser } from "../context/UserContext.jsx";
 
 export default function Navbar() {
+  const { user, updateUser, userChanged } = useUser();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [username, setUsername] = useState(null);
-  const [avatar, setAvatar] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadUserInfo = async () => {
-    const userInfo = await fetchUserInfo();
-    setUsername(userInfo.username);
-    setAvatar(userInfo.avatar);
-    setIsLoading(false);
+    try {
+      const userInfo = await fetchUserInfo();
+      updateUser(userInfo);
+      console.log("UserContext updated in Navbar:", user);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error loading user info:", error);
+    }
   };
 
   useEffect(() => {
+    console.log("Navbar user context:", user);
     loadUserInfo();
   }, []);
 
@@ -28,6 +32,7 @@ export default function Navbar() {
   const handleLinkClick = () => {
     toggleNav(false); // close  navigation menu when a link is clicked
   };
+
   const isLoggedIn = localStorage.getItem("token");
 
   return (
@@ -118,20 +123,17 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={`/userPanel/${username}`}
-                    className="my-1"
-                    onClick={handleLinkClick}
-                  >
-                    {avatar ? (
-                      <div className="flex items-center gap-1 ">
+                  <Link to={`/userPanel/${user.username}`}>
+                    {user.avatar ? (
+                      <div className="flex items-center gap-1">
                         <span className="text-sm dark:text-gray-400">
-                          {username.charAt(0).toUpperCase() +
-                            username.slice(1).toLowerCase()}
+                          {user.username.charAt(0).toUpperCase() +
+                            user.username.slice(1).toLowerCase()}
                         </span>
                         <img
+                          key={user.key}
                           className="rounded-full w-full max-w-[35px] mb-4 md:mb-0 md:mr-4"
-                          src={`http://localhost:4000/uploads/${avatar.slice(
+                          src={`http://localhost:4000/uploads/${user.avatar.slice(
                             -24
                           )}`}
                           alt={`avatar from `}

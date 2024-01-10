@@ -18,6 +18,7 @@ import LocationsPage from "./pages/LocationsPage";
 import ScrollToTop from "./components/ScrollToTop";
 // Provider context
 import { ThemeProvider } from "./context/ThemeContext";
+import { UserProvider } from "./context/UserContext";
 // State
 import { useEffect, useState } from "react";
 // Toastify
@@ -40,34 +41,40 @@ function App() {
   };
 
   return (
-    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-      <BrowserRouter>
-        <ToastContainer />
-        <Navbar />
-        <ScrollToTop />
-        <Routes>
-          {localStorage.getItem("token") ? (
-            <>
-              <Route exact path="/" element={<PostList />} />
-              <Route exact path="/posts/create" element={<CreatePost />} />
-              <Route exact path="/posts/details/:id" element={<ShowPost />} />
-              <Route exact path="/posts/delete/:id" element={<DeletePost />} />
-              <Route exact path="/locations" element={<LocationsPage />} />
-              <Route exact path="/logout" element={<Logout />} />
-              <Route path="/userPanel/:username" element={<UserPanel />} />
-            </>
-          ) : (
-            <>
-              <Route exact path="/" element={<SignIn />} />
-              <Route exact path="/signin" element={<SignIn />} />
-              <Route exact path="/signUp" element={<SignUp />} />
-            </>
-          )}
-          <Route exact path="/*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
+        <BrowserRouter>
+          <ToastContainer />
+          <Navbar />
+          <ScrollToTop />
+          <Routes>
+            {localStorage.getItem("token") ? (
+              <>
+                <Route exact path="/" element={<PostList />} />
+                <Route exact path="/posts/create" element={<CreatePost />} />
+                <Route exact path="/posts/details/:id" element={<ShowPost />} />
+                <Route
+                  exact
+                  path="/posts/delete/:id"
+                  element={<DeletePost />}
+                />
+                <Route exact path="/locations" element={<LocationsPage />} />
+                <Route exact path="/logout" element={<Logout />} />
+                <Route path="/userPanel/:username" element={<UserPanel />} />
+              </>
+            ) : (
+              <>
+                <Route exact path="/" element={<SignIn />} />
+                <Route exact path="/signin" element={<SignIn />} />
+                <Route exact path="/signUp" element={<SignUp />} />
+              </>
+            )}
+            <Route exact path="/*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 

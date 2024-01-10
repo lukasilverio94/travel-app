@@ -3,33 +3,33 @@ import axios from "axios";
 import BackButton from "../components/BackButton";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useUser } from "../context/UserContext.jsx";
 
 const UserPanel = () => {
   const { username } = useParams();
-  const [user, setUser] = useState({});
+  const { user, updateUser } = useUser(); // Use the UserContext hook
+
   const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/user/search/${username}`);
-        setUser(response.data.userInfo);
-      } catch (error) {
-        console.error("Error fetching user details:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadUserInfo = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/user/search/${username}`);
+      updateUser((prevUser) => ({ ...prevUser, ...response.data.userInfo }));
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchUserDetails();
-  }, [username, refresh]);
   useEffect(() => {
-    console.log("Updated Avatar:", avatar);
-  }, []);
+    loadUserInfo();
+  }, [username]);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -62,14 +62,12 @@ const UserPanel = () => {
       );
 
       console.log("Avatar upload response:", response.data);
-      console.log("Updated Avatar:", response.data.avatar);
+      console.log("Updated Avatar:", response.data.user.avatar);
 
-      // setUser((prevUser) => ({ ...prevUser, avatar: response.data.user.avatar }));
-      setUser((prevUser) => {
-        console.log("Previous User:", prevUser);
-        console.log("Updated Avatar URL:", response.data.user.avatar);
-        return { ...prevUser, avatar: response.data.user.avatar };
-      });
+      console.log("UserContext updated in UserPanel:", user);
+      // Update user information using UserContext
+      updateUser({ avatar: response.data.user.avatar });
+
       setRefresh((prevRefresh) => !prevRefresh);
 
       console.log("Updated Avatar:", response.data.user.avatar);
@@ -88,11 +86,8 @@ const UserPanel = () => {
         <div className="mb-4 text-center">
           {user.avatar ? (
             <img
-              key={refresh}
               className="rounded-full w-full max-w-[150px]"
-              src={`http://localhost:4000/uploads/${user.avatar.slice(
-                -24
-              )}?t=${refresh}`}
+              src={`http://localhost:4000/uploads/${user.avatar.slice(-24)}`}
               alt={`avatar from ${username}`}
             />
           ) : (
@@ -106,6 +101,7 @@ const UserPanel = () => {
             </div>
           )}
         </div>
+
         <h1 className="text-4xl font-bold mb-4 mt-3">User Details</h1>
 
         {loading ? (
@@ -135,15 +131,15 @@ const UserPanel = () => {
             <h2 className="text-3xl md:text-5xl text-teal-600 font-bold mt-6 mb-8 dark:text-white">
               Your posts:
             </h2>
-            {user.posts && user.posts.length > 0 ? (
-              <div
-                style={{
-                  wordWrap: "break-word",
-                  overflowWrap: "break-word",
-                }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full"
-              >
-                {user.posts.map((post) => (
+            <div
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+              }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full"
+            >
+              {user.posts && user.posts.length > 0 ? (
+                user.posts.map((post) => (
                   <div
                     key={post._id}
                     className="w-full  md:w-full lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
@@ -172,11 +168,11 @@ const UserPanel = () => {
                       </Link>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xl">No posts available for this user.</p>
-            )}
+                ))
+              ) : (
+                <p className="text-xl">No posts available for this user.</p>
+              )}
+            </div>
           </div>
         )}
       </div>

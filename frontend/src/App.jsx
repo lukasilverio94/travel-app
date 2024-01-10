@@ -7,7 +7,7 @@ import ShowPost from "./pages/ShowPost";
 import DeletePost from "./pages/DeletePost";
 import Navbar from "./components/Navbar";
 import Logout from "./components/Logout";
-import { useAvatar } from './components/AvatarContext.jsx';
+import { useAvatar } from "./components/AvatarContext.jsx";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PostList from "./components/PostList";
@@ -43,9 +43,8 @@ function App() {
 
   return (
     <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-      <div>
-    {avatar && <img src={avatar} alt="Avatar" />}
-    <BrowserRouter>
+      {avatar && <img src={avatar} alt="Avatar" />}
+      <BrowserRouter>
         <ToastContainer />
         <Navbar />
         <ScrollToTop />
@@ -72,7 +71,6 @@ function App() {
         <Footer />
       </BrowserRouter>
     </ThemeProvider>
-    </div>
   );
 }
 

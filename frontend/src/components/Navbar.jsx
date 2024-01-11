@@ -105,7 +105,7 @@ export default function Navbar() {
                     onClick={handleLinkClick}
                     className="block py-2 pe-3 text-gray-900 rounded   md:hover:bg-transparent md: md:p-0 dark:text-white  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
                   >
-                    Add Experience
+                    Add post
                   </Link>
                 </li>
                 <li>

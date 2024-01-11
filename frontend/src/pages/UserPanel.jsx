@@ -71,7 +71,7 @@ const UserPanel = () => {
         return { ...prevUser, avatar: response.data.user.avatar };
       });
       setRefresh((prevRefresh) => !prevRefresh);
-
+      localStorage.setItem("avatar", response.data.user.avatar);
       console.log("Updated Avatar:", response.data.user.avatar);
     } catch (error) {
       console.error("Error uploading avatar:", error);

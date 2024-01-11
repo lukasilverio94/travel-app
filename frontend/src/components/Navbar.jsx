@@ -13,8 +13,14 @@ export default function Navbar() {
   const loadUserInfo = async () => {
     const userInfo = await fetchUserInfo();
     setUsername(userInfo.username);
-    setAvatar(userInfo.avatar);
     setIsLoading(false);
+    if (localStorage.getItem("avatar")) {
+      setAvatar(localStorage.getItem("avatar"));
+    } else if (userInfo.avatar && !localStorage.getItem("avatar")) {
+      setAvatar(userInfo.avatar);
+    } else {
+      setAvatar(null);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +37,7 @@ export default function Navbar() {
   const isLoggedIn = localStorage.getItem("token");
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10 px-3">
+    <nav className="bg-white py-2 border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 z-10 px-3">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"
@@ -39,7 +45,7 @@ export default function Navbar() {
         >
           <div className="flex gap-1">
             <img src="/assets/logo.png" alt="Logo" style={{ width: "45px" }} />
-            <span className="self-center text-3xl  text-teal-800  whitespace-nowrap dark:text-slate-200">
+            <span className="self-center font-oswald text-3xl  text-teal-800  whitespace-nowrap dark:text-slate-200">
               On the road
             </span>
           </div>
@@ -84,10 +90,10 @@ export default function Navbar() {
         <div
           className={`${
             isNavOpen ? "block" : "hidden"
-          } w-full md:flex md:w-auto md:order-1`}
+          } w-full md:flex flex  md:w-auto`}
           id="navbar-search"
         >
-          <ul className="flex flex-col md:items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col md:items-center w-full p-4 md:p-0 mt-4 font-semibold border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {isLoggedIn ? (
               <>
                 <li>
@@ -123,35 +129,25 @@ export default function Navbar() {
                     className="my-1"
                     onClick={handleLinkClick}
                   >
-                    {avatar ? (
-                      <div className="flex items-center gap-1 ">
-                        <span className="text-sm dark:text-gray-400">
-                          {username.charAt(0).toUpperCase() +
-                            username.slice(1).toLowerCase()}
-                        </span>
-                        <img
-                          className="rounded-full w-full max-w-[35px] mb-4 md:mb-0 md:mr-4"
-                          src={`http://localhost:4000/uploads/${avatar.slice(
-                            -24
-                          )}`}
-                          alt={`avatar from `}
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <img
-                          className="rounded-full w-full max-w-[30px] mb-4 md:mb-0 md:mr-4"
-                          src="/assets/avatar.png"
-                          alt={`avatar from`}
-                        />
-                      </div>
-                    )}
+                    <div className="flex items-center gap-1 ">
+                      <img
+                        className="rounded-full w-full max-w-[35px] mb-4 md:mb-0 md:mr-4"
+                        src={
+                          avatar
+                            ? `http://localhost:4000/uploads/${avatar.slice(
+                                -24
+                              )}`
+                            : "/assets/avatar.png"
+                        }
+                        alt={`avatar from `}
+                      />
+                    </div>
                   </Link>
                 </li>
-                <li className="flex ">
+                <li>
                   <Link to="/logout" onClick={handleLinkClick}>
-                    <span className="text-gray-800 dark:text-slate-300 text-sm font-bold hover:underline dark:hover:text-teal-500">
-                      Logout
+                    <span className="text-gray-800 dark:text-slate-300 text-md  hover:underline dark:hover:text-teal-500 flex items-center gap-1">
+                      Logout <MdLogout />
                     </span>
                   </Link>
                 </li>

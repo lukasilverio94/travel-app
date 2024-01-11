@@ -6,6 +6,7 @@ export default {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
+        oswald: ["oswald", "sans-serif"],
       },
     },
     backgroundImage: {

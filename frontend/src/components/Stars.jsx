@@ -54,7 +54,7 @@ export default function Stars({ post, onRatingChange }) {
                 className="hidden"
               />
               <FaStar
-                className="cursor-pointer"
+                className="cursor-pointer "
                 size={20}
                 color={
                   currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"

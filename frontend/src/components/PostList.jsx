@@ -97,53 +97,54 @@ const PostList = () => {
   };
 
   return (
-    <div className="mx-auto px-6 mt-16 pb-12 dark:bg-gray-950 dark:text-slate-200">
-      {/* Use 'mx-auto' to center the container and 'w-full' to take full width on smaller screens */}
+    <>
       <Banner />
-      <h1 className="text-5xl font-bold md:text-6xl pt-6 pb-2 my-4 text-teal-700 dark:text-gray-300   dark:border-slate-200">
-        Traveller's posts
-      </h1>
+      <div className="mx-auto px-6  pb-12 dark:bg-gray-950 dark:text-slate-200">
+        <h1 className="text-5xl font-bold md:text-6xl pt-6 pb-2 mb-4 text-teal-700 dark:text-gray-300   dark:border-slate-200">
+          Traveller's posts
+        </h1>
 
-      <SearchInput onChange={handleSearchChange} value={search} />
-      {loading ? (
-        <Loader />
-      ) : (
-        <div ref={containerRef} className="container flex flex-col mt-2">
-          {posts.length === 0 ? (
-            <p className="dark:text-slate-300">No posts available</p>
-          ) : (
-            posts
-              .filter((post) => {
-                const titleMatch = post.title
-                  .toLowerCase()
-                  .includes(search.toLowerCase());
-                const placeMatch = post.place
-                  .toLowerCase()
-                  .includes(search.toLowerCase());
-                return titleMatch || placeMatch;
-              })
-              .map((post) => <MemoizedPost key={post._id} post={post} />)
-          )}
-        </div>
-      )}
+        <SearchInput onChange={handleSearchChange} value={search} />
+        {loading ? (
+          <Loader />
+        ) : (
+          <div ref={containerRef} className="container flex flex-col mt-2">
+            {posts.length === 0 ? (
+              <p className="dark:text-slate-300">No posts available</p>
+            ) : (
+              posts
+                .filter((post) => {
+                  const titleMatch = post.title
+                    .toLowerCase()
+                    .includes(search.toLowerCase());
+                  const placeMatch = post.place
+                    .toLowerCase()
+                    .includes(search.toLowerCase());
+                  return titleMatch || placeMatch;
+                })
+                .map((post) => <MemoizedPost key={post._id} post={post} />)
+            )}
+          </div>
+        )}
 
-      {hasMore && (
-        <button
-          onClick={loadMore}
-          className="mt-4 p-2 bg-teal-500 text-white rounded dark:bg-gray-500"
-        >
-          Load More
-        </button>
-      )}
-      {showScrollToTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-4 right-4 p-2 bg-teal-700 text-white rounded-full"
-        >
-          <FaArrowUp />
-        </button>
-      )}
-    </div>
+        {hasMore && (
+          <button
+            onClick={loadMore}
+            className="mt-4 p-2 bg-teal-500 text-white rounded dark:bg-gray-500"
+          >
+            Load More
+          </button>
+        )}
+        {showScrollToTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-4 right-4 p-2 bg-teal-700 text-white rounded-full"
+          >
+            <FaArrowUp />
+          </button>
+        )}
+      </div>
+    </>
   );
 };
 

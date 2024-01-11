@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
 import { isImageValid } from "../utils/imageFormatUtils";
 import axios from "axios";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const ShowPost = () => {
   const [post, setPost] = useState({});
@@ -106,7 +107,7 @@ const ShowPost = () => {
             handleEditMode={handleEditMode}
           />
           {/* Add new image */}
-          <div className="mb-4 dark:text-slate-200 dark:bg-gray-950">
+          <div className="mb-4 ml-7 dark:text-slate-200 dark:bg-gray-950">
             <label
               htmlFor="newImage"
               className="dark:text-slate-300 block mt-5 text-2xl"
@@ -131,6 +132,9 @@ const ShowPost = () => {
               <p className="text-red-600 mt-2 font-semibold">{formatError}</p>
             )}
           </div>
+          <button className="text-lg flex items-center gap-1 text-teal-600">
+            <IoIosArrowRoundBack /> Back
+          </button>
         </>
       ) : (
         <>

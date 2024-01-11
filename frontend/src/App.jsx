@@ -39,11 +39,8 @@ function App() {
     setThemeMode("light");
   };
 
-  const { avatar } = useAvatar();
-
   return (
     <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-      {avatar && <img src={avatar} alt="Avatar" />}
       <BrowserRouter>
         <ToastContainer />
         <Navbar />

@@ -80,7 +80,6 @@ const PostDetails = ({
           </button>
         )}
       </div>
-
       {/* Render images */}
       {post.images.length > 0 && <AlertBox />}
       {post.images && post.images.length > 0 && (

@@ -48,7 +48,7 @@ export default function Comments({ post }) {
 
   return (
     <div className="container mb-2">
-      <form onSubmit={submitComment} className="w-full lg:max-w-[80%]">
+      <form onSubmit={submitComment} className="w-full  max-w-[600px]">
         {/* Use md:w-full to make it full width on md screens and lg:w-1/2 to make it half width on lg screens */}
         <input
           className="w-full border border-gray-300 mb-4 px-3 py-2 rounded dark:text-gray-950"

@@ -148,7 +148,7 @@ const UserPanel = () => {
                     key={post._id}
                     className="w-full  md:w-full lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                   >
-                    {post.images && (
+                    {post.images && post.images.length > 0 && (
                       <img
                         className="w-full rounded-lg h-32 sm:h-52 object-cover"
                         src={`http://localhost:4000/uploads/${post.images[0].slice(

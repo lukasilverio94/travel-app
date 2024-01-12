@@ -5,8 +5,10 @@ import BackButton from "../components/BackButton";
 import { isImageValid } from "../utils/imageFormatUtils";
 import axios from "axios";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const ShowPost = () => {
+  const navigate = useNavigate();
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -93,7 +95,7 @@ const ShowPost = () => {
   };
 
   return (
-    <div className="mx-auto p-10 mt-16  overflow-hidden dark:bg-gray-950">
+    <div className="mx-auto p-10 mt-16  overflow-hidden dark:bg-gray-950 min-h-screen">
       <BackButton />
       {JSON.parse(localStorage.getItem("user")).username === post.writer ? (
         <>
@@ -132,15 +134,30 @@ const ShowPost = () => {
               <p className="text-red-600 mt-2 font-semibold">{formatError}</p>
             )}
           </div>
-          <button className="text-lg flex items-center gap-1 text-teal-600">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-lg flex items-center gap-1 ml-7 text-teal-600"
+          >
             <IoIosArrowRoundBack /> Back
           </button>
         </>
       ) : (
         <>
-          <h3 className="text-teal-600 text-3xl mt-4">{post.title}</h3>
-          <p className="text-slate-800 font-semibold mt-2">{post.place}</p>
-          <p className="text-slate-900 mt-4 leading-snug">{post.description}</p>
+          <h3 className="text-teal-600 text-3xl mt-4 dark:text-white">
+            {post.title}
+          </h3>
+          <p className="text-slate-800 font-semibold mt-2 dark:text-slate-200">
+            {post.place}
+          </p>
+          <p className="text-slate-900 mt-4 leading-snug dark:text-slate-200">
+            {post.description}
+          </p>
+          <button
+            onClick={() => navigate(-1)}
+            className="text-lg flex items-center gap-1 text-teal-600"
+          >
+            <IoIosArrowRoundBack /> Back
+          </button>
         </>
       )}
     </div>

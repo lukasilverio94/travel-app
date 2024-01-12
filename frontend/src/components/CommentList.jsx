@@ -122,7 +122,7 @@ const CommentList = ({ post }) => {
                       </button>
                     </form>
                   ) : null}
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center justify-between w-full mt-2">
                     <button
                       onClick={handleReplyMode}
                       className="text-teal-600 dark:text-slate-200 hover:underline flex items-center"
@@ -153,7 +153,7 @@ const CommentList = ({ post }) => {
                         }
                       />
                       <button
-                        className="bg-teal-500 text-white py-1 px-2 rounded self-end"
+                        className="bg-teal-500 dark:bg-gray-500 text-white py-1 px-2 rounded self-end"
                         type="submit"
                       >
                         {loading ? "Posting..." : "Send reply"}
@@ -162,8 +162,11 @@ const CommentList = ({ post }) => {
                   ) : null}
                   <button
                     onClick={handleReplyMode}
-                    className="text-teal-600 hover:underline"
+                    className="text-teal-600 dark:text-slate-200 hover:underline flex items-center"
                   >
+                    <span className="mr-1">
+                      <MdOutlineReply />
+                    </span>
                     Reply
                   </button>
                 </div>

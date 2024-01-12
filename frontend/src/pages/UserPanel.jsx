@@ -3,12 +3,13 @@ import axios from "axios";
 import BackButton from "../components/BackButton";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useAvatar } from "../components/AvatarContext";
 
 const UserPanel = () => {
+  const { avatar, updateAvatar } = useAvatar();
   const { username } = useParams();
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-  const [avatar, setAvatar] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -18,6 +19,7 @@ const UserPanel = () => {
         setLoading(true);
         const response = await axios.get(`/user/search/${username}`);
         setUser(response.data.userInfo);
+        updateAvatar(response.data.userInfo.avatar);
       } catch (error) {
         console.error("Error fetching user details:", error);
       } finally {
@@ -27,13 +29,11 @@ const UserPanel = () => {
 
     fetchUserDetails();
   }, [username, refresh]);
-  useEffect(() => {
-    console.log("Updated Avatar:", avatar);
-  }, []);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setAvatar(file);
+      updateAvatar(file);
     } else {
       console.warn("No file selected.");
     }
@@ -60,19 +60,11 @@ const UserPanel = () => {
           withCredentials: true,
         }
       );
-
-      console.log("Avatar upload response:", response.data);
-      console.log("Updated Avatar:", response.data.avatar);
-
-      // setUser((prevUser) => ({ ...prevUser, avatar: response.data.user.avatar }));
       setUser((prevUser) => {
-        console.log("Previous User:", prevUser);
-        console.log("Updated Avatar URL:", response.data.user.avatar);
         return { ...prevUser, avatar: response.data.user.avatar };
       });
       setRefresh((prevRefresh) => !prevRefresh);
       localStorage.setItem("avatar", response.data.user.avatar);
-      console.log("Updated Avatar:", response.data.user.avatar);
     } catch (error) {
       console.error("Error uploading avatar:", error);
     } finally {
@@ -81,11 +73,11 @@ const UserPanel = () => {
   };
 
   return (
-    <div className="w-full py-6 mx-auto mt-16 px-4  dark:bg-gray-950 dark:text-slate-300 leading-normal">
+    <div className="w-full py-6 mx-auto mt-20 px-4  dark:bg-gray-950 dark:text-slate-300 leading-normal">
       <div className=" mx-auto p-6 shadow-md dark:shadow-sm dark:shadow-white rounded-md">
         <BackButton />
 
-        <div className="mb-4 text-center">
+        <div className="mb-4 text-center rounded-full">
           {user.avatar ? (
             <img
               key={refresh}

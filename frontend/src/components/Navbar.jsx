@@ -3,28 +3,30 @@ import { Link } from "react-router-dom";
 import { fetchUserInfo } from "../utils/authUtil.js";
 import ThemeBtn from "./ThemeBtn.jsx";
 import { MdLogout } from "react-icons/md";
+import { useAvatar } from "./AvatarContext";
 
 export default function Navbar() {
+  const { avatar, updateAvatar } = useAvatar();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [username, setUsername] = useState(null);
-  const [avatar, setAvatar] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadUserInfo = async () => {
     const userInfo = await fetchUserInfo();
     setUsername(userInfo.username);
     setIsLoading(false);
-    if (localStorage.getItem("avatar")) {
-      setAvatar(localStorage.getItem("avatar"));
-    } else if (userInfo.avatar && !localStorage.getItem("avatar")) {
-      setAvatar(userInfo.avatar);
-    } else {
-      setAvatar(null);
-    }
   };
 
   useEffect(() => {
     loadUserInfo();
+  }, []);
+
+  useEffect(() => {
+    const storedAvatar = localStorage.getItem("avatar");
+    if (storedAvatar) {
+      // Update the avatar in the context
+      updateAvatar(storedAvatar);
+    }
   }, []);
 
   const toggleNav = () => {
@@ -139,7 +141,7 @@ export default function Navbar() {
                               )}`
                             : "/assets/avatar.png"
                         }
-                        alt={`avatar from `}
+                        alt="Avatar"
                       />
                     </div>
                   </Link>

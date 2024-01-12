@@ -64,7 +64,7 @@ const PostList = () => {
         });
 
         setPosts(filteredPosts);
-        setHasMore(newPosts.length > 0);
+        setHasMore(newPosts.length > 5);
         setLoading(false);
 
         if (currentPage > 1 && containerRef.current) {

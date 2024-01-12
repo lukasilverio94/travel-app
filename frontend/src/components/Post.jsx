@@ -32,7 +32,7 @@ const Post = ({ post }) => {
         overflowWrap: "break-word",
       }}
       key={post._id}
-      className="w-full flex flex-col border-b-2 dark:border-slate-200 pb-5 mt-5 mb-3 md:col-span-1"
+      className="w-full flex flex-col border-t-2 dark:border-t dark:border-slate-200 pt-7 pb-3 mt-5 mb-3 md:col-span-1"
     >
       <div className="flex flex-col md:flex-row ">
         <div className="w-full md:w-full sm:w-full lg:w-2/3 flex flex-col gap-y-1 flex-grow">

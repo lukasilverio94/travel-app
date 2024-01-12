@@ -48,7 +48,7 @@ const Post = ({ post }) => {
             {post.place}
           </p>
           <p className="dark:text-slate-300">
-            {post.description.slice(0, 35)}...
+            {post.description.slice(0, 80)}...
           </p>
           <Link to={`posts/details/${post._id}`} className="my-1">
             <span className="flex items-center text-teal-700 dark:text-teal-400 ">
@@ -62,7 +62,7 @@ const Post = ({ post }) => {
             {formatDistance(new Date(post.createdAt), new Date(), {
               addSuffix: true,
             })}
-            by {post.writer}
+            <span> by {post.writer}</span>
           </small>
 
           <Comments post={post} />

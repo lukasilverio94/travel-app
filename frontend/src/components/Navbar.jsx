@@ -4,6 +4,7 @@ import { fetchUserInfo } from "../utils/authUtil.js";
 import ThemeBtn from "./ThemeBtn.jsx";
 import { MdLogout } from "react-icons/md";
 import { useAvatar } from "./AvatarContext";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Navbar() {
   const { avatar, updateAvatar } = useAvatar();
@@ -122,30 +123,23 @@ export default function Navbar() {
                     onClick={handleLinkClick}
                     className="block py-2 pe-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md: md:p-0  dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700 hover:text-teal-800 hover:underline dark:hover:text-teal-500"
                   >
-                    Get inspired
+                    Suggestions
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to={`/userPanel/${username}`}
-                    className="my-1"
-                    onClick={handleLinkClick}
-                  >
-                    <div className="flex items-center gap-1 ">
-                      <img
-                        className="rounded-full w-full max-w-[35px] mb-4 md:mb-0 md:mr-4"
-                        src={
-                          avatar
-                            ? `http://localhost:4000/uploads/${avatar.slice(
-                                -24
-                              )}`
-                            : "/assets/avatar.png"
-                        }
-                        alt="Avatar"
-                      />
-                    </div>
-                  </Link>
-                </li>
+                {!isLoading && (
+                  <li>
+                    <Link
+                      to={`/userPanel/${username}`}
+                      className="my-1"
+                      onClick={handleLinkClick}
+                    >
+                      <span className="flex items-center gap-1 dark:text-white ">
+                        Profile <FaUserCircle />
+                      </span>
+                    </Link>
+                  </li>
+                )}
+
                 <li>
                   <Link to="/logout" onClick={handleLinkClick}>
                     <span className="text-gray-800 dark:text-slate-300 text-md  hover:underline dark:hover:text-teal-500 flex items-center gap-1">

@@ -23,10 +23,10 @@ const DeletePost = () => {
   };
 
   return (
-    <div className="p-4 mb-24 ">
-      <h1 className="text-3xl text-center my-4">Delete Post</h1>
+    <div className="p-12 mt-20 dark:bg-gray-950 dark:text-slate-200">
+      <h1 className="text-3xl text-center my-4 mt-4">Delete Post</h1>
       {loading ? <Loader /> : ""}
-      <div className="flex flex-col items-center border-2 border-teal-400 rounded-xl w-full sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] p-8 mx-auto">
+      <div className="flex flex-col items-center border-2 border-slate-400 dark:border-slate-200 rounded-xl w-full sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] p-8 mx-auto">
         <h3 className="text-2xl">Are you sure you want to delete this post?</h3>
 
         <button

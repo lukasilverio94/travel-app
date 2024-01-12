@@ -100,14 +100,14 @@ const CommentList = ({ post }) => {
                 ))}
               </ul>
               {user && user.username === comment.writer ? (
-                <div className="flex flex-col items-start mt-2 gap-2">
+                <div className="flex flex-col items-start mt-2 gap-2 dark:text-gray-900">
                   {isReplyMode ? (
                     <form
                       onSubmit={(e) => submitReply(e, comment._id)}
                       className="max-w-md flex flex-col items-start w-full"
                     >
                       <input
-                        className="w-full border text-gray-950 border-gray-300 mb-2 px-3 py-2 rounded"
+                        className="w-full border dark:text-gray-900  border-gray-300 mb-2 px-3 py-2 rounded"
                         type="text"
                         placeholder={`add a reply to ${comment.writer}'s comment `}
                         onChange={(e) =>
@@ -145,7 +145,7 @@ const CommentList = ({ post }) => {
                       className="max-w-md"
                     >
                       <input
-                        className="w-full border border-gray-300 mb-2 px-3 py-2 rounded"
+                        className="w-full border border-gray-300 mb-2 px-3 py-2 rounded dark:text-gray-900"
                         type="text"
                         placeholder={`add a reply to ${comment.writer}'s comment `}
                         onChange={(e) =>

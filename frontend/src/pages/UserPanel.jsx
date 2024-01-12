@@ -94,7 +94,6 @@ const UserPanel = () => {
                 src="/assets/avatar.png"
                 alt={`default avatar`}
               />
-              <p className="text-gray-500">Default Avatar</p>
             </div>
           )}
         </div>
@@ -167,7 +166,7 @@ const UserPanel = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-xl">No posts available for this user.</p>
+              <p className="text-xl">You still didn't post.</p>
             )}
           </div>
         )}

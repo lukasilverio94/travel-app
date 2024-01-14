@@ -152,6 +152,7 @@ const ShowPost = () => {
           <p className="text-slate-900 mt-4 leading-snug dark:text-slate-200">
             {post.description}
           </p>
+
           <button
             onClick={() => navigate(-1)}
             className="text-lg flex items-center gap-1 text-teal-600"

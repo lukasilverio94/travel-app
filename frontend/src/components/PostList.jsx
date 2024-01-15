@@ -64,7 +64,7 @@ const PostList = () => {
         });
 
         setPosts(filteredPosts);
-        setHasMore(newPosts.length > 0);
+        setHasMore(newPosts.length > 5);
         setLoading(false);
 
         if (currentPage > 1 && containerRef.current) {
@@ -88,7 +88,7 @@ const PostList = () => {
     const searchTerm = e.target.value;
     setSearch(searchTerm);
     setLoading(false);
-    setCurrentPage(1); // Reset current page when the search term changes
+    setCurrentPage(1);
   };
 
   // Scroll configs
@@ -110,7 +110,9 @@ const PostList = () => {
         ) : (
           <div ref={containerRef} className="container flex flex-col mt-2">
             {posts.length === 0 ? (
-              <p className="dark:text-slate-300">No posts available</p>
+              <p className="text-gray-800 dark:text-slate-300 mt-4 text-3xl">
+                No posts to display
+              </p>
             ) : (
               posts
                 .filter((post) => {

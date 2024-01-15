@@ -100,14 +100,14 @@ const CommentList = ({ post }) => {
                 ))}
               </ul>
               {user && user.username === comment.writer ? (
-                <div className="flex flex-col items-start mt-2 gap-2">
+                <div className="flex flex-col items-start mt-2 gap-2 dark:text-gray-900">
                   {isReplyMode ? (
                     <form
                       onSubmit={(e) => submitReply(e, comment._id)}
                       className="max-w-md flex flex-col items-start w-full"
                     >
                       <input
-                        className="w-full border text-gray-950 border-gray-300 mb-2 px-3 py-2 rounded"
+                        className="w-full border dark:text-gray-900  border-gray-300 mb-2 px-3 py-2 rounded"
                         type="text"
                         placeholder={`add a reply to ${comment.writer}'s comment `}
                         onChange={(e) =>
@@ -122,7 +122,7 @@ const CommentList = ({ post }) => {
                       </button>
                     </form>
                   ) : null}
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center justify-between w-full mt-2">
                     <button
                       onClick={handleReplyMode}
                       className="text-teal-600 dark:text-slate-200 hover:underline flex items-center"
@@ -145,7 +145,7 @@ const CommentList = ({ post }) => {
                       className="max-w-md"
                     >
                       <input
-                        className="w-full border border-gray-300 mb-2 px-3 py-2 rounded"
+                        className="w-full border border-gray-300 mb-2 px-3 py-2 rounded dark:text-gray-900"
                         type="text"
                         placeholder={`add a reply to ${comment.writer}'s comment `}
                         onChange={(e) =>
@@ -153,7 +153,7 @@ const CommentList = ({ post }) => {
                         }
                       />
                       <button
-                        className="bg-teal-500 text-white py-1 px-2 rounded self-end"
+                        className="bg-teal-500 dark:bg-gray-500 text-white py-1 px-2 rounded self-end"
                         type="submit"
                       >
                         {loading ? "Posting..." : "Send reply"}
@@ -162,8 +162,11 @@ const CommentList = ({ post }) => {
                   ) : null}
                   <button
                     onClick={handleReplyMode}
-                    className="text-teal-600 hover:underline"
+                    className="text-teal-600 dark:text-slate-200 hover:underline flex items-center"
                   >
+                    <span className="mr-1">
+                      <MdOutlineReply />
+                    </span>
                     Reply
                   </button>
                 </div>

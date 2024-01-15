@@ -32,7 +32,7 @@ const Post = ({ post }) => {
         overflowWrap: "break-word",
       }}
       key={post._id}
-      className="w-full flex flex-col border-b-2 dark:border-slate-200 pb-5 mt-5 mb-3 md:col-span-1"
+      className="w-full flex flex-col border-t-2 dark:border-t dark:border-slate-200 pt-7 pb-3 mt-5 mb-3 md:col-span-1"
     >
       <div className="flex flex-col md:flex-row ">
         <div className="w-full md:w-full sm:w-full lg:w-2/3 flex flex-col gap-y-1 flex-grow">
@@ -48,7 +48,7 @@ const Post = ({ post }) => {
             {post.place}
           </p>
           <p className="dark:text-slate-300">
-            {post.description.slice(0, 35)}...
+            {post.description.slice(0, 80)}...
           </p>
           <Link to={`posts/details/${post._id}`} className="my-1">
             <span className="flex items-center text-teal-700 dark:text-teal-400 ">
@@ -62,7 +62,7 @@ const Post = ({ post }) => {
             {formatDistance(new Date(post.createdAt), new Date(), {
               addSuffix: true,
             })}
-            by {post.writer}
+            <span> by {post.writer}</span>
           </small>
 
           <Comments post={post} />

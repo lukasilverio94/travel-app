@@ -120,7 +120,7 @@ export default function CreatePost() {
             Description
           </label>
           <textarea
-            className="border-2 border-slate-600 px-4 py-2 min-h-20 w-full rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
+            className="border-2 border-slate-600 px-4 py-2 min-h-[250px] w-full rounded-lg dark:bg-transparent dark:focus:outline-none dark:focus:border-teal-500"
             placeholder="Tell us your experience..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}

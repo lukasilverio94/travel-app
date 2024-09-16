@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 // import Comment from '../models/commentModel';
 import Comment from '../models/commentModel.js';
 import Post from '../models/postModel.js';
+
+
 export const addNewComment = async (req, res) => {
   console.log('comment request', req.body);
 

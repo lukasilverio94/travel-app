@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export default function Banner() {
   return (
     <div className="flex items-center justify-center h-screen  bg-fixed bg-center bg-parallax bg-cover min-w-full">

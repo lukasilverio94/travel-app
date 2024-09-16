@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
+
 //Components & pages
-import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import ShowPost from "./pages/ShowPost";
 import DeletePost from "./pages/DeletePost";
@@ -15,13 +15,14 @@ import Footer from "./components/Footer";
 import UserPanel from "./pages/UserPanel";
 import LocationsPage from "./pages/LocationsPage";
 import ScrollToTop from "./components/ScrollToTop";
+
 // Provider context
 import { ThemeProvider } from "./context/ThemeContext";
 import { AvatarProvider } from "./components/AvatarContext.jsx";
 // State
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // Toastify
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Default axios

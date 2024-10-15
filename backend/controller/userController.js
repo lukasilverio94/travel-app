@@ -13,20 +13,23 @@ import jwt from "jsonwebtoken";
 //Function sign up
 export const signup = async (req, res) => {
   // Hash the user's password using bcrypt with a salt factor of 12
-  let hashedPass = bcrypt.hashSync(req.body.password, 12);
-
-  // Create a new user object with hashed password
-  let userObj = {
-    ...req.body,
-    password: hashedPass,
-  };
-
-  // Create a new user model instance
-  let newUser = new User(userObj);
 
   try {
-    // Save the new user to the database
-    console.log("Received signup request:", req.body);
+    const existingUser = User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res.status(404).send("This email is already registered!");
+    }
+    let hashedPass = bcrypt.hashSync(req.body.password, 12);
+
+    // Create a new user object with hashed password
+    let userObj = {
+      ...req.body,
+      password: hashedPass,
+    };
+
+    // Create a new user model instance
+    let newUser = new User(userObj);
+
     await newUser.save();
 
     // Send a success response if the user is saved successfully

@@ -1,53 +1,61 @@
-// test
-import Post from "../models/postModel.js";
-import Comment from "../models/commentModel.js";
-import Reply from "../models/replyModel.js";
-
 import dotenv from "dotenv";
 dotenv.config();
-import User from "../models/userModel.js";
+import User, { validateUser } from "../models/userModel.js";
+
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 //Function sign up
+
 export const signup = async (req, res) => {
-  // Hash the user's password using bcrypt with a salt factor of 12
-
   try {
-    const existingUser = User.findOne({ email: req.body.email });
-    if (existingUser) {
-      return res.status(404).send("This email is already registered!");
-    }
-    let hashedPass = bcrypt.hashSync(req.body.password, 12);
+    console.log("Request body:", req.body);
+    // Validate the incoming request body
+    const { error } = validateUser(req.body);
+    console.log("Joi validation result:", error);
 
-    // Create a new user object with hashed password
-    let userObj = {
+    if (error) {
+      console.log("Validation failed:", error.details[0].message);
+      return res.status(400).send(error.details[0].message);
+    }
+
+    // Check if email is already registered before hashing the password
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "This email is already registered!" });
+    }
+
+    // Hash the user's password using bcrypt with a salt factor of 12
+    const hashedPass = bcrypt.hashSync(req.body.password, 12);
+
+    // Create a new user object with the hashed password
+    const userObj = {
       ...req.body,
       password: hashedPass,
     };
 
-    // Create a new user model instance
-    let newUser = new User(userObj);
-
+    // Create a new user model instance and save it
+    const newUser = new User(userObj);
     await newUser.save();
 
     // Send a success response if the user is saved successfully
-    res.status(200).send("User saved successfully");
-    console.log("User is saved", req.body);
+    return res.status(201).json({ message: "User saved successfully" });
   } catch (error) {
-    // Handle errors during user saving process
+    // Handle potential errors during the user-saving process
     if (error.code === 11000) {
       // Duplicate key error (unique constraint violation)
-      res.status(400).send("This email is already taken");
+      return res.status(400).json({ message: "This email is already taken" });
     } else {
-      // Other errors
       console.error(error);
-      res.status(500).send("An error occurred while saving the user.");
+      return res
+        .status(500)
+        .json({ message: "An error occurred while saving the user." });
     }
   }
 };
-
 // Function for user login
 export const login = async (req, res) => {
   // Log the incoming login request data
